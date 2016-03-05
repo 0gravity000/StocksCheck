@@ -11,6 +11,7 @@
 @interface BoardTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *codeNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 
 //UILabel *priceLable;
 //UILabel *changeValLabel;

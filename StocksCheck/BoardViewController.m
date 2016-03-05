@@ -203,6 +203,10 @@
     str = [str stringByAppendingString:name];
     cell.codeNameLabel.text = str;
     NSLog(@"cell.codeNameLabel.text(code+place+name) =%@", cell.codeNameLabel.text);
+
+    cell.priceLabel.text = [[object valueForKey:@"price"] description];
+    NSLog(@"cell.priceLabel.text(code+place+name) =%@", cell.priceLabel.text);
+
 }
 
 
