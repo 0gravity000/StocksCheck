@@ -43,7 +43,7 @@
         NSError *error = nil;
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
-        NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+        NSInteger count = [context countForFetchRequest:fetchRequest error:&error];
         NSLog(@"Error !: %@", [error localizedDescription]);
         NSLog(@"CoreData count = %ld", count);
         NSIndexPath *indexPath;
@@ -51,13 +51,14 @@
         indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
         object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [object setValue:appDelegate.addedCode forKey:@"code"];
-        
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
+        NSLog(@"object value code = %@", [object valueForKey:@"code"]);
+        
         appDelegate.IsBackResistView = FALSE;
         appDelegate.addedCode = @"";
     }
@@ -135,10 +136,11 @@
         [controller setDetailItem:object];
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;
+        
     } else if ([[segue identifier] isEqualToString:@"showResist"]) {
         [self insertNewObject];
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
-        NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+        NSInteger count = [self.bmanagedObjectContext countForFetchRequest:fetchRequest error:&error];
         NSLog(@"Error !: %@", [error localizedDescription]);
         NSLog(@"CoreData count = %ld", count);
         indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
@@ -197,28 +199,28 @@
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
-    if (_fetchedResultsController != nil) {
-        return _fetchedResultsController;
+    if (_bfetchedResultsController != nil) {
+        return _bfetchedResultsController;
     }
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.bmanagedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:YES];
     
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.bmanagedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
     aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
+    self.bfetchedResultsController = aFetchedResultsController;
     
     NSError *error = nil;
     if (![self.fetchedResultsController performFetch:&error]) {
@@ -228,7 +230,7 @@
         abort();
     }
     
-    return _fetchedResultsController;
+    return _bfetchedResultsController;
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
