@@ -17,6 +17,9 @@
 		AA19AC6E1C8A8D2200FD02E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA19AC6C1C8A8D2200FD02E6 /* LaunchScreen.storyboard */; };
 		AA19AC791C8A8D2200FD02E6 /* StocksCheckTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC781C8A8D2200FD02E6 /* StocksCheckTests.m */; };
 		AA19AC841C8A8D2200FD02E6 /* StocksCheckUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC831C8A8D2200FD02E6 /* StocksCheckUITests.m */; };
+		AA19AC931C8A915600FD02E6 /* BoardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC921C8A915600FD02E6 /* BoardTableViewCell.m */; };
+		AA19AC961C8A917900FD02E6 /* BoardUITableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC951C8A917900FD02E6 /* BoardUITableView.m */; };
+		AA19AC991C8A91A500FD02E6 /* BoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC981C8A91A500FD02E6 /* BoardViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +59,12 @@
 		AA19AC7F1C8A8D2200FD02E6 /* StocksCheckUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StocksCheckUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA19AC831C8A8D2200FD02E6 /* StocksCheckUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StocksCheckUITests.m; sourceTree = "<group>"; };
 		AA19AC851C8A8D2200FD02E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA19AC911C8A915600FD02E6 /* BoardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardTableViewCell.h; sourceTree = "<group>"; };
+		AA19AC921C8A915600FD02E6 /* BoardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardTableViewCell.m; sourceTree = "<group>"; };
+		AA19AC941C8A917900FD02E6 /* BoardUITableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardUITableView.h; sourceTree = "<group>"; };
+		AA19AC951C8A917900FD02E6 /* BoardUITableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardUITableView.m; sourceTree = "<group>"; };
+		AA19AC971C8A91A500FD02E6 /* BoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardViewController.h; sourceTree = "<group>"; };
+		AA19AC981C8A91A500FD02E6 /* BoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +122,12 @@
 				AA19AC641C8A8D2200FD02E6 /* DetailViewController.h */,
 				AA19AC651C8A8D2200FD02E6 /* DetailViewController.m */,
 				AA19AC671C8A8D2200FD02E6 /* Main.storyboard */,
+				AA19AC971C8A91A500FD02E6 /* BoardViewController.h */,
+				AA19AC981C8A91A500FD02E6 /* BoardViewController.m */,
+				AA19AC941C8A917900FD02E6 /* BoardUITableView.h */,
+				AA19AC951C8A917900FD02E6 /* BoardUITableView.m */,
+				AA19AC911C8A915600FD02E6 /* BoardTableViewCell.h */,
+				AA19AC921C8A915600FD02E6 /* BoardTableViewCell.m */,
 				AA19AC6A1C8A8D2200FD02E6 /* Assets.xcassets */,
 				AA19AC6C1C8A8D2200FD02E6 /* LaunchScreen.storyboard */,
 				AA19AC6F1C8A8D2200FD02E6 /* Info.plist */,
@@ -278,11 +293,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA19AC931C8A915600FD02E6 /* BoardTableViewCell.m in Sources */,
 				AA19AC661C8A8D2200FD02E6 /* DetailViewController.m in Sources */,
+				AA19AC961C8A917900FD02E6 /* BoardUITableView.m in Sources */,
 				AA19AC631C8A8D2200FD02E6 /* MasterViewController.m in Sources */,
 				AA19AC601C8A8D2200FD02E6 /* StocksCheck.xcdatamodeld in Sources */,
 				AA19AC5D1C8A8D2200FD02E6 /* AppDelegate.m in Sources */,
 				AA19AC5A1C8A8D2200FD02E6 /* main.m in Sources */,
+				AA19AC991C8A91A500FD02E6 /* BoardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
