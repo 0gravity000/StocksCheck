@@ -21,6 +21,8 @@
 		AA19AC961C8A917900FD02E6 /* BoardTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC951C8A917900FD02E6 /* BoardTableView.m */; };
 		AA19AC991C8A91A500FD02E6 /* BoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC981C8A91A500FD02E6 /* BoardViewController.m */; };
 		AA19AC9C1C8A9E2600FD02E6 /* ResistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC9B1C8A9E2600FD02E6 /* ResistViewController.m */; };
+		AA19ACA11C8AA3BB00FD02E6 /* Stock+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC9E1C8AA3BB00FD02E6 /* Stock+CoreDataProperties.m */; };
+		AA19ACA21C8AA3BB00FD02E6 /* Stock.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19ACA01C8AA3BB00FD02E6 /* Stock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +70,10 @@
 		AA19AC981C8A91A500FD02E6 /* BoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardViewController.m; sourceTree = "<group>"; };
 		AA19AC9A1C8A9E2600FD02E6 /* ResistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResistViewController.h; sourceTree = "<group>"; };
 		AA19AC9B1C8A9E2600FD02E6 /* ResistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResistViewController.m; sourceTree = "<group>"; };
+		AA19AC9D1C8AA3BB00FD02E6 /* Stock+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Stock+CoreDataProperties.h"; sourceTree = "<group>"; };
+		AA19AC9E1C8AA3BB00FD02E6 /* Stock+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Stock+CoreDataProperties.m"; sourceTree = "<group>"; };
+		AA19AC9F1C8AA3BB00FD02E6 /* Stock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stock.h; sourceTree = "<group>"; };
+		AA19ACA01C8AA3BB00FD02E6 /* Stock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stock.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +104,10 @@
 		AA19AC4C1C8A8D2200FD02E6 = {
 			isa = PBXGroup;
 			children = (
+				AA19AC9D1C8AA3BB00FD02E6 /* Stock+CoreDataProperties.h */,
+				AA19AC9E1C8AA3BB00FD02E6 /* Stock+CoreDataProperties.m */,
+				AA19AC9F1C8AA3BB00FD02E6 /* Stock.h */,
+				AA19ACA01C8AA3BB00FD02E6 /* Stock.m */,
 				AA19AC571C8A8D2200FD02E6 /* StocksCheck */,
 				AA19AC771C8A8D2200FD02E6 /* StocksCheckTests */,
 				AA19AC821C8A8D2200FD02E6 /* StocksCheckUITests */,
@@ -302,6 +312,8 @@
 				AA19AC661C8A8D2200FD02E6 /* DetailViewController.m in Sources */,
 				AA19AC961C8A917900FD02E6 /* BoardTableView.m in Sources */,
 				AA19AC631C8A8D2200FD02E6 /* MasterViewController.m in Sources */,
+				AA19ACA21C8AA3BB00FD02E6 /* Stock.m in Sources */,
+				AA19ACA11C8AA3BB00FD02E6 /* Stock+CoreDataProperties.m in Sources */,
 				AA19AC601C8A8D2200FD02E6 /* StocksCheck.xcdatamodeld in Sources */,
 				AA19AC5D1C8A8D2200FD02E6 /* AppDelegate.m in Sources */,
 				AA19AC9C1C8A9E2600FD02E6 /* ResistViewController.m in Sources */,
