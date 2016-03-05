@@ -79,8 +79,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="fzx-no-hft" firstAttribute="top" secondItem="YBE-Oc-WHv" secondAttribute="bottom" id="LQR-h7-vXg"/>
                             <constraint firstItem="QRS-NK-zzT" firstAttribute="top" secondItem="fzx-no-hft" secondAttribute="bottom" id="MQB-MS-dCf"/>
-                            <constraint firstItem="fzx-no-hft" firstAttribute="top" secondItem="aE3-97-zgi" secondAttribute="topMargin" constant="20" id="fm2-Gt-SeZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fzx-no-hft" secondAttribute="trailing" constant="-20" id="h9j-Dr-F6V"/>
                             <constraint firstItem="QRS-NK-zzT" firstAttribute="leading" secondItem="aE3-97-zgi" secondAttribute="leadingMargin" constant="-20" id="hNS-wG-PT0"/>
                             <constraint firstItem="6tM-LJ-vXm" firstAttribute="top" secondItem="QRS-NK-zzT" secondAttribute="bottom" id="lvN-Fk-NOX"/>
@@ -93,7 +93,7 @@
                                 <exclude reference="fzx-no-hft"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="fm2-Gt-SeZ"/>
+                                <exclude reference="LQR-h7-vXg"/>
                                 <exclude reference="h9j-Dr-F6V"/>
                                 <exclude reference="mu6-2X-5NK"/>
                                 <exclude reference="MQB-MS-dCf"/>
@@ -108,7 +108,7 @@
                                 <include reference="fzx-no-hft"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="fm2-Gt-SeZ"/>
+                                <include reference="LQR-h7-vXg"/>
                                 <include reference="h9j-Dr-F6V"/>
                                 <include reference="mu6-2X-5NK"/>
                                 <include reference="MQB-MS-dCf"/>

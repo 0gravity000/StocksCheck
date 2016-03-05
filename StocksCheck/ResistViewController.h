@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ResistTableView.h"
 #import "ResistTableViewCell.h"
+#import "AppDelegate.h"
 
 @interface ResistViewController : UIViewController <UISearchBarDelegate>
 

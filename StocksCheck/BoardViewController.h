@@ -10,9 +10,10 @@
 #import <CoreData/CoreData.h>
 #import "BoardTableView.h"
 #import "BoardTableViewCell.h"
+#import "AppDelegate.h"
 
 @class DetailViewController;
-//@class ResistViewController;
+@class ResistViewController;
 
 @interface BoardViewController : UIViewController <NSFetchedResultsControllerDelegate>
 

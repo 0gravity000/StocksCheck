@@ -17,6 +17,9 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
+@property bool IsBackResistView;
+@property NSString *addedCode;
+
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 

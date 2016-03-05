@@ -8,7 +8,7 @@
 
 #import "BoardViewController.h"
 #import "DetailViewController.h"
-//#import "ResistViewController.h"
+#import "ResistViewController.h"
 
 @interface BoardViewController ()
 
@@ -25,18 +25,71 @@
     self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     //self.resistViewController = (ResistViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
-    
+
+    //initialize variables
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.IsBackResistView = FALSE;
+    appDelegate.addedCode = @"";
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     //self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;  ///NG
     [super viewWillAppear:animated];
+
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.IsBackResistView == TRUE) {
+        // Save the context.
+        NSError *error = nil;
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+        NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+        NSLog(@"Error !: %@", [error localizedDescription]);
+        NSLog(@"CoreData count = %ld", count);
+        NSIndexPath *indexPath;
+        NSManagedObject *object;
+        indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
+        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        [object setValue:appDelegate.addedCode forKey:@"code"];
+        
+        if (![context save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+        appDelegate.IsBackResistView = FALSE;
+        appDelegate.addedCode = @"";
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)insertNewObject {
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
+    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    
+    // If appropriate, configure the new managed object.
+    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
+    //[newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
+    NSString* code = @"---";
+    [newManagedObject setValue:code forKey:@"code"];
+    NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
+    [newManagedObject setValue:now forKey:@"timeStamp"];
+    
+    // Save the context.
+    NSError *error = nil;
+    if (![context save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
 }
 
 - (void)insertNewObject:(id)sender {
@@ -71,14 +124,27 @@
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSIndexPath *indexPath;
+    NSManagedObject *object;
+    NSError *error = nil;
+    
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.boardTableView indexPathForSelectedRow];
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        indexPath = [self.boardTableView indexPathForSelectedRow];
+        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
-        //ResistViewController *controller = (ResistViewController *)[[segue destinationViewController] topViewController];
         [controller setDetailItem:object];
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;
+    } else if ([[segue identifier] isEqualToString:@"showResist"]) {
+        [self insertNewObject];
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+        NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+        NSLog(@"Error !: %@", [error localizedDescription]);
+        NSLog(@"CoreData count = %ld", count);
+        indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
+        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        ResistViewController *controller = (ResistViewController *)[segue destinationViewController];
+        [controller setDetailItem:object];
     }
 }
 
@@ -99,6 +165,14 @@
     return cell;
 }
 
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"Now configureCell index=%ld", indexPath.row);
+    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = [[object valueForKey:@"code"] description];
+    NSLog(@"cell.textLabel.text=%@", cell.textLabel.text);
+}
+
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
     return YES;
@@ -117,11 +191,6 @@
             abort();
         }
     }
-}
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
 }
 
 #pragma mark - Fetched results controller

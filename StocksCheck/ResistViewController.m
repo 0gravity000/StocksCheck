@@ -73,9 +73,9 @@
         //delete file
         IsSuccess = [sharedFM removeItemAtURL:documentsNameWithDir error:&error];
         if (IsSuccess) {
-            NSLog(@"success detele");
+            NSLog(@"success delete");
         } else {
-            NSLog(@"fail detele");
+            NSLog(@"fail delete");
             NSLog(@"Error !: %@", [error localizedDescription]);
         }
     }
@@ -183,7 +183,6 @@
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     // called when keyboard search button pressed
     [searchBar resignFirstResponder];
-    
     //close View
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -201,6 +200,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary *dic;
+    dic = [self.searchResultArray objectAtIndex:indexPath.row];
+    //Code
+    NSString *code  = [dic objectForKey:@"key1"];
+    [self.detailItem setValue:code forKey:@"code"];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.IsBackResistView = TRUE;
+    appDelegate.addedCode = code;
+    
+    //close View
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -244,7 +255,7 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
