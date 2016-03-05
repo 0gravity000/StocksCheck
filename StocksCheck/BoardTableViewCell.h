@@ -12,9 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *codeNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
-
-//UILabel *priceLable;
-//UILabel *changeValLabel;
-//UILabel *changeRateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *changeValLabel;
+@property (weak, nonatomic) IBOutlet UILabel *changeRateLabel;
 
 @end

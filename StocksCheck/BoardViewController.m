@@ -198,15 +198,59 @@
     NSString *place = [[object valueForKey:@"place"] description];
     NSString *name = [[object valueForKey:@"name"] description];
     
+    //銘柄名
     str = [code stringByAppendingString:place];
     str = [str stringByAppendingString:@" "];
     str = [str stringByAppendingString:name];
     cell.codeNameLabel.text = str;
     NSLog(@"cell.codeNameLabel.text(code+place+name) =%@", cell.codeNameLabel.text);
-
+    //現在値
     cell.priceLabel.text = [[object valueForKey:@"price"] description];
     NSLog(@"cell.priceLabel.text(code+place+name) =%@", cell.priceLabel.text);
-
+    //前日比、騰落率
+    float priceValTemp = 0;
+    float changeVal = 0;
+    float changeValTemp = 0;
+    float changeRate = 0;
+    NSString *valTemp;
+    NSString *rateTemp;
+    
+    NSString *setString = [NSString stringWithFormat:@"%@",cell.priceLabel.text];
+    NSString *setString2 = [setString stringByReplacingOccurrencesOfString:@"," withString:@""];
+    priceValTemp = [setString2 floatValue];
+    
+    valTemp = [[object valueForKey:@"yesterdayPrice"] description];
+    setString = [NSString stringWithFormat:@"%@",valTemp];
+    setString2 = [setString stringByReplacingOccurrencesOfString:@"," withString:@""];
+    changeValTemp = [setString2 floatValue];
+    
+    changeVal = priceValTemp - changeValTemp;
+    changeRate = (changeVal / changeValTemp) *100;
+    
+    valTemp = [NSString stringWithFormat : @"%.0f", changeVal];
+    rateTemp = [NSString stringWithFormat : @"%.2f", changeRate];
+    if (changeVal == 0) {
+        valTemp = @"---";
+        cell.priceLabel.textColor = [UIColor blackColor];
+        cell.changeValLabel.textColor = [UIColor blackColor];
+        cell.changeRateLabel.textColor = [UIColor blackColor];
+    } else if (changeVal > 0){
+        valTemp = [@"+" stringByAppendingString:valTemp];
+        rateTemp = [@"+" stringByAppendingString:rateTemp];
+        cell.priceLabel.textColor = [UIColor blueColor];
+        cell.changeValLabel.textColor = [UIColor blueColor];
+        cell.changeRateLabel.textColor = [UIColor blueColor];
+    } else if (changeVal < 0) {
+        cell.priceLabel.textColor = [UIColor redColor];
+        cell.changeValLabel.textColor = [UIColor redColor];
+        cell.changeRateLabel.textColor = [UIColor redColor];
+    }
+    rateTemp = [rateTemp stringByAppendingString:@"%"];
+    cell.changeValLabel.text = valTemp;
+    cell.changeRateLabel.text = rateTemp;
+    
+    NSLog(@"cell.changeValLabel.text %@", cell.changeValLabel.text);
+    NSLog(@"cell.changeRateLabel.text %@", cell.changeRateLabel.text);
 }
 
 

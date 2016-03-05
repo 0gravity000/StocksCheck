@@ -74,21 +74,45 @@
                                                         <rect key="frame" x="17" y="45" width="122" height="46"/>
                                                     </variation>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="前日比" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGy-rv-j7V">
+                                                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" fixedFrame="YES">
+                                                        <rect key="frame" x="201" y="34" width="149" height="34"/>
+                                                    </variation>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="騰落率" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q4m-uT-xvK">
+                                                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" fixedFrame="YES">
+                                                        <rect key="frame" x="201" y="68" width="149" height="34"/>
+                                                    </variation>
+                                                </label>
                                             </subviews>
                                             <variation key="default">
                                                 <mask key="subviews">
                                                     <exclude reference="A01-kG-JsH"/>
                                                     <exclude reference="EtR-ux-xA8"/>
+                                                    <exclude reference="TGy-rv-j7V"/>
+                                                    <exclude reference="Q4m-uT-xvK"/>
                                                 </mask>
                                             </variation>
                                             <variation key="widthClass=compact">
                                                 <mask key="subviews">
                                                     <include reference="A01-kG-JsH"/>
                                                     <include reference="EtR-ux-xA8"/>
+                                                    <include reference="TGy-rv-j7V"/>
+                                                    <include reference="Q4m-uT-xvK"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="changeRateLabel" destination="Q4m-uT-xvK" id="Trf-Hg-Vgf"/>
+                                            <outlet property="changeValLabel" destination="TGy-rv-j7V" id="5nN-2I-No4"/>
                                             <outlet property="codeNameLabel" destination="A01-kG-JsH" id="Nea-yJ-e0N"/>
                                             <outlet property="priceLabel" destination="EtR-ux-xA8" id="qFA-6d-tFX"/>
                                             <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="GjV-7v-3XC"/>
