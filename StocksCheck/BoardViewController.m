@@ -38,26 +38,36 @@
     [super viewWillAppear:animated];
 
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
     if (appDelegate.IsBackResistView == TRUE) {
-        // Save the context.
+
         NSError *error = nil;
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        NSIndexPath *indexPath;
+        NSManagedObject *object;
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
         NSInteger count = [context countForFetchRequest:fetchRequest error:&error];
         NSLog(@"Error !: %@", [error localizedDescription]);
         NSLog(@"CoreData count = %ld", count);
-        NSIndexPath *indexPath;
-        NSManagedObject *object;
         indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
         object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        [object setValue:appDelegate.addedCode forKey:@"code"];
+        
+        if ([appDelegate.addedCode isEqualToString:@""]) {
+            // Delete the Last Object
+            [context deleteObject:object];
+        } else {
+            // Save the context.
+            indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
+            object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+            [object setValue:appDelegate.addedCode forKey:@"code"];
+        }
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
-        NSLog(@"object value code = %@", [object valueForKey:@"code"]);
+        NSLog(@"object value 'code' = %@", [object valueForKey:@"code"]);
         
         appDelegate.IsBackResistView = FALSE;
         appDelegate.addedCode = @"";

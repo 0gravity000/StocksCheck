@@ -96,6 +96,11 @@
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     // called when keyboard search button pressed
     [searchBar resignFirstResponder];
+
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.IsBackResistView = TRUE;
+    appDelegate.addedCode = @"";
+    
     //close View
     [self dismissViewControllerAnimated:YES completion:nil];
 }
