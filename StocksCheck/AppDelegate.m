@@ -8,7 +8,8 @@
 
 #import "AppDelegate.h"
 #import "DetailViewController.h"
-#import "MasterViewController.h"
+//#import "MasterViewController.h"
+#import "BoardViewController.h"
 
 @interface AppDelegate () <UISplitViewControllerDelegate>
 
@@ -25,7 +26,8 @@
     splitViewController.delegate = self;
 
     UINavigationController *masterNavigationController = splitViewController.viewControllers[0];
-    MasterViewController *controller = (MasterViewController *)masterNavigationController.topViewController;
+    //MasterViewController *controller = (MasterViewController *)masterNavigationController.topViewController;
+    BoardViewController *controller = (BoardViewController *)masterNavigationController.topViewController;
     controller.managedObjectContext = self.managedObjectContext;
     return YES;
 }

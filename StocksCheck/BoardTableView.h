@@ -1,5 +1,5 @@
 //
-//  BoardUITableView.h
+//  BoardTableView.h
 //  StocksCheck
 //
 //  Created by SASAKIAI on 2016/03/05.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BoardUITableView : UITableView
+@interface BoardTableView : UITableView
 
 @end

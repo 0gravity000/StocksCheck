@@ -1,14 +1,14 @@
 //
-//  BoardUITableView.m
+//  BoardTableView.m
 //  StocksCheck
 //
 //  Created by SASAKIAI on 2016/03/05.
 //  Copyright © 2016年 SASAKIAI. All rights reserved.
 //
 
-#import "BoardUITableView.h"
+#import "BoardTableView.h"
 
-@implementation BoardUITableView
+@implementation BoardTableView
 
 /*
 // Only override drawRect: if you perform custom drawing.
