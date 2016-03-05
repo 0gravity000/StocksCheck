@@ -25,4 +25,6 @@
 
 @property (weak, nonatomic) IBOutlet BoardTableView *boardTableView;
 
+- (IBAction)pushRefreshBarItemButton:(id)sender;
+
 @end

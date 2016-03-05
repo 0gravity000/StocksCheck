@@ -81,6 +81,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
 - (void)insertNewObject {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
@@ -135,7 +137,80 @@
 //    }
 //}
 
-#pragma mark - Navigation 
+- (IBAction)pushRefreshBarItemButton:(id)sender {
+    NSLog(@"Now pushRefreshBarItemButton");
+    
+    NSString *url;
+    NSString *codebuf;
+    NSString *placebuf;
+    //NSError *error = nil;
+    //NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    
+    //--- Show Stock Page in WebView
+    NSError *error = nil;
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    NSIndexPath *indexPath;
+    NSManagedObject *object;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+    NSInteger count = [context countForFetchRequest:fetchRequest error:&error];
+    NSLog(@"Error !: %@", [error localizedDescription]);
+    NSLog(@"CoreData count = %ld", count);
+    
+    for (int i=0; i < count; i++) {
+        indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        
+        url = [NSString stringWithFormat:@"http://stocks.finance.yahoo.co.jp/stocks/detail/?code="];
+        codebuf = [object valueForKey:@"code"];
+        url = [url stringByAppendingString:codebuf];
+        placebuf = [object valueForKey:@"place"];
+        url = [url stringByAppendingString:placebuf];
+        
+        NSURL *transUrl = [NSURL URLWithString:url];
+        if ([[UIApplication sharedApplication] canOpenURL:transUrl]) {
+            //[[UIApplication sharedApplication] openURL:transUrl];
+            //NSURLRequest *urlReq = [NSURLRequest requestWithURL:self.transUrl];
+            //[self.StockWebView loadRequest:urlReq];
+        }
+        
+        //--- Search for stock price from html
+        NSString *html_ = [NSString stringWithContentsOfURL:transUrl
+                                                   encoding:NSUTF8StringEncoding
+                                                      error:nil];
+        NSString *html = [html_ stringByReplacingOccurrencesOfString:@"\n"
+                                                          withString:@""];
+        //NSLog(@"%@", html);
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+        // 正規表現の中で.*?とやると最短マッチするらしい。
+        NSRegularExpression *regexp = [NSRegularExpression regularExpressionWithPattern:@"<td class=\"stoksPrice\">(.*?)</td>"
+                                                                                options:0
+                                                                                  error:nil];
+        
+        //
+        //ここの処理を見直すこと。エラー処理も必要か？
+        NSArray *arr = [regexp matchesInString:html
+                                       options:0
+                                         range:NSMakeRange(0, html.length)];
+        
+        for (NSTextCheckingResult *match in arr) {
+            NSString *pricebuf = [html substringWithRange:[match rangeAtIndex:1]];
+            [object setValue:pricebuf forKey:@"price"];
+            NSLog(@"price %@", pricebuf);
+        }
+        // Save the context.
+        if (![context save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+    //---reload table view
+    [self.boardTableView reloadData];
+}
+
+#pragma mark - Navigation Controller
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
