@@ -74,14 +74,13 @@
         appDelegate.addedCode = @"";
     }
 
+    [self initializeCoreData];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 - (void)insertNewObject {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
@@ -136,6 +135,125 @@
 //        abort();
 //    }
 //}
+
+-(void)initializeCoreData {
+    NSLog(@"Now initializeCoreData");
+    
+    NSString *url;
+    NSError *error = nil;
+    
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    NSIndexPath *indexPath;
+    NSManagedObject *object;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+    NSInteger count = [context countForFetchRequest:fetchRequest error:&error];
+    NSLog(@"Error !: %@", [error localizedDescription]);
+    NSLog(@"CoreData count = %ld", count);
+    
+    for (int i=0; i < count; i++) {
+        indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        NSString *codebuf;
+        NSString *placebuf;
+        
+        //code
+        codebuf = [object valueForKey:@"code"];
+        NSLog(@"code %@", codebuf);
+        
+        //place
+        placebuf = [object valueForKey:@"place"];
+        NSLog(@"place %@", placebuf);
+        
+        //--- Show Stock Page in WebView
+        //http://stocks.finance.yahoo.co.jp/stocks/detail/?code=9984.T
+        
+        url = [NSString stringWithFormat:@"http://stocks.finance.yahoo.co.jp/stocks/detail/?code="];
+        url = [url stringByAppendingString:codebuf];
+        url = [url stringByAppendingString:placebuf];
+        
+        NSURL *transUrl = [NSURL URLWithString:url];
+        if ([[UIApplication sharedApplication] canOpenURL:transUrl]) {
+            //[[UIApplication sharedApplication] openURL:transUrl];
+            //NSURLRequest *urlReq = [NSURLRequest requestWithURL:self.transUrl];
+            //[self.StockWebView loadRequest:urlReq];
+        }
+        
+        NSString *html_ = [NSString stringWithContentsOfURL:transUrl
+                                                   encoding:NSUTF8StringEncoding
+                                                      error:nil];
+        NSString *html = [html_ stringByReplacingOccurrencesOfString:@"\n"
+                                                          withString:@""];
+        //NSLog(@"%@", html);
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+        
+        //--- Search for stockName from html　銘柄名
+        // 正規表現の中で.*?とやると最短マッチするらしい。
+        NSRegularExpression *regexp = [NSRegularExpression regularExpressionWithPattern:@"<th class=\"symbol\"><h1>(.*?)</h1></th>"
+                                                                                options:0
+                                                                                  error:nil];
+        //
+        //ここの処理を見直すこと。エラー処理も必要か？
+        NSArray *arr = [regexp matchesInString:html
+                                       options:0
+                                         range:NSMakeRange(0, html.length)];
+        
+        for (NSTextCheckingResult *match in arr) {
+            NSString *codeNamebuf = [html substringWithRange:[match rangeAtIndex:1]];
+            [object setValue:codeNamebuf forKey:@"name"];
+            NSLog(@"name %@", codeNamebuf);
+        }
+        
+        
+        //--- Search for yesterday stock price from html 前日終値
+        // 正規表現の中で.*?とやると最短マッチするらしい。
+        
+        //<dl class="tseDtlDelay"><dd class="ymuiEditLink mar0"><strong>5,585</strong><span class="date yjSt">（02/26）</span></dd><dt class="title">前日終値
+        
+        regexp = [NSRegularExpression regularExpressionWithPattern:@"<dl class=\"tseDtlDelay\"><dd class=\"ymuiEditLink mar0\"><strong>(.*)</strong><span class=\"date yjSt\">(.*)</span></dd><dt class=\"title\">前日終値"
+                                                           options:0
+                                                             error:nil];
+        //
+        //ここの処理を見直すこと。エラー処理も必要か？
+        arr = [regexp matchesInString:html
+                              options:0
+                                range:NSMakeRange(0, html.length)];
+        
+        for (NSTextCheckingResult *match in arr) {
+            NSString *yesterdayPricebuf = [html substringWithRange:[match rangeAtIndex:1]];
+            [object setValue:yesterdayPricebuf forKey:@"yesterdayPrice"];
+            NSLog(@"yesterdayPricebuf %@", yesterdayPricebuf);
+        }
+        
+        //--- Search for Now stock price from html 現在値
+        // 正規表現の中で.*?とやると最短マッチするらしい。
+        regexp = [NSRegularExpression regularExpressionWithPattern:@"<td class=\"stoksPrice\">(.*?)</td>"
+                                                           options:0
+                                                             error:nil];
+        
+        //
+        //ここの処理を見直すこと。エラー処理も必要か？
+        arr = [regexp matchesInString:html
+                              options:0
+                                range:NSMakeRange(0, html.length)];
+        
+        for (NSTextCheckingResult *match in arr) {
+            NSString *pricebuf = [html substringWithRange:[match rangeAtIndex:1]];
+            [object setValue:pricebuf forKey:@"price"];
+            NSLog(@"price %@", pricebuf);
+        }
+        // Save the context.
+        if (![context save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+    //---reload table view
+    [self.boardTableView reloadData];
+}
+
 
 - (IBAction)pushRefreshBarItemButton:(id)sender {
     NSLog(@"Now pushRefreshBarItemButton");
