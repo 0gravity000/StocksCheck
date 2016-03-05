@@ -23,6 +23,8 @@
 		AA19AC9C1C8A9E2600FD02E6 /* ResistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC9B1C8A9E2600FD02E6 /* ResistViewController.m */; };
 		AA19ACA11C8AA3BB00FD02E6 /* Stock+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC9E1C8AA3BB00FD02E6 /* Stock+CoreDataProperties.m */; };
 		AA19ACA21C8AA3BB00FD02E6 /* Stock.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19ACA01C8AA3BB00FD02E6 /* Stock.m */; };
+		AA19ACA51C8AC56600FD02E6 /* ResistTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19ACA41C8AC56600FD02E6 /* ResistTableView.m */; };
+		AA19ACA81C8AC58000FD02E6 /* ResistTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19ACA71C8AC58000FD02E6 /* ResistTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,10 @@
 		AA19AC9E1C8AA3BB00FD02E6 /* Stock+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Stock+CoreDataProperties.m"; sourceTree = "<group>"; };
 		AA19AC9F1C8AA3BB00FD02E6 /* Stock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stock.h; sourceTree = "<group>"; };
 		AA19ACA01C8AA3BB00FD02E6 /* Stock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stock.m; sourceTree = "<group>"; };
+		AA19ACA31C8AC56600FD02E6 /* ResistTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResistTableView.h; sourceTree = "<group>"; };
+		AA19ACA41C8AC56600FD02E6 /* ResistTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResistTableView.m; sourceTree = "<group>"; };
+		AA19ACA61C8AC58000FD02E6 /* ResistTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResistTableViewCell.h; sourceTree = "<group>"; };
+		AA19ACA71C8AC58000FD02E6 /* ResistTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResistTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +149,10 @@
 				AA19AC651C8A8D2200FD02E6 /* DetailViewController.m */,
 				AA19AC9A1C8A9E2600FD02E6 /* ResistViewController.h */,
 				AA19AC9B1C8A9E2600FD02E6 /* ResistViewController.m */,
+				AA19ACA31C8AC56600FD02E6 /* ResistTableView.h */,
+				AA19ACA41C8AC56600FD02E6 /* ResistTableView.m */,
+				AA19ACA61C8AC58000FD02E6 /* ResistTableViewCell.h */,
+				AA19ACA71C8AC58000FD02E6 /* ResistTableViewCell.m */,
 				AA19AC6A1C8A8D2200FD02E6 /* Assets.xcassets */,
 				AA19AC6C1C8A8D2200FD02E6 /* LaunchScreen.storyboard */,
 				AA19AC6F1C8A8D2200FD02E6 /* Info.plist */,
@@ -313,11 +323,13 @@
 				AA19AC961C8A917900FD02E6 /* BoardTableView.m in Sources */,
 				AA19AC631C8A8D2200FD02E6 /* MasterViewController.m in Sources */,
 				AA19ACA21C8AA3BB00FD02E6 /* Stock.m in Sources */,
+				AA19ACA51C8AC56600FD02E6 /* ResistTableView.m in Sources */,
 				AA19ACA11C8AA3BB00FD02E6 /* Stock+CoreDataProperties.m in Sources */,
 				AA19AC601C8A8D2200FD02E6 /* StocksCheck.xcdatamodeld in Sources */,
 				AA19AC5D1C8A8D2200FD02E6 /* AppDelegate.m in Sources */,
 				AA19AC9C1C8A9E2600FD02E6 /* ResistViewController.m in Sources */,
 				AA19AC5A1C8A8D2200FD02E6 /* main.m in Sources */,
+				AA19ACA81C8AC58000FD02E6 /* ResistTableViewCell.m in Sources */,
 				AA19AC991C8A91A500FD02E6 /* BoardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
