@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -52,16 +53,16 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hAK-cU-N26" id="3E7-xS-W8j">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="110"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="コード" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A01-kG-JsH">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="銘柄名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A01-kG-JsH">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="17" y="8" width="124" height="29"/>
+                                                        <rect key="frame" x="17" y="8" width="355" height="29"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
@@ -104,13 +105,13 @@
                                 <exclude reference="fzx-no-hft"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="LQR-h7-vXg"/>
-                                <exclude reference="h9j-Dr-F6V"/>
-                                <exclude reference="mu6-2X-5NK"/>
+                                <exclude reference="lvN-Fk-NOX"/>
                                 <exclude reference="MQB-MS-dCf"/>
                                 <exclude reference="hNS-wG-PT0"/>
                                 <exclude reference="z6Q-Dg-CVW"/>
-                                <exclude reference="lvN-Fk-NOX"/>
+                                <exclude reference="LQR-h7-vXg"/>
+                                <exclude reference="h9j-Dr-F6V"/>
+                                <exclude reference="mu6-2X-5NK"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -119,13 +120,13 @@
                                 <include reference="fzx-no-hft"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="LQR-h7-vXg"/>
-                                <include reference="h9j-Dr-F6V"/>
-                                <include reference="mu6-2X-5NK"/>
+                                <include reference="lvN-Fk-NOX"/>
                                 <include reference="MQB-MS-dCf"/>
                                 <include reference="hNS-wG-PT0"/>
                                 <include reference="z6Q-Dg-CVW"/>
-                                <include reference="lvN-Fk-NOX"/>
+                                <include reference="LQR-h7-vXg"/>
+                                <include reference="h9j-Dr-F6V"/>
+                                <include reference="mu6-2X-5NK"/>
                             </mask>
                         </variation>
                     </view>
@@ -147,6 +148,7 @@
                         <viewControllerLayoutGuide type="bottom" id="SBY-QT-sK7"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="G37-gD-hsa">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jrZ-Dy-cs7" customClass="ResistTableView">
@@ -165,9 +167,11 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7BN-cj-gnk" id="zOF-QD-5do">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8kl-PQ-9XL">
+                                                    <rect key="frame" x="15" y="1" width="34" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -177,6 +181,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x3H-0w-BXu">
+                                                    <rect key="frame" x="15" y="22" width="59" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -218,10 +223,10 @@
                                 <exclude reference="06w-hd-cn7"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="VGv-2P-AK5"/>
                                 <exclude reference="Pht-mN-fqZ"/>
                                 <exclude reference="ab9-2s-SiE"/>
                                 <exclude reference="mi8-hb-8f3"/>
-                                <exclude reference="VGv-2P-AK5"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -230,10 +235,10 @@
                                 <include reference="06w-hd-cn7"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="VGv-2P-AK5"/>
                                 <include reference="Pht-mN-fqZ"/>
                                 <include reference="ab9-2s-SiE"/>
                                 <include reference="mi8-hb-8f3"/>
-                                <include reference="VGv-2P-AK5"/>
                             </mask>
                         </variation>
                     </view>
@@ -309,7 +314,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="Arm-wq-HPj" style="IBUITableViewCellStyleDefault" id="WCw-Qf-5nD">
-                                <rect key="frame" x="0.0" y="86" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="22" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WCw-Qf-5nD" id="37f-cq-3Eg">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>

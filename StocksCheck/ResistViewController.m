@@ -120,9 +120,24 @@
 {
     NSDictionary *dic;
     dic = [self.searchResultArray objectAtIndex:indexPath.row];
+
+    NSString *code;
+    NSString *place;
+    NSRange range;
+    NSString *codebuf = [dic objectForKey:@"key1"];
+
+    range = [codebuf rangeOfString:@"-"];
+    if (range.location == NSNotFound) {
+    }
+
+    code = [codebuf substringToIndex:range.location];
+    place = [codebuf substringFromIndex:range.location];
+    place = [place stringByReplacingOccurrencesOfString:@"-" withString:@"."];
+
     //Code
-    NSString *code  = [dic objectForKey:@"key1"];
     [self.detailItem setValue:code forKey:@"code"];
+    //place
+    [self.detailItem setValue:place forKey:@"place"];
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.IsBackResistView = TRUE;

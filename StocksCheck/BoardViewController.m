@@ -21,8 +21,9 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
+//    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+//    self.navigationItem.rightBarButtonItem = addButton;
+    
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     //self.resistViewController = (ResistViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 
@@ -88,13 +89,22 @@
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
     //[newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
+    NSError *error = nil;
     NSString* code = @"---";
     [newManagedObject setValue:code forKey:@"code"];
+    NSString* place = @"---";
+    [newManagedObject setValue:place forKey:@"place"];
+    [newManagedObject setValue:@"0" forKey:@"price"];
+    [newManagedObject setValue:@"0" forKey:@"yesterdayPrice"];
+    [newManagedObject setValue:@"---" forKey:@"name"];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+    NSInteger count = [context countForFetchRequest:fetchRequest error:&error];
+    [newManagedObject setValue:[NSString stringWithFormat:@"%ld", count] forKey:@"rowPosition"];
     NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
     [newManagedObject setValue:now forKey:@"timeStamp"];
     
     // Save the context.
-    NSError *error = nil;
     if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -103,26 +113,27 @@
     }
 }
 
-- (void)insertNewObject:(id)sender {
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-    
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    //[newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
-    NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
-    [newManagedObject setValue:now forKey:@"timeStamp"];
-    
-    // Save the context.
-    NSError *error = nil;
-    if (![context save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-}
+
+//- (void)insertNewObject:(id)sender {
+//    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+//    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
+//    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+//    
+//    // If appropriate, configure the new managed object.
+//    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
+//    //[newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
+//    NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
+//    [newManagedObject setValue:now forKey:@"timeStamp"];
+//    
+//    // Save the context.
+//    NSError *error = nil;
+//    if (![context save:&error]) {
+//        // Replace this implementation with code to handle the error appropriately.
+//        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+//        abort();
+//    }
+//}
 
 #pragma mark - Navigation 
 
@@ -182,8 +193,16 @@
     NSLog(@"Now configureCell index=%ld", indexPath.row);
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     //cell.textLabel.text = [[object valueForKey:@"code"] description];
-    cell.codeNameLabel.text = [[object valueForKey:@"code"] description];
-    NSLog(@"cell.codeNameLabel.text=%@", cell.codeNameLabel.text);
+    NSString *str;
+    NSString *code = [[object valueForKey:@"code"] description];
+    NSString *place = [[object valueForKey:@"place"] description];
+    NSString *name = [[object valueForKey:@"name"] description];
+    
+    str = [code stringByAppendingString:place];
+    str = [str stringByAppendingString:@" "];
+    str = [str stringByAppendingString:name];
+    cell.codeNameLabel.text = str;
+    NSLog(@"cell.codeNameLabel.text(code+place+name) =%@", cell.codeNameLabel.text);
 }
 
 
