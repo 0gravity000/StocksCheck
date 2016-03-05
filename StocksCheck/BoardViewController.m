@@ -7,7 +7,8 @@
 //
 
 #import "BoardViewController.h"
-#import "DetailViewController.h"
+//#import "DetailViewController.h"
+#import "ResistViewController.h"
 
 @interface BoardViewController ()
 
@@ -22,7 +23,8 @@
     
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
-    self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    //self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    self.resistViewController = (ResistViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -60,7 +62,8 @@
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.boardTableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
+//        DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
+        ResistViewController *controller = (ResistViewController *)[[segue destinationViewController] topViewController];
         [controller setDetailItem:object];
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;

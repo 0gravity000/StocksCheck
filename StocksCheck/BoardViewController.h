@@ -11,11 +11,13 @@
 #import "BoardTableView.h"
 #import "BoardTableViewCell.h"
 
-@class DetailViewController;
+//@class DetailViewController;
+@class ResistViewController;
 
 @interface BoardViewController : UIViewController <NSFetchedResultsControllerDelegate>
 
-@property (strong, nonatomic) DetailViewController *detailViewController;
+//@property (strong, nonatomic) DetailViewController *detailViewController;
+@property (strong, nonatomic) ResistViewController *resistViewController;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
