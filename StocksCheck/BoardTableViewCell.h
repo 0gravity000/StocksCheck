@@ -10,4 +10,10 @@
 
 @interface BoardTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *codeNameLabel;
+
+//UILabel *priceLable;
+//UILabel *changeValLabel;
+//UILabel *changeRateLabel;
+
 @end
