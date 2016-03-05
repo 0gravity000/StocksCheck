@@ -20,6 +20,8 @@
 @property bool IsBackResistView;
 @property NSString *addedCode;
 
+@property NSMutableArray *stocksArray;
+
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
