@@ -56,6 +56,14 @@
     }
 }
 
+#pragma mark - Navigation 
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    [self.boardTableView setEditing:editing animated:YES];
+}
+
+
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
