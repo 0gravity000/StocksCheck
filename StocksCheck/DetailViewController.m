@@ -86,7 +86,8 @@
         self.changeRateLabel.text = rateTemp;
 
         //time Stamp
-        self.detailDescriptionLabel.text = [[self.detailItem valueForKey:@"timeStamp"] description];
+        self.timeStampLabel.text = [[self.detailItem valueForKey:@"timeStamp"] description];
+        NSLog(@"%@", self.timeStampLabel.text);
     }
 }
 
