@@ -630,11 +630,12 @@
     } else if([sorceRowbuf intValue] > [destRowbuf intValue]){
         //move down -> up
         startRow = [destRowbuf intValue];
-        endRow = [destRowbuf intValue]-1;
+        endRow = [sorceRowbuf intValue]-1;
         index = destinationIndexPath.row;
         for (counter = startRow; counter <= endRow; counter++) {
             indexPath = [NSIndexPath indexPathForRow:index inSection:0];
             object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+            NSLog(@"indexPath.row = @%ld", indexPath.row);
             rowTemp = [object valueForKey:@"rowPosition"];
             valTemp = [rowTemp intValue];
             valTemp++;
