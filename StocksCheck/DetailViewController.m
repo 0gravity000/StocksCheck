@@ -109,6 +109,20 @@
     [self configureView];
 
     //need UITextFields delegate in storyboard.
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    //現在値 監視値
+    [self.detailItem setValue:self.observePrice1TextField.text forKey:@"observePrice1"];
+    [self.detailItem setValue:self.observePrice2TextField.text forKey:@"observePrice2"];
+
+    //前日比 監視値
+    [self.detailItem setValue:self.observeChangeVal1TextField.text forKey:@"observeChangeVal1"];
+    [self.detailItem setValue:self.observeChangeVal2TextField.text forKey:@"observeChangeVal2"];
+
+    //騰落率 監視値
+    [self.detailItem setValue:self.observeChangeRate1TextField.text forKey:@"observeChangeRate1"];
+    [self.detailItem setValue:self.observeChangeRate2TextField.text forKey:@"observeChangeRate2"];
     
 }
 
