@@ -13,6 +13,7 @@
         <attribute name="observeChangeRate2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="observeChangeVal1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="observeChangeVal2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="observeImage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="observePrice1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="observePrice2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
@@ -23,6 +24,6 @@
     </entity>
     <elements>
         <element name="Event" positionX="261" positionY="189" width="128" height="60"/>
-        <element name="Stock" positionX="261" positionY="198" width="128" height="240"/>
+        <element name="Stock" positionX="261" positionY="198" width="128" height="255"/>
     </elements>
 </model>

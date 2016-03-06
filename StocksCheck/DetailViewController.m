@@ -123,7 +123,23 @@
     //騰落率 監視値
     [self.detailItem setValue:self.observeChangeRate1TextField.text forKey:@"observeChangeRate1"];
     [self.detailItem setValue:self.observeChangeRate2TextField.text forKey:@"observeChangeRate2"];
-    
+
+    //イメージ 監視値
+    [self.detailItem setValue:@"2" forKey:@"observeImage"];
+    if ([self.observePrice1TextField.text isEqualToString:@""]) {
+        if ([self.observePrice2TextField.text isEqualToString:@""]) {
+            if ([self.observeChangeVal1TextField.text isEqualToString:@""]) {
+                if ([self.observeChangeVal2TextField.text isEqualToString:@""]) {
+                    if ([self.observeChangeRate1TextField.text isEqualToString:@""]) {
+                        if ([self.observeChangeRate2TextField.text isEqualToString:@""]) {
+                            [self.detailItem setValue:@"1" forKey:@"observeImage"];
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {

@@ -26,5 +26,6 @@
 @dynamic observeChangeVal2;
 @dynamic observeChangeRate1;
 @dynamic observeChangeRate2;
+@dynamic observeImage;
 
 @end

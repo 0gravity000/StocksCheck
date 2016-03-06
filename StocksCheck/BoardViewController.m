@@ -112,6 +112,7 @@
     [newManagedObject setValue:@"" forKey:@"observeChangeVal2"];
     [newManagedObject setValue:@"" forKey:@"observeChangeRate1"];
     [newManagedObject setValue:@"" forKey:@"observeChangeRate2"];
+    [newManagedObject setValue:@"1" forKey:@"observeImage"];
     
     // Save the context.
     if (![context save:&error]) {
@@ -250,6 +251,9 @@
             [object setValue:pricebuf forKey:@"price"];
             NSLog(@"price %@", pricebuf);
         }
+        //監視値 イメージ
+        //[object setValue:@"1" forKey:@"observeImage"];
+
         // Save the context.
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
@@ -257,7 +261,9 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
+        
     }
+    
     //---reload table view
     [self.boardTableView reloadData];
 }
@@ -282,6 +288,7 @@
     NSLog(@"CoreData count = %ld", count);
     
     for (int i=0; i < count; i++) {
+        NSLog(@"checkObserveVaules i = %d", i);
         indexPath = [NSIndexPath indexPathForRow:i inSection:0];
         object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         
@@ -290,15 +297,18 @@
         int iHitFlag = 0;
         
         NSString *BasicPrice = cell.priceLabel.text;
+        //cell.observeImage.image = [UIImage imageNamed:@"button_01.png"];
         if (![BasicPrice isEqualToString:@"0"]) {
             NSString *observePriceUpper = [object valueForKey:@"observePrice1"];
             NSString *observePriceLower = [object valueForKey:@"observePrice2"];
             if (![observePriceUpper isEqualToString:@""]) {
+                //cell.observeImage.image = [UIImage imageNamed:@"button_03.png"];
                 if ([BasicPrice intValue] >= [observePriceUpper intValue]) {
                     iHitFlag = 1;
                 }
             }
             if (![observePriceLower isEqualToString:@""]) {
+                //cell.observeImage.image = [UIImage imageNamed:@"button_03.png"];
                 if ([BasicPrice intValue] <= [observePriceLower intValue]) {
                     iHitFlag = 2;
                 }
@@ -308,11 +318,13 @@
             NSString *observeChangeValUpper = [object valueForKey:@"observeChangeVal1"];
             NSString *observeChangeValLower = [object valueForKey:@"observeChangeVal2"];
             if (![observeChangeValUpper isEqualToString:@""]) {
+                //cell.observeImage.image = [UIImage imageNamed:@"button_03.png"];
                 if ([BasicChangeVal intValue] >= [observeChangeValUpper intValue]) {
                     iHitFlag = 3;
                 }
             }
             if (![observeChangeValLower isEqualToString:@""]) {
+                //cell.observeImage.image = [UIImage imageNamed:@"button_03.png"];
                 if ([BasicChangeVal intValue] <= [observeChangeValLower intValue]) {
                     iHitFlag = 4;
                 }
@@ -322,11 +334,13 @@
             NSString *observeChangeRateUpper = [object valueForKey:@"observeChangeRate1"];
             NSString *observeChangeRateLower = [object valueForKey:@"observeChangeRate2"];
             if (![observeChangeRateUpper isEqualToString:@""]) {
+                //cell.observeImage.image = [UIImage imageNamed:@"button_03.png"];
                 if ([BasicchangeRate intValue] >= [observeChangeRateUpper intValue]) {
                     iHitFlag = 5;
                 }
             }
             if (![observeChangeRateLower isEqualToString:@""]) {
+                //cell.observeImage.image = [UIImage imageNamed:@"button_03.png"];
                 if ([BasicchangeRate intValue] <= [observeChangeRateLower intValue]) {
                     iHitFlag = 6;
                 }
@@ -335,8 +349,19 @@
         if (iHitFlag != 0) {
             //do anything
             NSLog(@"Condition true");
+            [object setValue:@"3" forKey:@"observeImage"];
+            //cell.observeImage.image = [UIImage imageNamed:@"button_02.png"];
         }
         iHitFlag = 0;
+        
+        // Save the context.
+        if (![context save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+        
     }
     //---reload table view
     [self.boardTableView reloadData];
@@ -529,6 +554,24 @@
     
     NSLog(@"cell.changeValLabel.text %@", cell.changeValLabel.text);
     NSLog(@"cell.changeRateLabel.text %@", cell.changeRateLabel.text);
+
+    //監視値 イメージ
+    NSString *observe;
+    switch ([[object valueForKey:@"observeImage"] intValue]) {
+        case 1:
+            observe = @"button_01.png";
+            break;
+        case 2:
+            observe = @"button_02.png";
+            break;
+        case 3:
+            observe = @"button_03.png";
+            break;
+        default:
+            break;
+    }
+    cell.observeImage.image = [UIImage imageNamed:observe];
+    
 }
 
 

@@ -97,6 +97,12 @@
                                                         <rect key="frame" x="140" y="54" width="100" height="25"/>
                                                     </variation>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="button_01.png" translatesAutoresizingMaskIntoConstraints="NO" id="hkA-eK-4LY">
+                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                    <variation key="widthClass=compact" fixedFrame="YES">
+                                                        <rect key="frame" x="248" y="37" width="35" height="35"/>
+                                                    </variation>
+                                                </imageView>
                                             </subviews>
                                             <variation key="default">
                                                 <mask key="subviews">
@@ -104,6 +110,7 @@
                                                     <exclude reference="EtR-ux-xA8"/>
                                                     <exclude reference="TGy-rv-j7V"/>
                                                     <exclude reference="Q4m-uT-xvK"/>
+                                                    <exclude reference="hkA-eK-4LY"/>
                                                 </mask>
                                             </variation>
                                             <variation key="widthClass=compact">
@@ -112,6 +119,7 @@
                                                     <include reference="EtR-ux-xA8"/>
                                                     <include reference="TGy-rv-j7V"/>
                                                     <include reference="Q4m-uT-xvK"/>
+                                                    <include reference="hkA-eK-4LY"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -119,6 +127,7 @@
                                             <outlet property="changeRateLabel" destination="Q4m-uT-xvK" id="Trf-Hg-Vgf"/>
                                             <outlet property="changeValLabel" destination="TGy-rv-j7V" id="5nN-2I-No4"/>
                                             <outlet property="codeNameLabel" destination="A01-kG-JsH" id="Nea-yJ-e0N"/>
+                                            <outlet property="observeImage" destination="hkA-eK-4LY" id="SOV-Ay-Doa"/>
                                             <outlet property="priceLabel" destination="EtR-ux-xA8" id="qFA-6d-tFX"/>
                                             <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="GjV-7v-3XC"/>
                                         </connections>
@@ -631,6 +640,9 @@
             <point key="canvasLocation" x="-45" y="129"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="button_01.png" width="400" height="400"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="GjV-7v-3XC"/>
     </inferredMetricsTieBreakers>

@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *observeChangeVal2;
 @property (nullable, nonatomic, retain) NSString *observeChangeRate1;
 @property (nullable, nonatomic, retain) NSString *observeChangeRate2;
+@property (nullable, nonatomic, retain) NSString *observeImage;
 
 @end
 
