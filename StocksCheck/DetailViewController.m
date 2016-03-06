@@ -104,7 +104,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    self.navigationItem.title = @"監視値設定";
+
     [self configureView];
+
+    //need UITextFields delegate in storyboard.
     
 }
 
@@ -113,4 +117,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)sender {
+    // キーボードを閉じる
+    [sender resignFirstResponder];
+    
+    return TRUE;
+}
 @end
