@@ -265,12 +265,89 @@
 
 - (IBAction)pushRefreshBarItemButton:(id)sender {
     NSLog(@"Now pushRefreshBarItemButton");
+    [self refreshPriceValue];
+    [self checkObserveVaules];
+}
+
+-(void)checkObserveVaules {
+    NSLog(@"Now checkObserveVaules");
+
+    NSError *error = nil;
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    NSIndexPath *indexPath;
+    NSManagedObject *object;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+    NSInteger count = [context countForFetchRequest:fetchRequest error:&error];
+    NSLog(@"Error !: %@", [error localizedDescription]);
+    NSLog(@"CoreData count = %ld", count);
     
+    for (int i=0; i < count; i++) {
+        indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        
+        BoardTableViewCell *cell = (BoardTableViewCell *)[self.boardTableView cellForRowAtIndexPath:indexPath];
+
+        int iHitFlag = 0;
+        
+        NSString *BasicPrice = cell.priceLabel.text;
+        if (![BasicPrice isEqualToString:@"0"]) {
+            NSString *observePriceUpper = [object valueForKey:@"observePrice1"];
+            NSString *observePriceLower = [object valueForKey:@"observePrice2"];
+            if (![observePriceUpper isEqualToString:@""]) {
+                if ([BasicPrice intValue] >= [observePriceUpper intValue]) {
+                    iHitFlag = 1;
+                }
+            }
+            if (![observePriceLower isEqualToString:@""]) {
+                if ([BasicPrice intValue] <= [observePriceLower intValue]) {
+                    iHitFlag = 2;
+                }
+            }
+            
+            NSString *BasicChangeVal = cell.changeValLabel.text;
+            NSString *observeChangeValUpper = [object valueForKey:@"observeChangeVal1"];
+            NSString *observeChangeValLower = [object valueForKey:@"observeChangeVal2"];
+            if (![observeChangeValUpper isEqualToString:@""]) {
+                if ([BasicChangeVal intValue] >= [observeChangeValUpper intValue]) {
+                    iHitFlag = 3;
+                }
+            }
+            if (![observeChangeValLower isEqualToString:@""]) {
+                if ([BasicChangeVal intValue] <= [observeChangeValLower intValue]) {
+                    iHitFlag = 4;
+                }
+            }
+            
+            NSString *BasicchangeRate = cell.changeRateLabel.text;
+            NSString *observeChangeRateUpper = [object valueForKey:@"observeChangeRate1"];
+            NSString *observeChangeRateLower = [object valueForKey:@"observeChangeRate2"];
+            if (![observeChangeRateUpper isEqualToString:@""]) {
+                if ([BasicchangeRate intValue] >= [observeChangeRateUpper intValue]) {
+                    iHitFlag = 5;
+                }
+            }
+            if (![observeChangeRateLower isEqualToString:@""]) {
+                if ([BasicchangeRate intValue] <= [observeChangeRateLower intValue]) {
+                    iHitFlag = 6;
+                }
+            }
+        }
+        if (iHitFlag != 0) {
+            //do anything
+            NSLog(@"Condition true");
+        }
+        iHitFlag = 0;
+    }
+    //---reload table view
+    [self.boardTableView reloadData];
+    
+}
+
+-(void)refreshPriceValue {
+    NSLog(@"Now refreshPriceValue");
     NSString *url;
     NSString *codebuf;
     NSString *placebuf;
-    //NSError *error = nil;
-    //NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
     //--- Show Stock Page in WebView
     NSError *error = nil;
