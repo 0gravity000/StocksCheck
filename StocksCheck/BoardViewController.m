@@ -102,7 +102,7 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
     NSInteger count = [context countForFetchRequest:fetchRequest error:&error];
-    [newManagedObject setValue:[NSString stringWithFormat:@"%ld", count] forKey:@"rowPosition"];
+    [newManagedObject setValue:[NSString stringWithFormat:@"%ld", count-1] forKey:@"rowPosition"];
     NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
     [newManagedObject setValue:now forKey:@"timeStamp"];
     
@@ -575,6 +575,87 @@
 }
 
 
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // The table view should not be re-orderable.
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
+{
+    //for example
+//    NSString *stringToMove = [self.reorderingRows objectAtIndex:sourceIndexPath.row];
+//    [self.reorderingRows removeObjectAtIndex:sourceIndexPath.row];
+//    [self.reorderingRows insertObject:stringToMove atIndex:destinationIndexPath.row];
+    
+    NSError *error = nil;
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    NSIndexPath *indexPath;
+    NSManagedObject *object;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+    NSInteger count = [context countForFetchRequest:fetchRequest error:&error];
+    NSLog(@"Error !: %@", [error localizedDescription]);
+    NSLog(@"CoreData count = %ld", count);
+
+    object = [[self fetchedResultsController] objectAtIndexPath:sourceIndexPath];
+    NSLog(@"sourceIndexPath.row = @%ld", sourceIndexPath.row);
+    
+    NSString *sorceRowbuf = [object valueForKey:@"rowPosition"];
+    NSString *destRowbuf = [NSString stringWithFormat:@"%ld", destinationIndexPath.row];
+    NSLog(@"destinationIndexPath.row = @%ld", destinationIndexPath.row);
+    [object setValue:destRowbuf forKey:@"rowPosition"];
+
+    int counter;
+    NSInteger index;
+    int startRow;
+    int endRow;
+    NSString *rowTemp;
+    int valTemp;
+    if ([sorceRowbuf intValue] < [destRowbuf intValue]) {
+        //move up -> down
+        startRow = [sorceRowbuf intValue]+1;
+        endRow = [destRowbuf intValue];
+        index = sourceIndexPath.row;
+        for (counter = startRow; counter <= endRow; counter++) {
+            index++;
+            indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+            object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+            NSLog(@"indexPath.row = @%ld", indexPath.row);
+            rowTemp = [object valueForKey:@"rowPosition"];
+            valTemp = [rowTemp intValue];
+            valTemp--;
+            [object setValue:[NSString stringWithFormat:@"%d", valTemp] forKey:@"rowPosition"];
+            NSLog(@"indexPath.row = @%ld", indexPath.row);
+        }
+    } else if([sorceRowbuf intValue] > [destRowbuf intValue]){
+        //move down -> up
+        startRow = [destRowbuf intValue];
+        endRow = [destRowbuf intValue]-1;
+        index = destinationIndexPath.row;
+        for (counter = startRow; counter <= endRow; counter++) {
+            indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+            object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+            rowTemp = [object valueForKey:@"rowPosition"];
+            valTemp = [rowTemp intValue];
+            valTemp++;
+            [object setValue:[NSString stringWithFormat:@"%d", valTemp] forKey:@"rowPosition"];
+            index++;
+        }
+    } else {
+        //ありえない
+    }
+
+    if (![context save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    //---reload table view
+    [self.boardTableView reloadData];
+    
+}
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
     return YES;
@@ -612,7 +693,8 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:YES];
+    //NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"rowPosition" ascending:YES];
     
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
     
