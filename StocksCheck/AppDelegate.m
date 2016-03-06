@@ -102,10 +102,21 @@
     }
     
     NSLog(@"loading CSV File");
+    // 別のスレッドでファイル読み込みをキューに加える
+    NSOperationQueue *queue = [NSOperationQueue new];
+    NSInvocationOperation *operation = [[NSInvocationOperation alloc]
+                                        initWithTarget:self
+                                        selector:@selector(loadCSVFromWeb)
+                                        object:nil];
+    [queue addOperation:operation];
 
+}
+
+-(void)loadCSVFromWeb {
     // 読み込むファイルの URL を作成
     NSURL *url = [NSURL URLWithString:@"http://0gravity000.web.fc2.com/xxx_stockList/stocks.txt"];
     
+    NSError *error = nil;
     NSString *strData = [[NSString alloc] initWithContentsOfURL:url  encoding:NSUTF16StringEncoding error:&error];
     NSLog(@"Error !: %@", [error localizedDescription]);
     
@@ -125,8 +136,8 @@
     NSLog(@"Error !: %@", [error localizedDescription]);
     
     [self readStocksTextdata:strData];
-    
 }
+
 
 -(void) readStocksTextdata:(NSString *)data {
     
