@@ -85,6 +85,16 @@
         self.changeValLabel.text = valTemp;
         self.changeRateLabel.text = rateTemp;
 
+        //現在値 監視値
+        self.observePrice1TextField.text = [[self.detailItem valueForKey:@"observePrice1"] description];
+        self.observePrice2TextField.text = [[self.detailItem valueForKey:@"observePrice2"] description];
+        //前日比 監視値
+        self.observeChangeVal1TextField.text = [[self.detailItem valueForKey:@"observeChangeVal1"] description];
+        self.observeChangeVal2TextField.text = [[self.detailItem valueForKey:@"observeChangeVal2"] description];
+        //騰落率 監視値
+        self.observeChangeRate1TextField.text = [[self.detailItem valueForKey:@"observeChangeRate1"] description];
+        self.observeChangeRate2TextField.text = [[self.detailItem valueForKey:@"observeChangeRate2"] description];
+
         //time Stamp
         self.timeStampLabel.text = [[self.detailItem valueForKey:@"timeStamp"] description];
         NSLog(@"%@", self.timeStampLabel.text);

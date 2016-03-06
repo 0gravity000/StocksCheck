@@ -438,6 +438,12 @@
                         <outlet property="changeRateLabel" destination="THw-s8-d4u" id="Npc-Kr-Hvu"/>
                         <outlet property="changeValLabel" destination="2lu-EK-xEX" id="bXd-pI-KNV"/>
                         <outlet property="codeNameLabel" destination="ZDf-FQ-3ti" id="yPZ-u8-8Sx"/>
+                        <outlet property="observeChangeRate1TextField" destination="meY-gG-fFK" id="g3l-gJ-xzQ"/>
+                        <outlet property="observeChangeRate2TextField" destination="l9M-7H-9j2" id="hQE-Ji-MLE"/>
+                        <outlet property="observeChangeVal1TextField" destination="JHQ-1C-449" id="qd2-l0-VYr"/>
+                        <outlet property="observeChangeVal2TextField" destination="Asy-cM-1ci" id="S8v-UZ-QUp"/>
+                        <outlet property="observePrice1TextField" destination="Kyy-H5-3F2" id="Xuj-H7-bLr"/>
+                        <outlet property="observePrice2TextField" destination="mYE-HT-J4r" id="UyF-7z-6Xh"/>
                         <outlet property="priceLabel" destination="e89-I9-6ah" id="0kt-0z-113"/>
                         <outlet property="timeStampLabel" destination="wMk-8B-NId" id="sfL-vV-tDz"/>
                     </connections>

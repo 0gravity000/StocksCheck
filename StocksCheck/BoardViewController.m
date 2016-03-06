@@ -105,6 +105,13 @@
     NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
     [newManagedObject setValue:now forKey:@"timeStamp"];
     
+    [newManagedObject setValue:@"" forKey:@"observePrice1"];
+    [newManagedObject setValue:@"" forKey:@"observePrice2"];
+    [newManagedObject setValue:@"" forKey:@"observeChangeVal1"];
+    [newManagedObject setValue:@"" forKey:@"observeChangeVal2"];
+    [newManagedObject setValue:@"" forKey:@"observeChangeRate1"];
+    [newManagedObject setValue:@"" forKey:@"observeChangeRate2"];
+    
     // Save the context.
     if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.

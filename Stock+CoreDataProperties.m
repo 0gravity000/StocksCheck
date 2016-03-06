@@ -2,7 +2,7 @@
 //  Stock+CoreDataProperties.m
 //  StocksCheck
 //
-//  Created by SASAKIAI on 2016/03/05.
+//  Created by SASAKIAI on 2016/03/06.
 //  Copyright © 2016年 SASAKIAI. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -20,5 +20,11 @@
 @dynamic rowPosition;
 @dynamic timeStamp;
 @dynamic yesterdayPrice;
+@dynamic observePrice1;
+@dynamic observePrice2;
+@dynamic observeChangeVal1;
+@dynamic observeChangeVal2;
+@dynamic observeChangeRate1;
+@dynamic observeChangeRate2;
 
 @end
