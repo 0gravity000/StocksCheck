@@ -27,6 +27,7 @@
 		AA19ACAA1C8C27B600FD02E6 /* button_01.png in Resources */ = {isa = PBXBuildFile; fileRef = AA19ACA91C8C27B600FD02E6 /* button_01.png */; };
 		AA19ACAC1C8C27BD00FD02E6 /* button_03.png in Resources */ = {isa = PBXBuildFile; fileRef = AA19ACAB1C8C27BD00FD02E6 /* button_03.png */; };
 		AA19ACAE1C8C27C400FD02E6 /* button_02.png in Resources */ = {isa = PBXBuildFile; fileRef = AA19ACAD1C8C27C400FD02E6 /* button_02.png */; };
+		AA19ACB11C8D9EF900FD02E6 /* ObservTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19ACB01C8D9EF900FD02E6 /* ObservTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,8 @@
 		AA19ACA91C8C27B600FD02E6 /* button_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_01.png; sourceTree = "<group>"; };
 		AA19ACAB1C8C27BD00FD02E6 /* button_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_03.png; sourceTree = "<group>"; };
 		AA19ACAD1C8C27C400FD02E6 /* button_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_02.png; sourceTree = "<group>"; };
+		AA19ACAF1C8D9EF900FD02E6 /* ObservTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObservTableViewController.h; path = ../ObservTableViewController.h; sourceTree = "<group>"; };
+		AA19ACB01C8D9EF900FD02E6 /* ObservTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservTableViewController.m; path = ../ObservTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +155,8 @@
 				AA19ACA41C8AC56600FD02E6 /* ResistTableView.m */,
 				AA19ACA61C8AC58000FD02E6 /* ResistTableViewCell.h */,
 				AA19ACA71C8AC58000FD02E6 /* ResistTableViewCell.m */,
+				AA19ACAF1C8D9EF900FD02E6 /* ObservTableViewController.h */,
+				AA19ACB01C8D9EF900FD02E6 /* ObservTableViewController.m */,
 				AA19AC641C8A8D2200FD02E6 /* DetailViewController.h */,
 				AA19AC651C8A8D2200FD02E6 /* DetailViewController.m */,
 				AA19AC6A1C8A8D2200FD02E6 /* Assets.xcassets */,
@@ -335,6 +340,7 @@
 				AA19AC5D1C8A8D2200FD02E6 /* AppDelegate.m in Sources */,
 				AA19AC9C1C8A9E2600FD02E6 /* ResistViewController.m in Sources */,
 				AA19AC5A1C8A8D2200FD02E6 /* main.m in Sources */,
+				AA19ACB11C8D9EF900FD02E6 /* ObservTableViewController.m in Sources */,
 				AA19ACA81C8AC58000FD02E6 /* ResistTableViewCell.m in Sources */,
 				AA19AC991C8A91A500FD02E6 /* BoardViewController.m in Sources */,
 			);
