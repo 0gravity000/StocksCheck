@@ -10,7 +10,6 @@
 		AA19AC5A1C8A8D2200FD02E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC591C8A8D2200FD02E6 /* main.m */; };
 		AA19AC5D1C8A8D2200FD02E6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC5C1C8A8D2200FD02E6 /* AppDelegate.m */; };
 		AA19AC601C8A8D2200FD02E6 /* StocksCheck.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC5E1C8A8D2200FD02E6 /* StocksCheck.xcdatamodeld */; };
-		AA19AC631C8A8D2200FD02E6 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC621C8A8D2200FD02E6 /* MasterViewController.m */; };
 		AA19AC661C8A8D2200FD02E6 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC651C8A8D2200FD02E6 /* DetailViewController.m */; };
 		AA19AC691C8A8D2200FD02E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA19AC671C8A8D2200FD02E6 /* Main.storyboard */; };
 		AA19AC6B1C8A8D2200FD02E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA19AC6A1C8A8D2200FD02E6 /* Assets.xcassets */; };
@@ -53,8 +52,6 @@
 		AA19AC5B1C8A8D2200FD02E6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AA19AC5C1C8A8D2200FD02E6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		AA19AC5F1C8A8D2200FD02E6 /* StocksCheck.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StocksCheck.xcdatamodel; sourceTree = "<group>"; };
-		AA19AC611C8A8D2200FD02E6 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
-		AA19AC621C8A8D2200FD02E6 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		AA19AC641C8A8D2200FD02E6 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		AA19AC651C8A8D2200FD02E6 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		AA19AC681C8A8D2200FD02E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -142,8 +139,6 @@
 			children = (
 				AA19AC5B1C8A8D2200FD02E6 /* AppDelegate.h */,
 				AA19AC5C1C8A8D2200FD02E6 /* AppDelegate.m */,
-				AA19AC611C8A8D2200FD02E6 /* MasterViewController.h */,
-				AA19AC621C8A8D2200FD02E6 /* MasterViewController.m */,
 				AA19AC671C8A8D2200FD02E6 /* Main.storyboard */,
 				AA19AC971C8A91A500FD02E6 /* BoardViewController.h */,
 				AA19AC981C8A91A500FD02E6 /* BoardViewController.m */,
@@ -333,7 +328,6 @@
 				AA19AC931C8A915600FD02E6 /* BoardTableViewCell.m in Sources */,
 				AA19AC661C8A8D2200FD02E6 /* DetailViewController.m in Sources */,
 				AA19AC961C8A917900FD02E6 /* BoardTableView.m in Sources */,
-				AA19AC631C8A8D2200FD02E6 /* MasterViewController.m in Sources */,
 				AA19ACA21C8AA3BB00FD02E6 /* Stock.m in Sources */,
 				AA19ACA51C8AC56600FD02E6 /* ResistTableView.m in Sources */,
 				AA19ACA11C8AA3BB00FD02E6 /* Stock+CoreDataProperties.m in Sources */,

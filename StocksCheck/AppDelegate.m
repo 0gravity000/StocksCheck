@@ -29,7 +29,7 @@
     UINavigationController *masterNavigationController = splitViewController.viewControllers[0];
     //MasterViewController *controller = (MasterViewController *)masterNavigationController.topViewController;
     BoardViewController *controller = (BoardViewController *)masterNavigationController.topViewController;
-    controller.bmanagedObjectContext = self.managedObjectContext;
+    controller.managedObjectContext = self.managedObjectContext;
     
     //Load CSV File from web
     self.stocksArray = [NSMutableArray array];

@@ -20,8 +20,8 @@
 @property (strong, nonatomic) DetailViewController *detailViewController;
 //@property (strong, nonatomic) ResistViewController *resistViewController;
 
-@property (strong, nonatomic) NSFetchedResultsController *bfetchedResultsController;
-@property (strong, nonatomic) NSManagedObjectContext *bmanagedObjectContext;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @property (weak, nonatomic) IBOutlet BoardTableView *boardTableView;
 

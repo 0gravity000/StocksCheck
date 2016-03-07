@@ -17,6 +17,7 @@
 #pragma mark - Managing the detail item
 
 - (void)setDetailItem:(id)newDetailItem {
+    NSLog(@"*** Now ResistViewController setDetailItem");
     if (_detailItem != newDetailItem) {
         _detailItem = newDetailItem;
         
@@ -26,6 +27,7 @@
 }
 
 - (void)configureView {
+    NSLog(@"*** Now ResistViewController configureView");
     // Update the user interface for the detail item.
     if (self.detailItem) {
         self.detailDescriptionLabel.text = [[self.detailItem valueForKey:@"timeStamp"] description];
@@ -33,6 +35,7 @@
 }
 
 - (void)viewDidLoad {
+    NSLog(@"*** Now ResistViewController viewDidLoad");
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self configureView];
@@ -51,6 +54,7 @@
 }
 
 - (void)didReceiveMemoryWarning {
+    NSLog(@"*** Now ResistViewController didReceiveMemoryWarning");
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -60,6 +64,7 @@
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    NSLog(@"*** Now ResistViewController textDidChange");
     // called when text changes (including clear)
     [self.searchResultArray removeAllObjects];
     NSString *searchStr = self.codeSearchBar.text;
@@ -94,6 +99,7 @@
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    NSLog(@"*** Now ResistViewController searchBarCancelButtonClicked");
     // called when keyboard search button pressed
     [searchBar resignFirstResponder];
 
@@ -106,10 +112,12 @@
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    NSLog(@"*** Now ResistViewController searchBarTextDidBeginEditing");
     // called when text starts editing
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    NSLog(@"*** Now ResistViewController searchBarSearchButtonClicked");
     [searchBar resignFirstResponder];
 }
 
@@ -118,6 +126,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"*** Now ResistViewController didSelectRowAtIndexPath");
     NSDictionary *dic;
     dic = [self.searchResultArray objectAtIndex:indexPath.row];
 
@@ -149,6 +158,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    NSLog(@"*** Now ResistViewController numberOfSectionsInTableView");
     //NSLog(@"%lu", (unsigned long)[[self.fetchedResultsController sections] count]);
     //return [[self.fetchedResultsController sections] count];
     return 1;
@@ -156,6 +166,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"*** Now ResistViewController numberOfRowsInSection");
     //id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
     //return [sectionInfo numberOfObjects];
     //return [self.stocksArray count];
@@ -165,6 +176,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"*** Now ResistViewController cellForRowAtIndexPath");
     //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     ResistTableViewCell *cell = (ResistTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
@@ -173,6 +185,7 @@
 
 - (void)configureCell:(ResistTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"*** Now ResistViewController configureCell");
     //if ([self.stocksArray count] > 0) {
     if ([self.searchResultArray count] > 0) {
         NSDictionary *dic;
@@ -187,12 +200,14 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"*** Now ResistViewController canEditRowAtIndexPath");
     // Return NO if you do not want the specified item to be editable.
     return NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"*** Now ResistViewController commitEditingStyle");
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         /*
          NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];

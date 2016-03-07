@@ -17,6 +17,7 @@
 @implementation BoardViewController
 
 - (void)viewDidLoad {
+    NSLog(@"*** Now viewDidLoad");
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.title = @"リスト";
@@ -36,6 +37,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    NSLog(@"*** Now viewWillAppear");
     //self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;  ///NG
     [super viewWillAppear:animated];
 
@@ -43,33 +45,51 @@
     
     if (appDelegate.IsBackResistView == TRUE) {
 
+        //NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
+        //NSIndexPath *indexPath;
+        //NSManagedObject *object;
         NSError *error = nil;
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        NSIndexPath *indexPath;
-        NSManagedObject *object;
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
-        NSInteger count = [context countForFetchRequest:fetchRequest error:&error];
+        NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
         NSLog(@"Error !: %@", [error localizedDescription]);
         NSLog(@"CoreData count = %ld", count);
-        indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
-        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         
-        if ([appDelegate.addedCode isEqualToString:@""]) {
-            // Delete the Last Object
-            [context deleteObject:object];
+        //rowPosition = count-1 の object(最後に追加したもの)を検索
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rowPosition == %@", [NSString stringWithFormat:@"%ld",(count-1)]];
+        [request setPredicate:predicate];
+        NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+
+        if (array != nil) {
+            if ([appDelegate.addedCode isEqualToString:@""]) {
+                // Delete the Last Object
+                //[context deleteObject:object];
+                for (NSManagedObject *object in array) {
+                    [self.managedObjectContext deleteObject:object];
+                }
+            } else {
+                // Save the context.
+                //indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
+                //object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+                //[object setValue:appDelegate.addedCode forKey:@"code"];
+                for (NSManagedObject *object in array) {
+                    [object setValue:appDelegate.addedCode forKey:@"code"];
+                }
+            }
         } else {
-            // Save the context.
-            indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
-            object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-            [object setValue:appDelegate.addedCode forKey:@"code"];
+            NSLog(@"fetch result is 0");
         }
-        if (![context save:&error]) {
+        
+        //indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
+        if (![self.managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
-        NSLog(@"object value 'code' = %@", [object valueForKey:@"code"]);
         
         appDelegate.IsBackResistView = FALSE;
         appDelegate.addedCode = @"";
@@ -79,14 +99,16 @@
 }
 
 - (void)didReceiveMemoryWarning {
+    NSLog(@"*** Now didReceiveMemoryWarning");
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 - (void)insertNewObject {
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    NSLog(@"*** Now insertNewObject");
+    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:self.managedObjectContext];
     
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
@@ -101,7 +123,8 @@
     [newManagedObject setValue:@"---" forKey:@"name"];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
-    NSInteger count = [context countForFetchRequest:fetchRequest error:&error];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
     [newManagedObject setValue:[NSString stringWithFormat:@"%ld", count-1] forKey:@"rowPosition"];
     NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
     [newManagedObject setValue:now forKey:@"timeStamp"];
@@ -115,7 +138,7 @@
     [newManagedObject setValue:@"1" forKey:@"observeImage"];
     
     // Save the context.
-    if (![context save:&error]) {
+    if (![self.managedObjectContext save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -146,16 +169,18 @@
 //}
 
 -(void)initializeCoreData {
-    NSLog(@"Now initializeCoreData");
+    NSLog(@"*** Now initializeCoreData");
     
     NSString *url;
     NSError *error = nil;
     
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     NSIndexPath *indexPath;
     NSManagedObject *object;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
-    NSInteger count = [context countForFetchRequest:fetchRequest error:&error];
+    //NSFetchRequest *fetchRequest;
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
     NSLog(@"Error !: %@", [error localizedDescription]);
     NSLog(@"CoreData count = %ld", count);
     
@@ -255,7 +280,7 @@
         //[object setValue:@"1" forKey:@"observeImage"];
 
         // Save the context.
-        if (![context save:&error]) {
+        if (![self.managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -270,20 +295,21 @@
 
 
 - (IBAction)pushRefreshBarItemButton:(id)sender {
-    NSLog(@"Now pushRefreshBarItemButton");
+    NSLog(@"*** Now pushRefreshBarItemButton");
     [self refreshPriceValue];
     [self checkObserveVaules];
 }
 
 -(void)checkObserveVaules {
-    NSLog(@"Now checkObserveVaules");
+    NSLog(@"*** Now checkObserveVaules");
 
     NSError *error = nil;
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     NSIndexPath *indexPath;
     NSManagedObject *object;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
-    NSInteger count = [context countForFetchRequest:fetchRequest error:&error];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
     NSLog(@"Error !: %@", [error localizedDescription]);
     NSLog(@"CoreData count = %ld", count);
     
@@ -352,10 +378,9 @@
             [object setValue:@"3" forKey:@"observeImage"];
             //cell.observeImage.image = [UIImage imageNamed:@"button_02.png"];
         }
-        iHitFlag = 0;
         
         // Save the context.
-        if (![context save:&error]) {
+        if (![self.managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -369,18 +394,19 @@
 }
 
 -(void)refreshPriceValue {
-    NSLog(@"Now refreshPriceValue");
+    NSLog(@"*** Now refreshPriceValue");
     NSString *url;
     NSString *codebuf;
     NSString *placebuf;
     
     //--- Show Stock Page in WebView
     NSError *error = nil;
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     NSIndexPath *indexPath;
     NSManagedObject *object;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
-    NSInteger count = [context countForFetchRequest:fetchRequest error:&error];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
     NSLog(@"Error !: %@", [error localizedDescription]);
     NSLog(@"CoreData count = %ld", count);
     
@@ -427,7 +453,7 @@
             NSLog(@"price %@", pricebuf);
         }
         // Save the context.
-        if (![context save:&error]) {
+        if (![self.managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -441,6 +467,7 @@
 #pragma mark - Navigation Controller
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    NSLog(@"*** Now setEditing");
     [super setEditing:editing animated:animated];
     [self.boardTableView setEditing:editing animated:YES];
 }
@@ -449,6 +476,7 @@
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSLog(@"*** Now prepareForSegue");
     NSIndexPath *indexPath;
     NSManagedObject *object;
     NSError *error = nil;
@@ -464,28 +492,46 @@
     } else if ([[segue identifier] isEqualToString:@"showResist"]) {
         [self insertNewObject];
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
-        NSInteger count = [self.bmanagedObjectContext countForFetchRequest:fetchRequest error:&error];
-        NSLog(@"Error !: %@", [error localizedDescription]);
-        NSLog(@"CoreData count = %ld", count);
-        indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
-        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        ResistViewController *controller = (ResistViewController *)[segue destinationViewController];
-        [controller setDetailItem:object];
+        [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+        NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+//        NSLog(@"Error !: %@", [error localizedDescription]);
+//        NSLog(@"CoreData count = %ld", count);
+//        indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
+//        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+
+        //rowPosition = count-1 の object(最後に追加したもの)を検索
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rowPosition == %@", [NSString stringWithFormat:@"%ld",(count-1)]];
+        [request setPredicate:predicate];
+        NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+        if (array != nil) {
+            for (NSManagedObject *object in array) {
+                ResistViewController *controller = (ResistViewController *)[segue destinationViewController];
+                [controller setDetailItem:object];
+            }
+        } else {
+            NSLog(@"fetch result is 0");
+        }
+        
     }
 }
 
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    NSLog(@"*** Now numberOfSectionsInTableView");
     return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSLog(@"*** Now numberOfRowsInSection");
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
     return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"*** Now cellForRowAtIndexPath");
     //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     BoardTableViewCell *cell = (BoardTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
@@ -493,6 +539,7 @@
 }
 
 - (void)configureCell:(BoardTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"*** Now configureCell");
     NSLog(@"Now configureCell index=%ld", indexPath.row);
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     //cell.textLabel.text = [[object valueForKey:@"code"] description];
@@ -577,47 +624,48 @@
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"*** Now canMoveRowAtIndexPath");
     // The table view should not be re-orderable.
     return YES;
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
+    NSLog(@"*** Now moveRowAtIndexPath");
     //for example
 //    NSString *stringToMove = [self.reorderingRows objectAtIndex:sourceIndexPath.row];
 //    [self.reorderingRows removeObjectAtIndex:sourceIndexPath.row];
 //    [self.reorderingRows insertObject:stringToMove atIndex:destinationIndexPath.row];
     
     NSError *error = nil;
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     NSIndexPath *indexPath;
     NSManagedObject *object;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
-    NSInteger count = [context countForFetchRequest:fetchRequest error:&error];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
     NSLog(@"Error !: %@", [error localizedDescription]);
     NSLog(@"CoreData count = %ld", count);
-
-    object = [[self fetchedResultsController] objectAtIndexPath:sourceIndexPath];
-    NSLog(@"sourceIndexPath.row = @%ld", sourceIndexPath.row);
     
-    NSString *sorceRowbuf = [object valueForKey:@"rowPosition"];
+    NSString *sorceRowbuf = [NSString stringWithFormat:@"%ld", sourceIndexPath.row];
     NSString *destRowbuf = [NSString stringWithFormat:@"%ld", destinationIndexPath.row];
-    NSLog(@"destinationIndexPath.row = @%ld", destinationIndexPath.row);
+    
+    object = [[self fetchedResultsController] objectAtIndexPath:sourceIndexPath];
     [object setValue:destRowbuf forKey:@"rowPosition"];
 
-    int counter;
-    NSInteger index;
     int startRow;
     int endRow;
+    int cnt;
+    NSInteger index;
     NSString *rowTemp;
     int valTemp;
+    
     if ([sorceRowbuf intValue] < [destRowbuf intValue]) {
         //move up -> down
         startRow = [sorceRowbuf intValue]+1;
         endRow = [destRowbuf intValue];
-        index = sourceIndexPath.row;
-        for (counter = startRow; counter <= endRow; counter++) {
-            index++;
+        index = sourceIndexPath.row +1;
+        for (cnt = startRow; cnt <= endRow; cnt++) {
             indexPath = [NSIndexPath indexPathForRow:index inSection:0];
             object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
             NSLog(@"indexPath.row = @%ld", indexPath.row);
@@ -626,13 +674,15 @@
             valTemp--;
             [object setValue:[NSString stringWithFormat:@"%d", valTemp] forKey:@"rowPosition"];
             NSLog(@"indexPath.row = @%ld", indexPath.row);
+            index++;
         }
+        
     } else if([sorceRowbuf intValue] > [destRowbuf intValue]){
         //move down -> up
         startRow = [destRowbuf intValue];
         endRow = [sorceRowbuf intValue]-1;
         index = destinationIndexPath.row;
-        for (counter = startRow; counter <= endRow; counter++) {
+        for (cnt = startRow; cnt <= endRow; cnt++) {
             indexPath = [NSIndexPath indexPathForRow:index inSection:0];
             object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
             NSLog(@"indexPath.row = @%ld", indexPath.row);
@@ -646,7 +696,9 @@
         //ありえない
     }
 
-    if (![context save:&error]) {
+    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
+
+    if (![self.managedObjectContext save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -658,17 +710,19 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"*** Now canEditRowAtIndexPath");
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"*** Now commitEditingStyle");
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
+        [self.managedObjectContext deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         
         NSError *error = nil;
-        if (![context save:&error]) {
+        if (![self.managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -681,13 +735,14 @@
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
-    if (_bfetchedResultsController != nil) {
-        return _bfetchedResultsController;
+    NSLog(@"*** Now fetchedResultsController");
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
     }
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.bmanagedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
@@ -701,9 +756,9 @@
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.bmanagedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
     aFetchedResultsController.delegate = self;
-    self.bfetchedResultsController = aFetchedResultsController;
+    self.fetchedResultsController = aFetchedResultsController;
     
     NSError *error = nil;
     if (![self.fetchedResultsController performFetch:&error]) {
@@ -713,17 +768,19 @@
         abort();
     }
     
-    return _bfetchedResultsController;
+    return _fetchedResultsController;
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
+    NSLog(@"*** Now controllerWillChangeContent");
     [self.boardTableView beginUpdates];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
+    NSLog(@"*** Now didChangeSection");
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [self.boardTableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
@@ -742,6 +799,7 @@
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
+    NSLog(@"*** Now didChangeObject");
     UITableView *tableView = self.boardTableView;
     
     switch(type) {
@@ -766,6 +824,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
+    NSLog(@"*** Now controllerDidChangeContent");
     [self.boardTableView endUpdates];
 }
 
