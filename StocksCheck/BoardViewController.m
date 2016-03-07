@@ -7,7 +7,8 @@
 //
 
 #import "BoardViewController.h"
-#import "DetailViewController.h"
+//#import "DetailViewController.h"
+#import "ObservTableViewController.h"
 #import "ResistViewController.h"
 
 @interface BoardViewController ()
@@ -26,7 +27,7 @@
 //    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
 //    self.navigationItem.rightBarButtonItem = addButton;
     
-    self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    //self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     //self.resistViewController = (ResistViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 
     //initialize variables
@@ -484,7 +485,8 @@
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         indexPath = [self.boardTableView indexPathForSelectedRow];
         object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        DetailViewController *controller = (DetailViewController *)[segue destinationViewController];
+        //DetailViewController *controller = (DetailViewController *)[segue destinationViewController];
+        ObservTableViewController *controller = (ObservTableViewController *)[segue destinationViewController];
         [controller setDetailItem:object];
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;
@@ -533,7 +535,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"*** Now cellForRowAtIndexPath");
     //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    BoardTableViewCell *cell = (BoardTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    BoardTableViewCell *cell = (BoardTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell"forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
