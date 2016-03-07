@@ -28,6 +28,7 @@
 		AA19ACAC1C8C27BD00FD02E6 /* button_03.png in Resources */ = {isa = PBXBuildFile; fileRef = AA19ACAB1C8C27BD00FD02E6 /* button_03.png */; };
 		AA19ACAE1C8C27C400FD02E6 /* button_02.png in Resources */ = {isa = PBXBuildFile; fileRef = AA19ACAD1C8C27C400FD02E6 /* button_02.png */; };
 		AA19ACB11C8D9EF900FD02E6 /* ObservTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19ACB01C8D9EF900FD02E6 /* ObservTableViewController.m */; };
+		AA19ACB41C8DCFA100FD02E6 /* ValSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19ACB31C8DCFA100FD02E6 /* ValSetViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,8 @@
 		AA19ACAD1C8C27C400FD02E6 /* button_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_02.png; sourceTree = "<group>"; };
 		AA19ACAF1C8D9EF900FD02E6 /* ObservTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObservTableViewController.h; path = ../ObservTableViewController.h; sourceTree = "<group>"; };
 		AA19ACB01C8D9EF900FD02E6 /* ObservTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservTableViewController.m; path = ../ObservTableViewController.m; sourceTree = "<group>"; };
+		AA19ACB21C8DCFA100FD02E6 /* ValSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValSetViewController.h; sourceTree = "<group>"; };
+		AA19ACB31C8DCFA100FD02E6 /* ValSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValSetViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +160,8 @@
 				AA19ACA71C8AC58000FD02E6 /* ResistTableViewCell.m */,
 				AA19ACAF1C8D9EF900FD02E6 /* ObservTableViewController.h */,
 				AA19ACB01C8D9EF900FD02E6 /* ObservTableViewController.m */,
+				AA19ACB21C8DCFA100FD02E6 /* ValSetViewController.h */,
+				AA19ACB31C8DCFA100FD02E6 /* ValSetViewController.m */,
 				AA19AC641C8A8D2200FD02E6 /* DetailViewController.h */,
 				AA19AC651C8A8D2200FD02E6 /* DetailViewController.m */,
 				AA19AC6A1C8A8D2200FD02E6 /* Assets.xcassets */,
@@ -333,6 +338,7 @@
 				AA19AC931C8A915600FD02E6 /* BoardTableViewCell.m in Sources */,
 				AA19AC661C8A8D2200FD02E6 /* DetailViewController.m in Sources */,
 				AA19AC961C8A917900FD02E6 /* BoardTableView.m in Sources */,
+				AA19ACB41C8DCFA100FD02E6 /* ValSetViewController.m in Sources */,
 				AA19ACA21C8AA3BB00FD02E6 /* Stock.m in Sources */,
 				AA19ACA51C8AC56600FD02E6 /* ResistTableView.m in Sources */,
 				AA19ACA11C8AA3BB00FD02E6 /* Stock+CoreDataProperties.m in Sources */,

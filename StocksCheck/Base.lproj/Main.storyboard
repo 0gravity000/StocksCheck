@@ -565,12 +565,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="714" y="208"/>
+            <point key="canvasLocation" x="-54" y="189.75"/>
         </scene>
-        <!--View Controller-->
+        <!--Val Set View Controller-->
         <scene sceneID="dOD-i7-YpU">
             <objects>
-                <viewController id="RQt-eA-POT" sceneMemberID="viewController">
+                <viewController id="RQt-eA-POT" customClass="ValSetViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tbg-NL-mlp"/>
                         <viewControllerLayoutGuide type="bottom" id="jHQ-Ov-u2E"/>
@@ -585,12 +585,48 @@
                                 <variation key="widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="90" y="127" width="205" height="30"/>
                                 </variation>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="76" y="197" width="205" height="30"/>
+                                </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="RQt-eA-POT" id="FvN-lI-VWm"/>
+                                </connections>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="銘柄" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4mN-qh-hyU">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="20" y="96" width="360" height="21"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上限下限" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L7y-JA-sVe">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="76" y="163" width="68" height="21"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="項目" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SdI-SX-9xv">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="76" y="125" width="68" height="26"/>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="dwZ-NR-LBC"/>
+                                <exclude reference="4mN-qh-hyU"/>
+                                <exclude reference="L7y-JA-sVe"/>
+                                <exclude reference="SdI-SX-9xv"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -598,11 +634,24 @@
                                 <include reference="dwZ-NR-LBC"/>
                             </mask>
                         </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="4mN-qh-hyU"/>
+                                <include reference="L7y-JA-sVe"/>
+                                <include reference="SdI-SX-9xv"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="itemNameLabel" destination="SdI-SX-9xv" id="6Ez-Mw-wnC"/>
+                        <outlet property="nameLabel" destination="4mN-qh-hyU" id="7x2-kP-ils"/>
+                        <outlet property="upperOrLowerLabel" destination="L7y-JA-sVe" id="9gi-pu-iSV"/>
+                        <outlet property="valueTextField" destination="dwZ-NR-LBC" id="Xbj-X8-341"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="35j-pa-VZp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2362.5" y="200"/>
+            <point key="canvasLocation" x="1873.5" y="123"/>
         </scene>
         <!--Observ Table View Controller-->
         <scene sceneID="xmI-ft-N1Y">
@@ -677,6 +726,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="RQt-eA-POT" kind="show" identifier="setPriceUpper" id="OYc-qq-MN2"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="wWn-f4-g9h" detailTextLabel="6ZR-60-luV" style="IBUITableViewCellStyleValue2" id="CKy-Sj-ZAK">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -703,6 +755,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="RQt-eA-POT" kind="show" identifier="setPriceLower" id="DwQ-Sk-qdS"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -724,9 +779,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="RQt-eA-POT" kind="show" id="XmK-Hb-CEd"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="vXP-vC-YDQ" detailTextLabel="opA-Pa-Wqv" style="IBUITableViewCellStyleValue2" id="QMd-UL-q8G">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -754,7 +806,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="RQt-eA-POT" kind="show" id="ov6-Ch-kLm"/>
+                                            <segue destination="RQt-eA-POT" kind="show" identifier="setPriceValUpper" id="nBZ-6x-Cke"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="AXY-3z-oBf" detailTextLabel="buT-tu-bPx" style="IBUITableViewCellStyleValue2" id="jgD-lN-Pmi">
@@ -782,6 +834,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="RQt-eA-POT" kind="show" identifier="setPriceValLower" id="2Cg-e8-cpC"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -806,9 +861,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="RQt-eA-POT" kind="show" id="P0q-ua-nqy"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="IqL-NV-qSI" detailTextLabel="ef2-mV-haK" style="IBUITableViewCellStyleValue2" id="bpp-2y-Jeh">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -836,7 +888,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="RQt-eA-POT" kind="show" id="5f3-W5-V33"/>
+                                            <segue destination="RQt-eA-POT" kind="show" identifier="setPriceRateUpper" id="VWS-u1-nqZ"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="yqs-5J-mmu" detailTextLabel="OHP-aC-7VU" style="IBUITableViewCellStyleValue2" id="ydh-fb-pLk">
@@ -864,6 +916,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="RQt-eA-POT" kind="show" identifier="setPriceRateLower" id="Xi3-G7-jPN"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -889,13 +944,13 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="loM-Gg-gVd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1401" y="140"/>
+            <point key="canvasLocation" x="972" y="123"/>
         </scene>
     </scenes>
     <resources>
         <image name="button_01.png" width="400" height="400"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="XmK-Hb-CEd"/>
+        <segue reference="VWS-u1-nqZ"/>
     </inferredMetricsTieBreakers>
 </document>

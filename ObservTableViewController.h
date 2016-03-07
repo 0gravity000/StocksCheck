@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class ValSetViewController;
+
 @interface ObservTableViewController : UITableViewController
 
 @property (strong, nonatomic) id detailItem;

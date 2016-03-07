@@ -7,6 +7,7 @@
 //
 
 #import "ObservTableViewController.h"
+#import "ValSetViewController.h"
 
 @interface ObservTableViewController ()
 
@@ -97,7 +98,6 @@
         self.changeRateLowerCell.textLabel.text = @"下限";
         self.changeRateUpperCell.detailTextLabel.text = [[self.detailItem valueForKey:@"observeChangeRate1"] description];
         self.changeRateLowerCell.detailTextLabel.text = [[self.detailItem valueForKey:@"observeChangeRate2"] description];
-        
     }
 }
 
@@ -106,7 +106,6 @@
     [super viewDidLoad];
     self.navigationItem.title = @"監視値設定";
     
-    [self configureView];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -114,10 +113,80 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [self configureView];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)viewWillDisappear:(BOOL)animated {
+    //現在値 監視値
+    [self.detailItem setValue:self.priceUpperCell.detailTextLabel.text forKey:@"observePrice1"];
+    [self.detailItem setValue:self.priceLowerCell.detailTextLabel.text forKey:@"observePrice2"];
+    
+    //前日比 監視値
+    [self.detailItem setValue:self.changeValUpperCell.detailTextLabel.text forKey:@"observeChangeVal1"];
+    [self.detailItem setValue:self.changeValLowerCell.detailTextLabel.text forKey:@"observeChangeVal2"];
+    
+    //騰落率 監視値
+    [self.detailItem setValue:self.changeRateUpperCell.detailTextLabel.text forKey:@"observeChangeRate1"];
+    [self.detailItem setValue:self.changeRateLowerCell.detailTextLabel.text forKey:@"observeChangeRate2"];
+    
+    //イメージ 監視値
+    [self.detailItem setValue:@"2" forKey:@"observeImage"];
+    if ([self.priceUpperCell.detailTextLabel.text isEqualToString:@""]) {
+        if ([self.priceLowerCell.detailTextLabel.text isEqualToString:@""]) {
+            if ([self.changeValUpperCell.detailTextLabel.text isEqualToString:@""]) {
+                if ([self.changeValLowerCell.detailTextLabel.text isEqualToString:@""]) {
+                    if ([self.changeRateUpperCell.detailTextLabel.text isEqualToString:@""]) {
+                        if ([self.changeRateLowerCell.detailTextLabel.text isEqualToString:@""]) {
+                            [self.detailItem setValue:@"1" forKey:@"observeImage"];
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+
+    ValSetViewController *controller = (ValSetViewController *)[segue destinationViewController];
+    
+    if ([[segue identifier] isEqualToString:@"setPriceUpper"]) {
+        [controller setTypeValue:self.priceCell.textLabel.text];
+        [controller setTypeFlag:1];
+    } else if ([[segue identifier] isEqualToString:@"setPriceLower"]) {
+        [controller setTypeValue:self.priceCell.textLabel.text];
+        [controller setTypeFlag:2];
+        
+    } else if ([[segue identifier] isEqualToString:@"setPriceValUpper"]) {
+        [controller setTypeValue:self.changeValCell.textLabel.text];
+        [controller setTypeFlag:3];
+    } else if ([[segue identifier] isEqualToString:@"setPriceValLower"]) {
+        [controller setTypeValue:self.changeValCell.textLabel.text];
+        [controller setTypeFlag:4];
+        
+    } else if ([[segue identifier] isEqualToString:@"setPriceRateUpper"]) {
+        [controller setTypeValue:self.changeRateCell.textLabel.text];
+        [controller setTypeFlag:5];
+    } else if ([[segue identifier] isEqualToString:@"setPriceRateLower"]) {
+        [controller setTypeValue:self.changeRateCell.textLabel.text];
+        [controller setTypeFlag:6];
+        
+    } else {
+    }
+    
+    [controller setDetailItem:self.detailItem];
+    
+}
+
 
 #pragma mark - Table view data source
 
