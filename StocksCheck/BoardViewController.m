@@ -718,10 +718,44 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"*** Now commitEditingStyle");
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        NSError *error = nil;
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+        NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+        NSLog(@"CoreData count = %ld", count);
+        
         self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
         [self.managedObjectContext deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         
-        NSError *error = nil;
+        fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+        count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+        NSLog(@"CoreData count = %ld", count);
+        
+        
+        //削除行以降のrowPositionを全て-1する
+        NSManagedObject *object;
+        NSInteger startRow;
+        NSInteger endRow;
+        NSInteger cnt;
+        NSInteger index;
+        NSString *rowTemp;
+        int valTemp;
+        
+        startRow = indexPath.row;
+        endRow = count;
+        index = indexPath.row;
+        for (cnt = startRow; cnt < endRow; cnt++) {
+            indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+            object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+            NSLog(@"indexPath.row = @%ld", indexPath.row);
+            rowTemp = [object valueForKey:@"rowPosition"];
+            valTemp = [rowTemp intValue];
+            valTemp--;
+            [object setValue:[NSString stringWithFormat:@"%d", valTemp] forKey:@"rowPosition"];
+            NSLog(@"indexPath.row = @%ld", indexPath.row);
+            index++;
+        }
+        
         if (![self.managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
