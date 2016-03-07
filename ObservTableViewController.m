@@ -98,6 +98,9 @@
         self.changeRateLowerCell.textLabel.text = @"下限";
         self.changeRateUpperCell.detailTextLabel.text = [[self.detailItem valueForKey:@"observeChangeRate1"] description];
         self.changeRateLowerCell.detailTextLabel.text = [[self.detailItem valueForKey:@"observeChangeRate2"] description];
+
+        //---reload table view
+        [self.tableView reloadData];
     }
 }
 

@@ -94,6 +94,9 @@
         
         appDelegate.IsBackResistView = FALSE;
         appDelegate.addedCode = @"";
+        
+        //---reload table view
+        [self.boardTableView reloadData];
     }
 
     [self initializeCoreData];
