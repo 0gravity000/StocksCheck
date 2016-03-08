@@ -18,7 +18,7 @@
         <attribute name="observePrice2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="rowPosition" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rowPosition" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="yesterdayPrice" optional="YES" attributeType="String" syncable="YES"/>
     </entity>

@@ -66,7 +66,8 @@
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         [request setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rowPosition == %@", [NSString stringWithFormat:@"%ld",(count-1)]];
+        //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rowPosition == %@", [NSString stringWithFormat:@"%ld",(count-1)]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rowPosition == %d", (count-1)];
         [request setPredicate:predicate];
         NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
 
@@ -141,7 +142,8 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
     NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-    [newManagedObject setValue:[NSString stringWithFormat:@"%ld", count-1] forKey:@"rowPosition"];
+    //[newManagedObject setValue:[NSString stringWithFormat:@"%ld", count-1] forKey:@"rowPosition"];
+    [newManagedObject setValue:[NSNumber numberWithInteger:(count-1)] forKey:@"rowPosition"];
     NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
     [newManagedObject setValue:now forKey:@"timeStamp"];
     
@@ -681,49 +683,52 @@
     NSString *destRowbuf = [NSString stringWithFormat:@"%ld", destinationIndexPath.row];
     
     object = [[self fetchedResultsController] objectAtIndexPath:sourceIndexPath];
-    [object setValue:destRowbuf forKey:@"rowPosition"];
+    //[object setValue:destRowbuf forKey:@"rowPosition"];
+    [object setValue:[NSNumber numberWithInteger:destinationIndexPath.row] forKey:@"rowPosition"];
 
-    int startRow;
-    int endRow;
-    int cnt;
+    NSInteger startRow;
+    NSInteger endRow;
+    NSInteger cnt;
     NSInteger index;
     NSString *rowTemp;
-    int valTemp;
+    NSInteger valTemp;
     
-    if ([sorceRowbuf intValue] < [destRowbuf intValue]) {
+    if ([sorceRowbuf integerValue] < [destRowbuf integerValue]) {
         //move up -> down
-        startRow = [sorceRowbuf intValue]+1;
-        endRow = [destRowbuf intValue];
+        startRow = [sorceRowbuf integerValue]+1;
+        endRow = [destRowbuf integerValue];
         index = sourceIndexPath.row +1;
         for (cnt = startRow; cnt <= endRow; cnt++) {
             indexPath = [NSIndexPath indexPathForRow:index inSection:0];
             object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
             NSLog(@"indexPath.row = @%ld", indexPath.row);
             rowTemp = [object valueForKey:@"rowPosition"];
-            valTemp = [rowTemp intValue];
+            valTemp = [rowTemp integerValue];
             valTemp--;
-            [object setValue:[NSString stringWithFormat:@"%d", valTemp] forKey:@"rowPosition"];
+            //[object setValue:[NSString stringWithFormat:@"%d", valTemp] forKey:@"rowPosition"];
+            [object setValue:[NSNumber numberWithInteger:valTemp] forKey:@"rowPosition"];
             NSLog(@"indexPath.row = @%ld", indexPath.row);
             index++;
         }
         
-    } else if([sorceRowbuf intValue] > [destRowbuf intValue]){
+    } else if([sorceRowbuf integerValue] > [destRowbuf integerValue]){
         //move down -> up
-        startRow = [destRowbuf intValue];
-        endRow = [sorceRowbuf intValue]-1;
+        startRow = [destRowbuf integerValue];
+        endRow = [sorceRowbuf integerValue]-1;
         index = destinationIndexPath.row;
         for (cnt = startRow; cnt <= endRow; cnt++) {
             indexPath = [NSIndexPath indexPathForRow:index inSection:0];
             object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
             NSLog(@"indexPath.row = @%ld", indexPath.row);
             rowTemp = [object valueForKey:@"rowPosition"];
-            valTemp = [rowTemp intValue];
+            valTemp = [rowTemp integerValue];
             valTemp++;
-            [object setValue:[NSString stringWithFormat:@"%d", valTemp] forKey:@"rowPosition"];
+            //[object setValue:[NSString stringWithFormat:@"%d", valTemp] forKey:@"rowPosition"];
+            [object setValue:[NSNumber numberWithInteger:valTemp] forKey:@"rowPosition"];
             index++;
         }
     } else {
-        //ありえない
+        //Nothing to do
     }
 
     self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
@@ -760,13 +765,19 @@
         NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
         NSLog(@"CoreData count = %ld", count);
         
+        for (int j=0; j < count; j++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:0];
+            NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+            NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
+        }
+        
+        //delete coredata
         self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
         [self.managedObjectContext deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         
         fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
         count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
         NSLog(@"CoreData count = %ld", count);
-        
         
         //削除行以降のrowPositionを全て-1する
         NSManagedObject *object;
@@ -775,7 +786,7 @@
         NSInteger cnt;
         NSInteger index;
         NSString *rowTemp;
-        int valTemp;
+        NSInteger valTemp;
         
         startRow = indexPath.row;
         endRow = count;
@@ -787,9 +798,16 @@
             rowTemp = [object valueForKey:@"rowPosition"];
             valTemp = [rowTemp intValue];
             valTemp--;
-            [object setValue:[NSString stringWithFormat:@"%d", valTemp] forKey:@"rowPosition"];
+            //[object setValue:[NSString stringWithFormat:@"%d", valTemp] forKey:@"rowPosition"];
+            [object setValue:[NSNumber numberWithInteger:valTemp] forKey:@"rowPosition"];
             NSLog(@"indexPath.row = @%ld", indexPath.row);
             index++;
+        }
+        
+        for (int j=0; j < count; j++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:0];
+            NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+            NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
         }
         
         if (![self.managedObjectContext save:&error]) {
