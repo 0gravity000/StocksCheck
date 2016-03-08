@@ -55,6 +55,12 @@
         NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
         NSLog(@"Error !: %@", [error localizedDescription]);
         NSLog(@"CoreData count = %ld", count);
+
+        for (int j=0; j < count; j++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:0];
+            NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+            NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
+        }
         
         //rowPosition = count-1 の object(最後に追加したもの)を検索
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -82,6 +88,12 @@
             }
         } else {
             NSLog(@"fetch result is 0");
+        }
+        
+        for (int j=0; j < count; j++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:0];
+            NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+            NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
         }
         
         //indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
@@ -659,6 +671,12 @@
     NSLog(@"Error !: %@", [error localizedDescription]);
     NSLog(@"CoreData count = %ld", count);
     
+    for (int j=0; j < count; j++) {
+        indexPath = [NSIndexPath indexPathForRow:j inSection:0];
+        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
+    }
+    
     NSString *sorceRowbuf = [NSString stringWithFormat:@"%ld", sourceIndexPath.row];
     NSString *destRowbuf = [NSString stringWithFormat:@"%ld", destinationIndexPath.row];
     
@@ -710,6 +728,12 @@
 
     self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
 
+    for (int j=0; j < count; j++) {
+        indexPath = [NSIndexPath indexPathForRow:j inSection:0];
+        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
+    }
+    
     if (![self.managedObjectContext save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
