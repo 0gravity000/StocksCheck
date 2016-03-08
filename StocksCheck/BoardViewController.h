@@ -25,6 +25,8 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarItemButton;
+
 @property (weak, nonatomic) IBOutlet BoardTableView *boardTableView;
 
 - (IBAction)pushRefreshBarItemButton:(id)sender;

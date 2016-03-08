@@ -22,7 +22,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.title = @"リスト";
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
 //    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
 //    self.navigationItem.rightBarButtonItem = addButton;
@@ -474,6 +474,13 @@
     NSLog(@"*** Now setEditing");
     [super setEditing:editing animated:animated];
     [self.boardTableView setEditing:editing animated:YES];
+    //desable add button
+    
+    if (editing) {
+        self.addBarItemButton.enabled = NO;
+    } else {
+        self.addBarItemButton.enabled = YES;
+    }
 }
 
 

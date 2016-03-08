@@ -182,6 +182,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="BXf-Vd-LaM"/>
                     <connections>
+                        <outlet property="addBarItemButton" destination="trn-Q0-DnH" id="6l6-U3-XuH"/>
                         <outlet property="boardTableView" destination="fzx-no-hft" id="DT6-AZ-MM6"/>
                     </connections>
                 </viewController>
@@ -595,70 +596,70 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="銘柄" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgz-ou-aKV">
-                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上限下限" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zid-PV-a2H">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="銘柄" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgz-ou-aKV">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="jHQ-Ov-u2E" firstAttribute="top" secondItem="dwZ-NR-LBC" secondAttribute="bottom" constant="380" id="53p-cH-1K0"/>
-                            <constraint firstItem="dwZ-NR-LBC" firstAttribute="top" secondItem="Zid-PV-a2H" secondAttribute="bottom" constant="9" id="AO7-bt-zwg"/>
-                            <constraint firstItem="dwZ-NR-LBC" firstAttribute="leading" secondItem="fWn-0C-mrE" secondAttribute="leadingMargin" constant="25" id="BZV-K9-1Ym"/>
+                            <constraint firstItem="dwZ-NR-LBC" firstAttribute="top" secondItem="Zid-PV-a2H" secondAttribute="bottom" constant="19" id="GAF-zv-0Jr"/>
                             <constraint firstItem="Jgz-ou-aKV" firstAttribute="leading" secondItem="fWn-0C-mrE" secondAttribute="leadingMargin" id="Hqk-dS-yYw"/>
-                            <constraint firstItem="Zid-PV-a2H" firstAttribute="leading" secondItem="fWn-0C-mrE" secondAttribute="leadingMargin" constant="25" id="ccg-z2-2E8"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="dwZ-NR-LBC" secondAttribute="trailing" constant="135" id="lI5-GF-weR"/>
+                            <constraint firstItem="Zid-PV-a2H" firstAttribute="top" secondItem="NZr-73-g5E" secondAttribute="bottom" constant="14" id="IG0-et-anX"/>
+                            <constraint firstItem="NZr-73-g5E" firstAttribute="leading" secondItem="fWn-0C-mrE" secondAttribute="leadingMargin" constant="25" id="KNi-4o-Ae8"/>
+                            <constraint firstItem="Zid-PV-a2H" firstAttribute="leading" secondItem="fWn-0C-mrE" secondAttribute="leadingMargin" constant="25" id="LNL-06-PwS"/>
+                            <constraint firstItem="dwZ-NR-LBC" firstAttribute="leading" secondItem="fWn-0C-mrE" secondAttribute="leadingMargin" constant="25" id="T4t-Be-KKW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dwZ-NR-LBC" secondAttribute="trailing" constant="135" id="UTu-sD-UgO"/>
                             <constraint firstItem="Jgz-ou-aKV" firstAttribute="top" secondItem="tbg-NL-mlp" secondAttribute="bottom" constant="36" id="sN8-BU-mpT"/>
-                            <constraint firstItem="NZr-73-g5E" firstAttribute="leading" secondItem="fWn-0C-mrE" secondAttribute="leadingMargin" constant="25" id="sbs-N3-TpT"/>
-                            <constraint firstItem="Zid-PV-a2H" firstAttribute="top" secondItem="NZr-73-g5E" secondAttribute="bottom" constant="9" id="uXD-FE-98k"/>
                             <constraint firstItem="Jgz-ou-aKV" firstAttribute="trailing" secondItem="fWn-0C-mrE" secondAttribute="trailingMargin" id="v32-uK-qc4"/>
+                            <constraint firstItem="NZr-73-g5E" firstAttribute="top" secondItem="Jgz-ou-aKV" secondAttribute="bottom" constant="17" id="zYe-7s-1Xr"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="dwZ-NR-LBC"/>
                                 <exclude reference="NZr-73-g5E"/>
-                                <exclude reference="Jgz-ou-aKV"/>
                                 <exclude reference="Zid-PV-a2H"/>
+                                <exclude reference="Jgz-ou-aKV"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="Hqk-dS-yYw"/>
                                 <exclude reference="sN8-BU-mpT"/>
                                 <exclude reference="v32-uK-qc4"/>
-                                <exclude reference="sbs-N3-TpT"/>
-                                <exclude reference="ccg-z2-2E8"/>
-                                <exclude reference="uXD-FE-98k"/>
-                                <exclude reference="AO7-bt-zwg"/>
-                                <exclude reference="BZV-K9-1Ym"/>
-                                <exclude reference="lI5-GF-weR"/>
-                                <exclude reference="53p-cH-1K0"/>
+                                <exclude reference="KNi-4o-Ae8"/>
+                                <exclude reference="zYe-7s-1Xr"/>
+                                <exclude reference="IG0-et-anX"/>
+                                <exclude reference="LNL-06-PwS"/>
+                                <exclude reference="GAF-zv-0Jr"/>
+                                <exclude reference="T4t-Be-KKW"/>
+                                <exclude reference="UTu-sD-UgO"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="dwZ-NR-LBC"/>
                                 <include reference="NZr-73-g5E"/>
-                                <include reference="Jgz-ou-aKV"/>
                                 <include reference="Zid-PV-a2H"/>
+                                <include reference="Jgz-ou-aKV"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="Hqk-dS-yYw"/>
                                 <include reference="sN8-BU-mpT"/>
                                 <include reference="v32-uK-qc4"/>
-                                <include reference="sbs-N3-TpT"/>
-                                <include reference="ccg-z2-2E8"/>
-                                <include reference="uXD-FE-98k"/>
-                                <include reference="AO7-bt-zwg"/>
-                                <include reference="BZV-K9-1Ym"/>
-                                <include reference="lI5-GF-weR"/>
-                                <include reference="53p-cH-1K0"/>
+                                <include reference="KNi-4o-Ae8"/>
+                                <include reference="zYe-7s-1Xr"/>
+                                <include reference="IG0-et-anX"/>
+                                <include reference="LNL-06-PwS"/>
+                                <include reference="GAF-zv-0Jr"/>
+                                <include reference="T4t-Be-KKW"/>
+                                <include reference="UTu-sD-UgO"/>
                             </mask>
                         </variation>
                     </view>
@@ -735,7 +736,7 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jdj-HL-3do">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jdj-HL-3do">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -764,7 +765,7 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6ZR-60-luV">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6ZR-60-luV">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -814,7 +815,7 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="opA-Pa-Wqv">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="opA-Pa-Wqv">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -843,7 +844,7 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="buT-tu-bPx">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="buT-tu-bPx">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -893,7 +894,7 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ef2-mV-haK">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ef2-mV-haK">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -922,7 +923,7 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OHP-aC-7VU">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OHP-aC-7VU">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
