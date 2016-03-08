@@ -111,8 +111,10 @@
         //---reload table view
         [self.boardTableView reloadData];
     }
-
     [self initializeCoreData];
+
+    [self checkObserveVaules];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -606,7 +608,7 @@
     valTemp = [NSString stringWithFormat : @"%.0f", changeVal];
     rateTemp = [NSString stringWithFormat : @"%.2f", changeRate];
     if (changeVal == 0) {
-        valTemp = @"---";
+        valTemp = @"0";
         cell.priceLabel.textColor = [UIColor blackColor];
         cell.changeValLabel.textColor = [UIColor blackColor];
         cell.changeRateLabel.textColor = [UIColor blackColor];

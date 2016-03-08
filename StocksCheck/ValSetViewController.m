@@ -45,6 +45,10 @@
     // Update the user interface for the detail item.
     if (self.typeFlag) {
         if (self.detailItem) {
+            self.errorLabel.text = @"";
+            self.valueTextField.backgroundColor = [UIColor whiteColor];
+            [self.navigationController.navigationItem setHidesBackButton:NO];
+            
             NSString *str;
             NSString *code = [[self.detailItem valueForKey:@"code"] description];
             NSString *place = [[self.detailItem valueForKey:@"place"] description];
@@ -125,11 +129,63 @@
     
 }
 
+#pragma mark -
+-(BOOL)checkInvaliedString:(NSString *)checkedStr {
+    if (([checkedStr isEqualToString:@""]) || (checkedStr == nil)) {
+        return TRUE;
+    } else {
+        NSCharacterSet *checkedCharset = [NSCharacterSet characterSetWithCharactersInString:checkedStr];
+        NSCharacterSet *charset = [NSCharacterSet characterSetWithCharactersInString:@"0123456789+-."];
+        BOOL result = [charset isSupersetOfSet:checkedCharset];
+        if (result) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+}
+
 #pragma mark - textField delegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    [self.navigationItem setHidesBackButton:YES];
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    BOOL checkstr = [self checkInvaliedString:textField.text];
+    if (!checkstr) {
+        self.errorLabel.text = @"無効な値です。\n空欄、半角数値、半角+、半角-、\n小数点のみ有効です。";
+        self.valueTextField.backgroundColor = [UIColor redColor];
+        [self.navigationItem setHidesBackButton:YES];
+    } else {
+        self.errorLabel.text = @"";
+        self.valueTextField.backgroundColor = [UIColor whiteColor];
+        [self.navigationItem setHidesBackButton:NO];
+    }
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)sender {
     // キーボードを閉じる
     [sender resignFirstResponder];
+
+    BOOL checkstr = [self checkInvaliedString:self.valueTextField.text];
+    if (!checkstr) {
+        self.errorLabel.text = @"無効な値です。\n空欄、半角数値、半角+、半角-、\n小数点のみ有効です。";
+        self.valueTextField.backgroundColor = [UIColor redColor];
+        [self.navigationItem setHidesBackButton:YES];
+    } else {
+        self.errorLabel.text = @"";
+        self.valueTextField.backgroundColor = [UIColor whiteColor];
+        [self.navigationItem setHidesBackButton:NO];
+    }
     
     return TRUE;
 }

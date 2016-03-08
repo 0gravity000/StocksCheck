@@ -64,7 +64,7 @@
         valTemp = [NSString stringWithFormat : @"%.0f", changeVal];
         rateTemp = [NSString stringWithFormat : @"%.2f", changeRate];
         if (changeVal == 0) {
-            valTemp = @"---";
+            valTemp = @"0";
             self.priceCell.textLabel.textColor = [UIColor blackColor];
             self.changeValCell.textLabel.textColor = [UIColor blackColor];
             self.changeRateCell.textLabel.textColor = [UIColor blackColor];
@@ -83,16 +83,19 @@
         self.changeValCell.textLabel.text = valTemp;
         self.changeRateCell.textLabel.text = rateTemp;
         
+        BOOL checkstr;
         //現在値 監視値
         self.priceUpperCell.textLabel.text = @"上限値";
         self.priceLowerCell.textLabel.text = @"下限値";
         self.priceUpperCell.detailTextLabel.text = [[self.detailItem valueForKey:@"observePrice1"] description];
         self.priceLowerCell.detailTextLabel.text = [[self.detailItem valueForKey:@"observePrice2"] description];
+        
         //前日比 監視値
         self.changeValUpperCell.textLabel.text = @"上限値";
         self.changeValLowerCell.textLabel.text = @"下限値";
         self.changeValUpperCell.detailTextLabel.text = [[self.detailItem valueForKey:@"observeChangeVal1"] description];
         self.changeValLowerCell.detailTextLabel.text = [[self.detailItem valueForKey:@"observeChangeVal2"] description];
+
         //騰落率 監視値
         self.changeRateUpperCell.textLabel.text = @"上限値";
         self.changeRateLowerCell.textLabel.text = @"下限値";
@@ -155,6 +158,7 @@
     }
     
 }
+
 
 #pragma mark - Segues
 

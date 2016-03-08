@@ -583,7 +583,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dwZ-NR-LBC">
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="76" y="197" width="205" height="30"/>
                                 </variation>
@@ -609,9 +609,17 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27a-cr-LHK">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="27a-cr-LHK" firstAttribute="top" secondItem="dwZ-NR-LBC" secondAttribute="bottom" constant="15" id="2v3-qU-WlI"/>
+                            <constraint firstItem="27a-cr-LHK" firstAttribute="leading" secondItem="fWn-0C-mrE" secondAttribute="leadingMargin" constant="25" id="4Z7-fe-4le"/>
                             <constraint firstItem="dwZ-NR-LBC" firstAttribute="top" secondItem="Zid-PV-a2H" secondAttribute="bottom" constant="19" id="GAF-zv-0Jr"/>
                             <constraint firstItem="Jgz-ou-aKV" firstAttribute="leading" secondItem="fWn-0C-mrE" secondAttribute="leadingMargin" id="Hqk-dS-yYw"/>
                             <constraint firstItem="Zid-PV-a2H" firstAttribute="top" secondItem="NZr-73-g5E" secondAttribute="bottom" constant="14" id="IG0-et-anX"/>
@@ -619,6 +627,7 @@
                             <constraint firstItem="Zid-PV-a2H" firstAttribute="leading" secondItem="fWn-0C-mrE" secondAttribute="leadingMargin" constant="25" id="LNL-06-PwS"/>
                             <constraint firstItem="dwZ-NR-LBC" firstAttribute="leading" secondItem="fWn-0C-mrE" secondAttribute="leadingMargin" constant="25" id="T4t-Be-KKW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dwZ-NR-LBC" secondAttribute="trailing" constant="135" id="UTu-sD-UgO"/>
+                            <constraint firstItem="27a-cr-LHK" firstAttribute="trailing" secondItem="fWn-0C-mrE" secondAttribute="trailingMargin" id="ZqZ-k8-BsR"/>
                             <constraint firstItem="Jgz-ou-aKV" firstAttribute="top" secondItem="tbg-NL-mlp" secondAttribute="bottom" constant="36" id="sN8-BU-mpT"/>
                             <constraint firstItem="Jgz-ou-aKV" firstAttribute="trailing" secondItem="fWn-0C-mrE" secondAttribute="trailingMargin" id="v32-uK-qc4"/>
                             <constraint firstItem="NZr-73-g5E" firstAttribute="top" secondItem="Jgz-ou-aKV" secondAttribute="bottom" constant="17" id="zYe-7s-1Xr"/>
@@ -629,11 +638,9 @@
                                 <exclude reference="NZr-73-g5E"/>
                                 <exclude reference="Zid-PV-a2H"/>
                                 <exclude reference="Jgz-ou-aKV"/>
+                                <exclude reference="27a-cr-LHK"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="GAF-zv-0Jr"/>
-                                <exclude reference="T4t-Be-KKW"/>
-                                <exclude reference="UTu-sD-UgO"/>
                                 <exclude reference="Hqk-dS-yYw"/>
                                 <exclude reference="sN8-BU-mpT"/>
                                 <exclude reference="v32-uK-qc4"/>
@@ -641,6 +648,12 @@
                                 <exclude reference="zYe-7s-1Xr"/>
                                 <exclude reference="IG0-et-anX"/>
                                 <exclude reference="LNL-06-PwS"/>
+                                <exclude reference="GAF-zv-0Jr"/>
+                                <exclude reference="T4t-Be-KKW"/>
+                                <exclude reference="UTu-sD-UgO"/>
+                                <exclude reference="2v3-qU-WlI"/>
+                                <exclude reference="4Z7-fe-4le"/>
+                                <exclude reference="ZqZ-k8-BsR"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -649,11 +662,9 @@
                                 <include reference="NZr-73-g5E"/>
                                 <include reference="Zid-PV-a2H"/>
                                 <include reference="Jgz-ou-aKV"/>
+                                <include reference="27a-cr-LHK"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="GAF-zv-0Jr"/>
-                                <include reference="T4t-Be-KKW"/>
-                                <include reference="UTu-sD-UgO"/>
                                 <include reference="Hqk-dS-yYw"/>
                                 <include reference="sN8-BU-mpT"/>
                                 <include reference="v32-uK-qc4"/>
@@ -661,10 +672,17 @@
                                 <include reference="zYe-7s-1Xr"/>
                                 <include reference="IG0-et-anX"/>
                                 <include reference="LNL-06-PwS"/>
+                                <include reference="GAF-zv-0Jr"/>
+                                <include reference="T4t-Be-KKW"/>
+                                <include reference="UTu-sD-UgO"/>
+                                <include reference="2v3-qU-WlI"/>
+                                <include reference="4Z7-fe-4le"/>
+                                <include reference="ZqZ-k8-BsR"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="errorLabel" destination="27a-cr-LHK" id="lxW-g1-YJC"/>
                         <outlet property="itemNameLabel" destination="NZr-73-g5E" id="DdU-GP-pLm"/>
                         <outlet property="nameLabel" destination="Jgz-ou-aKV" id="p3L-Y8-5QG"/>
                         <outlet property="upperOrLowerLabel" destination="Zid-PV-a2H" id="vGU-O6-uwz"/>

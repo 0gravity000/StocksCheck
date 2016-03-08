@@ -20,5 +20,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *valueTextField;
 
+@property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 
 @end
