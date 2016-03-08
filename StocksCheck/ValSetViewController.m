@@ -61,25 +61,25 @@
             
             if (self.typeFlag == 1) {
                 self.valueTextField.text = [[self.detailItem valueForKey:@"observePrice1"] description];
-                self.upperOrLowerLabel.text = @"上限";
+                self.upperOrLowerLabel.text = @"上限値";
             } else if (self.typeFlag == 2) {
                 self.valueTextField.text = [[self.detailItem valueForKey:@"observePrice2"] description];
-                self.upperOrLowerLabel.text = @"下限";
+                self.upperOrLowerLabel.text = @"下限値";
                 
             } else if (self.typeFlag == 3) {
                 self.valueTextField.text = [[self.detailItem valueForKey:@"observeChangeVal1"] description];
-                self.upperOrLowerLabel.text = @"上限";
+                self.upperOrLowerLabel.text = @"上限値";
                 
             } else if (self.typeFlag == 4) {
                 self.valueTextField.text = [[self.detailItem valueForKey:@"observeChangeVal2"] description];
-                self.upperOrLowerLabel.text = @"下限";
+                self.upperOrLowerLabel.text = @"下限値";
                 
             } else if (self.typeFlag == 5) {
                 self.valueTextField.text = [[self.detailItem valueForKey:@"observeChangeRate1"] description];
-                self.upperOrLowerLabel.text = @"上限";
+                self.upperOrLowerLabel.text = @"上限値";
             } else if (self.typeFlag == 6) {
                 self.valueTextField.text = [[self.detailItem valueForKey:@"observeChangeRate2"] description];
-                self.upperOrLowerLabel.text = @"下限";
+                self.upperOrLowerLabel.text = @"下限値";
                 
             } else {
             }
@@ -90,6 +90,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.navigationItem.title = @"値設定";
+    
     [self configureView];
 }
 

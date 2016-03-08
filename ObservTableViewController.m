@@ -84,18 +84,18 @@
         self.changeRateCell.textLabel.text = rateTemp;
         
         //現在値 監視値
-        self.priceUpperCell.textLabel.text = @"上限";
-        self.priceLowerCell.textLabel.text = @"下限";
+        self.priceUpperCell.textLabel.text = @"上限値";
+        self.priceLowerCell.textLabel.text = @"下限値";
         self.priceUpperCell.detailTextLabel.text = [[self.detailItem valueForKey:@"observePrice1"] description];
         self.priceLowerCell.detailTextLabel.text = [[self.detailItem valueForKey:@"observePrice2"] description];
         //前日比 監視値
-        self.changeValUpperCell.textLabel.text = @"上限";
-        self.changeValLowerCell.textLabel.text = @"下限";
+        self.changeValUpperCell.textLabel.text = @"上限値";
+        self.changeValLowerCell.textLabel.text = @"下限値";
         self.changeValUpperCell.detailTextLabel.text = [[self.detailItem valueForKey:@"observeChangeVal1"] description];
         self.changeValLowerCell.detailTextLabel.text = [[self.detailItem valueForKey:@"observeChangeVal2"] description];
         //騰落率 監視値
-        self.changeRateUpperCell.textLabel.text = @"上限";
-        self.changeRateLowerCell.textLabel.text = @"下限";
+        self.changeRateUpperCell.textLabel.text = @"上限値";
+        self.changeRateLowerCell.textLabel.text = @"下限値";
         self.changeRateUpperCell.detailTextLabel.text = [[self.detailItem valueForKey:@"observeChangeRate1"] description];
         self.changeRateLowerCell.detailTextLabel.text = [[self.detailItem valueForKey:@"observeChangeRate2"] description];
 
@@ -107,7 +107,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"監視値設定";
+    self.navigationItem.title = @"監視値";
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

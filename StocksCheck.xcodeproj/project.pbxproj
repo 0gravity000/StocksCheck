@@ -24,11 +24,11 @@
 		AA19ACA21C8AA3BB00FD02E6 /* Stock.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19ACA01C8AA3BB00FD02E6 /* Stock.m */; };
 		AA19ACA51C8AC56600FD02E6 /* ResistTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19ACA41C8AC56600FD02E6 /* ResistTableView.m */; };
 		AA19ACA81C8AC58000FD02E6 /* ResistTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19ACA71C8AC58000FD02E6 /* ResistTableViewCell.m */; };
-		AA19ACAA1C8C27B600FD02E6 /* button_01.png in Resources */ = {isa = PBXBuildFile; fileRef = AA19ACA91C8C27B600FD02E6 /* button_01.png */; };
-		AA19ACAC1C8C27BD00FD02E6 /* button_03.png in Resources */ = {isa = PBXBuildFile; fileRef = AA19ACAB1C8C27BD00FD02E6 /* button_03.png */; };
-		AA19ACAE1C8C27C400FD02E6 /* button_02.png in Resources */ = {isa = PBXBuildFile; fileRef = AA19ACAD1C8C27C400FD02E6 /* button_02.png */; };
 		AA19ACB11C8D9EF900FD02E6 /* ObservTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19ACB01C8D9EF900FD02E6 /* ObservTableViewController.m */; };
 		AA19ACB41C8DCFA100FD02E6 /* ValSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19ACB31C8DCFA100FD02E6 /* ValSetViewController.m */; };
+		AAC7B13E1C8F34A100D792AF /* button_01.png in Resources */ = {isa = PBXBuildFile; fileRef = AAC7B13D1C8F34A100D792AF /* button_01.png */; };
+		AAC7B1401C8F34AB00D792AF /* button_02.png in Resources */ = {isa = PBXBuildFile; fileRef = AAC7B13F1C8F34AB00D792AF /* button_02.png */; };
+		AAC7B1421C8F34B800D792AF /* button_03.png in Resources */ = {isa = PBXBuildFile; fileRef = AAC7B1411C8F34B800D792AF /* button_03.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,13 +82,13 @@
 		AA19ACA41C8AC56600FD02E6 /* ResistTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResistTableView.m; sourceTree = "<group>"; };
 		AA19ACA61C8AC58000FD02E6 /* ResistTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResistTableViewCell.h; sourceTree = "<group>"; };
 		AA19ACA71C8AC58000FD02E6 /* ResistTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResistTableViewCell.m; sourceTree = "<group>"; };
-		AA19ACA91C8C27B600FD02E6 /* button_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_01.png; sourceTree = "<group>"; };
-		AA19ACAB1C8C27BD00FD02E6 /* button_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_03.png; sourceTree = "<group>"; };
-		AA19ACAD1C8C27C400FD02E6 /* button_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_02.png; sourceTree = "<group>"; };
 		AA19ACAF1C8D9EF900FD02E6 /* ObservTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObservTableViewController.h; path = ../ObservTableViewController.h; sourceTree = "<group>"; };
 		AA19ACB01C8D9EF900FD02E6 /* ObservTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservTableViewController.m; path = ../ObservTableViewController.m; sourceTree = "<group>"; };
 		AA19ACB21C8DCFA100FD02E6 /* ValSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValSetViewController.h; sourceTree = "<group>"; };
 		AA19ACB31C8DCFA100FD02E6 /* ValSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValSetViewController.m; sourceTree = "<group>"; };
+		AAC7B13D1C8F34A100D792AF /* button_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_01.png; sourceTree = "<group>"; };
+		AAC7B13F1C8F34AB00D792AF /* button_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_02.png; sourceTree = "<group>"; };
+		AAC7B1411C8F34B800D792AF /* button_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_03.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,9 +176,9 @@
 		AA19AC581C8A8D2200FD02E6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				AA19ACAD1C8C27C400FD02E6 /* button_02.png */,
-				AA19ACAB1C8C27BD00FD02E6 /* button_03.png */,
-				AA19ACA91C8C27B600FD02E6 /* button_01.png */,
+				AAC7B1411C8F34B800D792AF /* button_03.png */,
+				AAC7B13F1C8F34AB00D792AF /* button_02.png */,
+				AAC7B13D1C8F34A100D792AF /* button_01.png */,
 				AA19AC591C8A8D2200FD02E6 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -305,11 +305,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA19ACAA1C8C27B600FD02E6 /* button_01.png in Resources */,
+				AAC7B13E1C8F34A100D792AF /* button_01.png in Resources */,
 				AA19AC6E1C8A8D2200FD02E6 /* LaunchScreen.storyboard in Resources */,
-				AA19ACAC1C8C27BD00FD02E6 /* button_03.png in Resources */,
+				AAC7B1401C8F34AB00D792AF /* button_02.png in Resources */,
 				AA19AC6B1C8A8D2200FD02E6 /* Assets.xcassets in Resources */,
-				AA19ACAE1C8C27C400FD02E6 /* button_02.png in Resources */,
+				AAC7B1421C8F34B800D792AF /* button_03.png in Resources */,
 				AA19AC691C8A8D2200FD02E6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
