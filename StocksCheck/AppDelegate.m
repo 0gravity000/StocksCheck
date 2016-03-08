@@ -180,7 +180,9 @@
     }
     //先頭の2行はヘッダーデータで不要なので削除
     [self.stocksArray removeObjectsInRange:NSMakeRange(0, 2)];
-    NSLog(@"self.stocksArray count: %ld", lines.count);    // 行数
+    //最後の1行は空データで不要なので削除
+    [self.stocksArray removeObjectsInRange:NSMakeRange(([self.stocksArray count]-1), 1)];
+    NSLog(@"self.stocksArray count: %ld", [self.stocksArray count]);    // 行数
 
 }
 
