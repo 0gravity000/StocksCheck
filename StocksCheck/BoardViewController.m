@@ -368,53 +368,51 @@
         BoardTableViewCell *cell = (BoardTableViewCell *)[self.boardTableView cellForRowAtIndexPath:indexPath];
 
         int iHitFlag = 0;
-        
         NSString *BasicPrice = cell.priceLabel.text;
+        NSString *targetString;
+        
         //cell.observeImage.image = [UIImage imageNamed:@"button_01.png"];
         if (![BasicPrice isEqualToString:@"0"]) {
-            NSString *observePriceUpper = [object valueForKey:@"observePrice1"];
-            NSString *observePriceLower = [object valueForKey:@"observePrice2"];
-            if (![observePriceUpper isEqualToString:@""]) {
-                //cell.observeImage.image = [UIImage imageNamed:@"button_03.png"];
-                if ([BasicPrice intValue] >= [observePriceUpper intValue]) {
+            BasicPrice = [BasicPrice stringByReplacingOccurrencesOfString:@"," withString:@""];
+            
+            targetString = [object valueForKey:@"observePrice1"];
+            if (![targetString isEqualToString:@""]) {
+                if ([BasicPrice intValue] >= [targetString intValue]) {
                     iHitFlag = 1;
                 }
             }
-            if (![observePriceLower isEqualToString:@""]) {
-                //cell.observeImage.image = [UIImage imageNamed:@"button_03.png"];
-                if ([BasicPrice intValue] <= [observePriceLower intValue]) {
+            targetString = [object valueForKey:@"observePrice2"];
+            if (![targetString isEqualToString:@""]) {
+                if ([BasicPrice intValue] <= [targetString intValue]) {
                     iHitFlag = 2;
                 }
             }
             
             NSString *BasicChangeVal = cell.changeValLabel.text;
-            NSString *observeChangeValUpper = [object valueForKey:@"observeChangeVal1"];
-            NSString *observeChangeValLower = [object valueForKey:@"observeChangeVal2"];
-            if (![observeChangeValUpper isEqualToString:@""]) {
-                //cell.observeImage.image = [UIImage imageNamed:@"button_03.png"];
-                if ([BasicChangeVal intValue] >= [observeChangeValUpper intValue]) {
+            targetString = [object valueForKey:@"observeChangeVal1"];
+            if (![targetString isEqualToString:@""]) {
+                if ([BasicChangeVal intValue] >= [targetString intValue]) {
                     iHitFlag = 3;
                 }
             }
-            if (![observeChangeValLower isEqualToString:@""]) {
-                //cell.observeImage.image = [UIImage imageNamed:@"button_03.png"];
-                if ([BasicChangeVal intValue] <= [observeChangeValLower intValue]) {
+            targetString = [object valueForKey:@"observeChangeVal2"];
+            if (![targetString isEqualToString:@""]) {
+                if ([BasicChangeVal intValue] <= [targetString intValue]) {
                     iHitFlag = 4;
                 }
             }
             
             NSString *BasicchangeRate = cell.changeRateLabel.text;
-            NSString *observeChangeRateUpper = [object valueForKey:@"observeChangeRate1"];
-            NSString *observeChangeRateLower = [object valueForKey:@"observeChangeRate2"];
-            if (![observeChangeRateUpper isEqualToString:@""]) {
-                //cell.observeImage.image = [UIImage imageNamed:@"button_03.png"];
-                if ([BasicchangeRate intValue] >= [observeChangeRateUpper intValue]) {
+            BasicchangeRate = [BasicchangeRate stringByReplacingOccurrencesOfString:@"%" withString:@""];
+            targetString = [object valueForKey:@"observeChangeRate1"];
+            if (![targetString isEqualToString:@""]) {
+                if ([BasicchangeRate intValue] >= [targetString intValue]) {
                     iHitFlag = 5;
                 }
             }
-            if (![observeChangeRateLower isEqualToString:@""]) {
-                //cell.observeImage.image = [UIImage imageNamed:@"button_03.png"];
-                if ([BasicchangeRate intValue] <= [observeChangeRateLower intValue]) {
+            targetString = [object valueForKey:@"observeChangeRate2"];
+            if (![targetString isEqualToString:@""]) {
+                if ([BasicchangeRate intValue] <= [targetString intValue]) {
                     iHitFlag = 6;
                 }
             }
@@ -428,6 +426,7 @@
             [object setValue:now forKey:@"noticeTime"];
             
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
             [formatter setDateFormat:@"MM/dd HH:mm:ss"];
             NSString *noticeTime = [formatter stringFromDate:now];
 
@@ -440,7 +439,6 @@
             codePlaceName = [code stringByAppendingString:place];
             codePlaceName = [codePlaceName stringByAppendingString:@" "];
             codePlaceName = [codePlaceName stringByAppendingString:name];
-
             
             [self createLocalNotification:codePlaceName :noticeTime];
             NSLog(@"Condition true. Notification");
