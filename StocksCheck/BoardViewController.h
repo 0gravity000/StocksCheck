@@ -28,9 +28,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *nikkeiLabel;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarItemButton;
+@property (weak, nonatomic) IBOutlet UISwitch *refreshSwitch;
 
 @property (weak, nonatomic) IBOutlet BoardTableView *boardTableView;
 
 - (IBAction)pushRefreshBarItemButton:(id)sender;
+- (IBAction)changeRefreshSwitch:(id)sender;
 
 @end

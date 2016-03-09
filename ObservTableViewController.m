@@ -39,8 +39,16 @@
         str = [str stringByAppendingString:@" "];
         str = [str stringByAppendingString:name];
         self.nameCell.textLabel.text = str;
+        
         //現在値
-        self.priceCell.textLabel.text = [[self.detailItem valueForKey:@"price"] description];
+        //self.priceCell.textLabel.text = [[self.detailItem valueForKey:@"price"] description];
+        NSString *strPrice = [[self.detailItem valueForKey:@"price"] description];
+        if ([strPrice isEqualToString:@"---"]) {
+            self.priceCell.textLabel.text = [[self.detailItem valueForKey:@"yesterdayPrice"] description];
+        } else {
+            self.priceCell.textLabel.text = [[self.detailItem  valueForKey:@"price"] description];
+        }
+        
         //前日比、騰落率
         float priceValTemp = 0;
         float changeVal = 0;

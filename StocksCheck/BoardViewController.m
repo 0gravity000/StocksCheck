@@ -36,7 +36,6 @@
     appDelegate.addedCode = @"";
 
     //[[UIApplication sharedApplication] cancelAllLocalNotifications];
-    [self refreshHedderLabel];
     
 }
 
@@ -114,8 +113,8 @@
         //---reload table view
         [self.boardTableView reloadData];
     }
+    [self refreshHedderLabel];
     [self initializeCoreData];
-
     [self checkObserveVaules];
     
 }
@@ -203,7 +202,6 @@
         
         //--- Show Stock Page in WebView
         //http://stocks.finance.yahoo.co.jp/stocks/detail/?code=9984.T
-        
         url = [NSString stringWithFormat:@"http://stocks.finance.yahoo.co.jp/stocks/detail/?code="];
         url = [url stringByAppendingString:codebuf];
         url = [url stringByAppendingString:placebuf];
@@ -225,12 +223,11 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
         
         //--- Search for stockName from html　銘柄名
-        // 正規表現の中で.*?とやると最短マッチするらしい。
+        // 正規表現の中で.*?とやると最短マッチする
         NSRegularExpression *regexp = [NSRegularExpression regularExpressionWithPattern:@"<th class=\"symbol\"><h1>(.*?)</h1></th>"
                                                                                 options:0
                                                                                   error:nil];
         //
-        //ここの処理を見直すこと。エラー処理も必要か？
         NSArray *arr = [regexp matchesInString:html
                                        options:0
                                          range:NSMakeRange(0, html.length)];
@@ -243,15 +240,12 @@
         
         
         //--- Search for yesterday stock price from html 前日終値
-        // 正規表現の中で.*?とやると最短マッチするらしい。
-        
+        // 正規表現の中で.*?とやると最短マッチする
         //<dl class="tseDtlDelay"><dd class="ymuiEditLink mar0"><strong>5,585</strong><span class="date yjSt">（02/26）</span></dd><dt class="title">前日終値
-        
         regexp = [NSRegularExpression regularExpressionWithPattern:@"<dl class=\"tseDtlDelay\"><dd class=\"ymuiEditLink mar0\"><strong>(.*)</strong><span class=\"date yjSt\">(.*)</span></dd><dt class=\"title\">前日終値"
                                                            options:0
                                                              error:nil];
         //
-        //ここの処理を見直すこと。エラー処理も必要か？
         arr = [regexp matchesInString:html
                               options:0
                                 range:NSMakeRange(0, html.length)];
@@ -263,7 +257,7 @@
         }
         
         //--- Search for Now stock price from html 現在値
-        // 正規表現の中で.*?とやると最短マッチするらしい。
+        // 正規表現の中で.*?とやると最短マッチする
         regexp = [NSRegularExpression regularExpressionWithPattern:@"<td class=\"stoksPrice\">(.*?)</td>"
                                                            options:0
                                                              error:nil];
@@ -302,6 +296,15 @@
     [self refreshHedderLabel];
     [self refreshPriceValue];
     [self checkObserveVaules];
+}
+
+- (IBAction)changeRefreshSwitch:(id)sender {
+    if (self.refreshSwitch.on == YES) {
+        //ON
+        
+    } else {
+        //OFF
+    }
 }
 
 
@@ -693,9 +696,16 @@
     str = [str stringByAppendingString:name];
     cell.codeNameLabel.text = str;
     NSLog(@"cell.codeNameLabel.text(code+place+name) =%@", cell.codeNameLabel.text);
+    
     //現在値
-    cell.priceLabel.text = [[object valueForKey:@"price"] description];
+    NSString *strPrice = [[object valueForKey:@"price"] description];
+    if ([strPrice isEqualToString:@"---"]) {
+        cell.priceLabel.text = [[object valueForKey:@"yesterdayPrice"] description];
+    } else {
+        cell.priceLabel.text = [[object valueForKey:@"price"] description];
+    }
     NSLog(@"cell.priceLabel.text(code+place+name) =%@", cell.priceLabel.text);
+    
     //前日比、騰落率
     float priceValTemp = 0;
     float changeVal = 0;

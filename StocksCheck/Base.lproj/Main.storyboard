@@ -40,22 +40,12 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QRS-NK-zzT">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <items>
-                                    <barButtonItem systemItem="refresh" id="PER-Tw-tmF">
-                                        <connections>
-                                            <action selector="pushRefreshBarItemButton:" destination="Soj-Er-glS" id="Rc0-mn-4vR"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="cn1-bO-Mdt"/>
-                                    <barButtonItem systemItem="add" id="trn-Q0-DnH">
-                                        <connections>
-                                            <segue destination="ivg-hn-eNr" kind="presentation" identifier="showResist" id="egA-0m-nTF"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="日経平均株価" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ku-oQ-cPG">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="85" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fzx-no-hft" customClass="BoardTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -156,12 +146,32 @@
                                     <outlet property="delegate" destination="Soj-Er-glS" id="zVr-60-toA"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="日経平均株価" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ku-oQ-cPG">
-                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QRS-NK-zzT">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem systemItem="refresh" id="PER-Tw-tmF">
+                                        <connections>
+                                            <action selector="pushRefreshBarItemButton:" destination="Soj-Er-glS" id="Rc0-mn-4vR"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="XTi-6N-uBi"/>
+                                    <barButtonItem style="plain" id="PPM-Ys-jDo">
+                                        <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="WA9-B6-xhU">
+                                            <rect key="frame" x="-25" y="-15" width="51" height="31"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <connections>
+                                                <action selector="changeRefreshSwitch:" destination="Soj-Er-glS" eventType="valueChanged" id="1V6-af-hcp"/>
+                                            </connections>
+                                        </switch>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="cn1-bO-Mdt"/>
+                                    <barButtonItem systemItem="add" id="trn-Q0-DnH">
+                                        <connections>
+                                            <segue destination="ivg-hn-eNr" kind="presentation" identifier="showResist" id="egA-0m-nTF"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -182,9 +192,9 @@
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="a7n-lz-Gbk"/>
-                                <exclude reference="QRS-NK-zzT"/>
-                                <exclude reference="fzx-no-hft"/>
                                 <exclude reference="4Ku-oQ-cPG"/>
+                                <exclude reference="fzx-no-hft"/>
+                                <exclude reference="QRS-NK-zzT"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="28f-ed-f1E"/>
@@ -205,9 +215,9 @@
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="a7n-lz-Gbk"/>
-                                <include reference="QRS-NK-zzT"/>
-                                <include reference="fzx-no-hft"/>
                                 <include reference="4Ku-oQ-cPG"/>
+                                <include reference="fzx-no-hft"/>
+                                <include reference="QRS-NK-zzT"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="28f-ed-f1E"/>
@@ -232,6 +242,7 @@
                         <outlet property="boardTableView" destination="fzx-no-hft" id="DT6-AZ-MM6"/>
                         <outlet property="dateMessageLabel" destination="a7n-lz-Gbk" id="XfF-3j-4Ia"/>
                         <outlet property="nikkeiLabel" destination="4Ku-oQ-cPG" id="JEa-LM-9xG"/>
+                        <outlet property="refreshSwitch" destination="WA9-B6-xhU" id="QkR-xk-d3B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="63K-d9-GOm" userLabel="First Responder" sceneMemberID="firstResponder"/>
