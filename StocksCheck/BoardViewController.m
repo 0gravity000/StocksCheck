@@ -34,6 +34,8 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.IsBackResistView = FALSE;
     appDelegate.addedCode = @"";
+
+    //[[UIApplication sharedApplication] cancelAllLocalNotifications];
     
 }
 
@@ -323,23 +325,23 @@
 }
 
 
-- (void)scheduleLocalNotification {
+- (void)createLocalNotification:(NSString *)name :(NSString *)time {
     
     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
     if (localNotif == nil) {
         return;
     }
     
-    localNotif.fireDate = [NSDate  dateWithTimeIntervalSinceNow:10.0];
+    localNotif.fireDate = [NSDate  dateWithTimeIntervalSinceNow:15.0];
     localNotif.timeZone = [NSTimeZone defaultTimeZone];
-    localNotif.repeatInterval = NSCalendarUnitMinute;
-
-    localNotif.alertBody = [NSString stringWithFormat:@"監視値成立"];
-    localNotif.alertAction = NSLocalizedString(@"View Details", nil);
-    localNotif.alertTitle = NSLocalizedString(@"Item Due", nil);
+    //localNotif.repeatInterval = NSCalendarUnitMinute;
+    //localNotif.alertTitle = name;
+    localNotif.alertBody = [NSString stringWithFormat:@"%@\n監視値成立\n%@",name ,time];
+    //localNotif.alertAction = NSLocalizedString(@"View Details", nil);aaaaa
+    localNotif.alertAction = @"Open";
     localNotif.soundName = UILocalNotificationDefaultSoundName;
     //localNotif.applicationIconBadgeNumber = 1;
-    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"5" forKey:@"IntervalKey"];
+    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"test" forKey:@"key1"];
     localNotif.userInfo = infoDict;
     
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
@@ -418,13 +420,29 @@
             }
         }
         if (iHitFlag != 0) {
-            //do anything
+            //監視値　イメージ
             [object setValue:@"3" forKey:@"observeImage"];
             
+            //銘柄名
             NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
             [object setValue:now forKey:@"noticeTime"];
+            
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"MM/dd HH:mm:ss"];
+            NSString *noticeTime = [formatter stringFromDate:now];
 
-            [self scheduleLocalNotification];
+            //銘柄名
+            NSString *codePlaceName;
+            NSString *code = [[object valueForKey:@"code"] description];
+            NSString *place = [[object valueForKey:@"place"] description];
+            NSString *name = [[object valueForKey:@"name"] description];
+            
+            codePlaceName = [code stringByAppendingString:place];
+            codePlaceName = [codePlaceName stringByAppendingString:@" "];
+            codePlaceName = [codePlaceName stringByAppendingString:name];
+
+            
+            [self createLocalNotification:codePlaceName :noticeTime];
             NSLog(@"Condition true. Notification");
         }
         

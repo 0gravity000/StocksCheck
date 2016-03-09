@@ -48,6 +48,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		AAC7B1741C8FC70900D792AF /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		AA19AC551C8A8D2200FD02E6 /* StocksCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StocksCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA19AC591C8A8D2200FD02E6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -212,6 +225,7 @@
 				AA19AC511C8A8D2200FD02E6 /* Sources */,
 				AA19AC521C8A8D2200FD02E6 /* Frameworks */,
 				AA19AC531C8A8D2200FD02E6 /* Resources */,
+				AAC7B1741C8FC70900D792AF /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
