@@ -150,7 +150,7 @@
     [newManagedObject setValue:[NSNumber numberWithInteger:(count-1)] forKey:@"rowPosition"];
     NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
     [newManagedObject setValue:now forKey:@"timeStamp"];
-    [newManagedObject setValue:now forKey:@"noticeTime"];
+    [newManagedObject setValue:@"" forKey:@"noticeTime"];
     
     [newManagedObject setValue:@"" forKey:@"observePrice1"];
     [newManagedObject setValue:@"" forKey:@"observePrice2"];
@@ -159,7 +159,6 @@
     [newManagedObject setValue:@"" forKey:@"observeChangeRate1"];
     [newManagedObject setValue:@"" forKey:@"observeChangeRate2"];
     [newManagedObject setValue:@"1" forKey:@"observeImage"];
-
     
     // Save the context.
     if (![self.managedObjectContext save:&error]) {
@@ -360,13 +359,13 @@
     NSLog(@"Error !: %@", [error localizedDescription]);
     NSLog(@"CoreData count = %ld", count);
     
+
     for (int i=0; i < count; i++) {
         NSLog(@"checkObserveVaules i = %d", i);
         indexPath = [NSIndexPath indexPathForRow:i inSection:0];
         object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        
         BoardTableViewCell *cell = (BoardTableViewCell *)[self.boardTableView cellForRowAtIndexPath:indexPath];
-
+        
         int iHitFlag = 0;
         NSString *BasicPrice = cell.priceLabel.text;
         NSString *targetString;
@@ -417,31 +416,40 @@
                 }
             }
         }
+        
+        
         if (iHitFlag != 0) {
             //監視値　イメージ
             [object setValue:@"3" forKey:@"observeImage"];
             
-            //銘柄名
-            NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
-            [object setValue:now forKey:@"noticeTime"];
-            
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-            [formatter setDateFormat:@"MM/dd HH:mm:ss"];
-            NSString *noticeTime = [formatter stringFromDate:now];
-
-            //銘柄名
-            NSString *codePlaceName;
-            NSString *code = [[object valueForKey:@"code"] description];
-            NSString *place = [[object valueForKey:@"place"] description];
-            NSString *name = [[object valueForKey:@"name"] description];
-            
-            codePlaceName = [code stringByAppendingString:place];
-            codePlaceName = [codePlaceName stringByAppendingString:@" "];
-            codePlaceName = [codePlaceName stringByAppendingString:name];
-            
-            [self createLocalNotification:codePlaceName :noticeTime];
-            NSLog(@"Condition true. Notification");
+            //NSString *noticeDate = [object valueForKey:@"noticeTime"];
+            //if ([noticeDate isEqual:[NSNull null]]) {
+            //if (noticeDate == nil) {
+            if ([cell.noticeTimeLabel.text isEqualToString:@""]) {
+                //--- Local Notification
+                //時間
+                NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
+                //[object setValue:now forKey:@"noticeTime"];
+                
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+                [formatter setDateFormat:@"MM/dd HH:mm:ss"];
+                NSString *noticeTime = [formatter stringFromDate:now];
+                [object setValue:noticeTime forKey:@"noticeTime"];
+                
+                //銘柄名
+                NSString *codePlaceName;
+                NSString *code = [[object valueForKey:@"code"] description];
+                NSString *place = [[object valueForKey:@"place"] description];
+                NSString *name = [[object valueForKey:@"name"] description];
+                
+                codePlaceName = [code stringByAppendingString:place];
+                codePlaceName = [codePlaceName stringByAppendingString:@" "];
+                codePlaceName = [codePlaceName stringByAppendingString:name];
+                
+                [self createLocalNotification:codePlaceName :noticeTime];
+                NSLog(@"Condition true. Notification");
+            }
         }
         
         // Save the context.
@@ -557,6 +565,7 @@
         indexPath = [self.boardTableView indexPathForSelectedRow];
         object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         //DetailViewController *controller = (DetailViewController *)[segue destinationViewController];
+        [object setValue:@"" forKey:@"noticeTime"];
         ObservTableViewController *controller = (ObservTableViewController *)[segue destinationViewController];
         [controller setDetailItem:object];
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
@@ -693,8 +702,11 @@
     cell.observeImage.image = [UIImage imageNamed:observe];
     
     //通知日時
-    cell.noticeTimeLabel.text = [[object valueForKey:@"noticeTime"] description];
-    NSLog(@"cell.priceLabel.text(code+place+name) =%@", cell.noticeTimeLabel.text);
+    //NSDate *noticeDate = [object valueForKey:@"noticeTime"];
+    //if (![noticeDate isEqual:[NSNull null]]) {
+        cell.noticeTimeLabel.text = [[object valueForKey:@"noticeTime"] description];
+        NSLog(@"cell.noticeTimeLabel.text =%@", cell.noticeTimeLabel.text);
+    //}
     
 }
 

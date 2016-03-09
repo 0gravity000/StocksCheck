@@ -9,7 +9,7 @@
     <entity name="Stock" representedClassName="Stock" syncable="YES">
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="noticeTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="noticeTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="observeChangeRate1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="observeChangeRate2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="observeChangeVal1" optional="YES" attributeType="String" syncable="YES"/>

@@ -15,6 +15,7 @@
 
 @dynamic code;
 @dynamic name;
+@dynamic noticeTime;
 @dynamic observeChangeRate1;
 @dynamic observeChangeRate2;
 @dynamic observeChangeVal1;
@@ -27,6 +28,5 @@
 @dynamic rowPosition;
 @dynamic timeStamp;
 @dynamic yesterdayPrice;
-@dynamic noticeTime;
 
 @end

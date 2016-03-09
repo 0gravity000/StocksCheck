@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, retain) NSString *code;
 @property (nullable, nonatomic, retain) NSString *name;
+@property (nullable, nonatomic, retain) NSString *noticeTime;
 @property (nullable, nonatomic, retain) NSString *observeChangeRate1;
 @property (nullable, nonatomic, retain) NSString *observeChangeRate2;
 @property (nullable, nonatomic, retain) NSString *observeChangeVal1;
@@ -29,7 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *rowPosition;
 @property (nullable, nonatomic, retain) NSDate *timeStamp;
 @property (nullable, nonatomic, retain) NSString *yesterdayPrice;
-@property (nullable, nonatomic, retain) NSDate *noticeTime;
 
 @end
 

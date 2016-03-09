@@ -653,6 +653,12 @@
                                 <exclude reference="27a-cr-LHK"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="GAF-zv-0Jr"/>
+                                <exclude reference="T4t-Be-KKW"/>
+                                <exclude reference="UTu-sD-UgO"/>
+                                <exclude reference="2v3-qU-WlI"/>
+                                <exclude reference="4Z7-fe-4le"/>
+                                <exclude reference="ZqZ-k8-BsR"/>
                                 <exclude reference="Hqk-dS-yYw"/>
                                 <exclude reference="sN8-BU-mpT"/>
                                 <exclude reference="v32-uK-qc4"/>
@@ -660,12 +666,6 @@
                                 <exclude reference="zYe-7s-1Xr"/>
                                 <exclude reference="IG0-et-anX"/>
                                 <exclude reference="LNL-06-PwS"/>
-                                <exclude reference="GAF-zv-0Jr"/>
-                                <exclude reference="T4t-Be-KKW"/>
-                                <exclude reference="UTu-sD-UgO"/>
-                                <exclude reference="2v3-qU-WlI"/>
-                                <exclude reference="4Z7-fe-4le"/>
-                                <exclude reference="ZqZ-k8-BsR"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -677,6 +677,12 @@
                                 <include reference="27a-cr-LHK"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="GAF-zv-0Jr"/>
+                                <include reference="T4t-Be-KKW"/>
+                                <include reference="UTu-sD-UgO"/>
+                                <include reference="2v3-qU-WlI"/>
+                                <include reference="4Z7-fe-4le"/>
+                                <include reference="ZqZ-k8-BsR"/>
                                 <include reference="Hqk-dS-yYw"/>
                                 <include reference="sN8-BU-mpT"/>
                                 <include reference="v32-uK-qc4"/>
@@ -684,12 +690,6 @@
                                 <include reference="zYe-7s-1Xr"/>
                                 <include reference="IG0-et-anX"/>
                                 <include reference="LNL-06-PwS"/>
-                                <include reference="GAF-zv-0Jr"/>
-                                <include reference="T4t-Be-KKW"/>
-                                <include reference="UTu-sD-UgO"/>
-                                <include reference="2v3-qU-WlI"/>
-                                <include reference="4Z7-fe-4le"/>
-                                <include reference="ZqZ-k8-BsR"/>
                             </mask>
                         </variation>
                     </view>
@@ -768,7 +768,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rCd-Ia-qcp">
-                                                    <rect key="frame" x="15" y="11" width="91" height="21"/>
+                                                    <rect key="frame" x="15" y="14" width="91" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -778,7 +778,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="52" id="Jdj-HL-3do">
-                                                    <rect key="frame" x="112" y="11" width="44" height="21"/>
+                                                    <rect key="frame" x="112" y="10" width="52" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -801,7 +801,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wWn-f4-g9h">
-                                                    <rect key="frame" x="15" y="11" width="91" height="21"/>
+                                                    <rect key="frame" x="15" y="14" width="91" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -811,7 +811,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6ZR-60-luV">
-                                                    <rect key="frame" x="112" y="11" width="44" height="21"/>
+                                                    <rect key="frame" x="112" y="10" width="52" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -858,7 +858,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vXP-vC-YDQ">
-                                                    <rect key="frame" x="15" y="11" width="91" height="21"/>
+                                                    <rect key="frame" x="15" y="14" width="91" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -868,7 +868,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="opA-Pa-Wqv">
-                                                    <rect key="frame" x="112" y="11" width="44" height="21"/>
+                                                    <rect key="frame" x="112" y="10" width="52" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -891,7 +891,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AXY-3z-oBf">
-                                                    <rect key="frame" x="15" y="11" width="91" height="21"/>
+                                                    <rect key="frame" x="15" y="14" width="91" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -901,7 +901,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="buT-tu-bPx">
-                                                    <rect key="frame" x="112" y="11" width="44" height="21"/>
+                                                    <rect key="frame" x="112" y="10" width="52" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -948,7 +948,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IqL-NV-qSI">
-                                                    <rect key="frame" x="15" y="11" width="91" height="21"/>
+                                                    <rect key="frame" x="15" y="14" width="91" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -958,7 +958,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ef2-mV-haK">
-                                                    <rect key="frame" x="112" y="11" width="44" height="21"/>
+                                                    <rect key="frame" x="112" y="10" width="52" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -981,7 +981,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yqs-5J-mmu">
-                                                    <rect key="frame" x="15" y="11" width="91" height="21"/>
+                                                    <rect key="frame" x="15" y="14" width="91" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -991,7 +991,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OHP-aC-7VU">
-                                                    <rect key="frame" x="112" y="11" width="44" height="21"/>
+                                                    <rect key="frame" x="112" y="10" width="52" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
