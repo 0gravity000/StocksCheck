@@ -34,6 +34,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="現在の日時" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a7n-lz-Gbk">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QRS-NK-zzT">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <items>
@@ -76,7 +82,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="65" y="32" width="80" height="40"/>
+                                                        <rect key="frame" x="52" y="33" width="80" height="40"/>
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="前日比" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGy-rv-j7V">
@@ -85,7 +91,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="161" y="28" width="80" height="25"/>
+                                                        <rect key="frame" x="148" y="29" width="80" height="25"/>
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="騰落率" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q4m-uT-xvK">
@@ -94,22 +100,22 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="161" y="53" width="80" height="25"/>
+                                                        <rect key="frame" x="148" y="54" width="80" height="25"/>
                                                     </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="button_01.png" translatesAutoresizingMaskIntoConstraints="NO" id="hkA-eK-4LY">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="15" y="37" width="35" height="35"/>
+                                                        <rect key="frame" x="15" y="39" width="30" height="30"/>
                                                     </variation>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知日時" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdb-JE-Isw">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知日時" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdb-JE-Isw">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="244" y="44" width="98" height="21"/>
+                                                        <rect key="frame" x="244" y="42" width="115" height="21"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
@@ -150,11 +156,23 @@
                                     <outlet property="delegate" destination="Soj-Er-glS" id="zVr-60-toA"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="日経平均株価" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ku-oQ-cPG">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="fzx-no-hft" firstAttribute="top" secondItem="YBE-Oc-WHv" secondAttribute="bottom" id="LQR-h7-vXg"/>
+                            <constraint firstItem="4Ku-oQ-cPG" firstAttribute="top" secondItem="a7n-lz-Gbk" secondAttribute="bottom" id="0sE-eZ-bxO"/>
+                            <constraint firstItem="a7n-lz-Gbk" firstAttribute="leading" secondItem="aE3-97-zgi" secondAttribute="leadingMargin" constant="-20" id="28f-ed-f1E"/>
+                            <constraint firstItem="4Ku-oQ-cPG" firstAttribute="leading" secondItem="aE3-97-zgi" secondAttribute="leadingMargin" constant="-20" id="4Ak-TC-dzD"/>
+                            <constraint firstItem="a7n-lz-Gbk" firstAttribute="top" secondItem="YBE-Oc-WHv" secondAttribute="bottom" id="Bym-J1-09x"/>
                             <constraint firstItem="QRS-NK-zzT" firstAttribute="top" secondItem="fzx-no-hft" secondAttribute="bottom" id="MQB-MS-dCf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="a7n-lz-Gbk" secondAttribute="trailing" constant="-20" id="diJ-lm-ATZ"/>
+                            <constraint firstItem="fzx-no-hft" firstAttribute="top" secondItem="4Ku-oQ-cPG" secondAttribute="bottom" id="fRt-xA-GIU"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4Ku-oQ-cPG" secondAttribute="trailing" constant="-20" id="h9d-6E-CHS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fzx-no-hft" secondAttribute="trailing" constant="-20" id="h9j-Dr-F6V"/>
                             <constraint firstItem="QRS-NK-zzT" firstAttribute="leading" secondItem="aE3-97-zgi" secondAttribute="leadingMargin" constant="-20" id="hNS-wG-PT0"/>
                             <constraint firstItem="6tM-LJ-vXm" firstAttribute="top" secondItem="QRS-NK-zzT" secondAttribute="bottom" id="lvN-Fk-NOX"/>
@@ -163,32 +181,48 @@
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
+                                <exclude reference="a7n-lz-Gbk"/>
                                 <exclude reference="QRS-NK-zzT"/>
                                 <exclude reference="fzx-no-hft"/>
+                                <exclude reference="4Ku-oQ-cPG"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="lvN-Fk-NOX"/>
+                                <exclude reference="28f-ed-f1E"/>
+                                <exclude reference="Bym-J1-09x"/>
+                                <exclude reference="diJ-lm-ATZ"/>
+                                <exclude reference="0sE-eZ-bxO"/>
+                                <exclude reference="4Ak-TC-dzD"/>
+                                <exclude reference="h9d-6E-CHS"/>
+                                <exclude reference="fRt-xA-GIU"/>
+                                <exclude reference="h9j-Dr-F6V"/>
+                                <exclude reference="mu6-2X-5NK"/>
                                 <exclude reference="MQB-MS-dCf"/>
                                 <exclude reference="hNS-wG-PT0"/>
                                 <exclude reference="z6Q-Dg-CVW"/>
-                                <exclude reference="LQR-h7-vXg"/>
-                                <exclude reference="h9j-Dr-F6V"/>
-                                <exclude reference="mu6-2X-5NK"/>
+                                <exclude reference="lvN-Fk-NOX"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
+                                <include reference="a7n-lz-Gbk"/>
                                 <include reference="QRS-NK-zzT"/>
                                 <include reference="fzx-no-hft"/>
+                                <include reference="4Ku-oQ-cPG"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="lvN-Fk-NOX"/>
+                                <include reference="28f-ed-f1E"/>
+                                <include reference="Bym-J1-09x"/>
+                                <include reference="diJ-lm-ATZ"/>
+                                <include reference="0sE-eZ-bxO"/>
+                                <include reference="4Ak-TC-dzD"/>
+                                <include reference="h9d-6E-CHS"/>
+                                <include reference="fRt-xA-GIU"/>
+                                <include reference="h9j-Dr-F6V"/>
+                                <include reference="mu6-2X-5NK"/>
                                 <include reference="MQB-MS-dCf"/>
                                 <include reference="hNS-wG-PT0"/>
                                 <include reference="z6Q-Dg-CVW"/>
-                                <include reference="LQR-h7-vXg"/>
-                                <include reference="h9j-Dr-F6V"/>
-                                <include reference="mu6-2X-5NK"/>
+                                <include reference="lvN-Fk-NOX"/>
                             </mask>
                         </variation>
                     </view>
@@ -196,6 +230,8 @@
                     <connections>
                         <outlet property="addBarItemButton" destination="trn-Q0-DnH" id="6l6-U3-XuH"/>
                         <outlet property="boardTableView" destination="fzx-no-hft" id="DT6-AZ-MM6"/>
+                        <outlet property="dateMessageLabel" destination="a7n-lz-Gbk" id="XfF-3j-4Ia"/>
+                        <outlet property="nikkeiLabel" destination="4Ku-oQ-cPG" id="JEa-LM-9xG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="63K-d9-GOm" userLabel="First Responder" sceneMemberID="firstResponder"/>

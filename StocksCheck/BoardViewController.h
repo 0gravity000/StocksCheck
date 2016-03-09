@@ -24,6 +24,8 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (weak, nonatomic) IBOutlet UILabel *dateMessageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *nikkeiLabel;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarItemButton;
 

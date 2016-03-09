@@ -36,6 +36,7 @@
     appDelegate.addedCode = @"";
 
     //[[UIApplication sharedApplication] cancelAllLocalNotifications];
+    [self refreshHedderLabel];
     
 }
 
@@ -170,27 +171,6 @@
 }
 
 
-//- (void)insertNewObject:(id)sender {
-//    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-//    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-//    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-//    
-//    // If appropriate, configure the new managed object.
-//    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-//    //[newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
-//    NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
-//    [newManagedObject setValue:now forKey:@"timeStamp"];
-//    
-//    // Save the context.
-//    NSError *error = nil;
-//    if (![context save:&error]) {
-//        // Replace this implementation with code to handle the error appropriately.
-//        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-//        abort();
-//    }
-//}
-
 -(void)initializeCoreData {
     NSLog(@"*** Now initializeCoreData");
     
@@ -319,6 +299,7 @@
 
 - (IBAction)pushRefreshBarItemButton:(id)sender {
     NSLog(@"*** Now pushRefreshBarItemButton");
+    [self refreshHedderLabel];
     [self refreshPriceValue];
     [self checkObserveVaules];
 }
@@ -335,7 +316,7 @@
     localNotif.timeZone = [NSTimeZone defaultTimeZone];
     //localNotif.repeatInterval = NSCalendarUnitMinute;
     //localNotif.alertTitle = name;
-    localNotif.alertBody = [NSString stringWithFormat:@"%@\n監視値成立\n%@",name ,time];
+    localNotif.alertBody = [NSString stringWithFormat:@"%@\n株価が監視値になりました。\n%@",name ,time];
     //localNotif.alertAction = NSLocalizedString(@"View Details", nil);aaaaa
     localNotif.alertAction = @"Open";
     localNotif.soundName = UILocalNotificationDefaultSoundName;
@@ -416,7 +397,6 @@
                 }
             }
         }
-        
         
         if (iHitFlag != 0) {
             //監視値　イメージ
@@ -536,6 +516,83 @@
     //---reload table view
     [self.boardTableView reloadData];
 }
+
+-(void)refreshHedderLabel {
+    NSLog(@"*** Now refreshPriceValue");
+    NSString *url;
+    url = [NSString stringWithFormat:@"http://stocks.finance.yahoo.co.jp/stocks/detail/?code=998407.O"];
+    
+    NSURL *transUrl = [NSURL URLWithString:url];
+    if ([[UIApplication sharedApplication] canOpenURL:transUrl]) {
+        //[[UIApplication sharedApplication] openURL:transUrl];
+        //NSURLRequest *urlReq = [NSURLRequest requestWithURL:self.transUrl];
+        //[self.StockWebView loadRequest:urlReq];
+    }
+    
+    //--- Search for stock price from html
+    NSString *html_ = [NSString stringWithContentsOfURL:transUrl
+                                               encoding:NSUTF8StringEncoding
+                                                  error:nil];
+    NSString *html = [html_ stringByReplacingOccurrencesOfString:@"\n"
+                                                      withString:@""];
+
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+
+    // 正規表現の中で.*?とやると最短マッチする
+    //<p>現在の日時：<strong>3月 9日 23:31</strong> -- 日本の証券市場は終了しました。</p></div>
+    //@"<td class=\"stoksPrice\">(.*?)</td>"
+    //nowtime and Message
+    NSRegularExpression *regexp = [NSRegularExpression regularExpressionWithPattern:@"<p>現在の日時：<strong>(.*?)月 (.*?)日 (.*?):(.*?)</strong>(.*?)</p>"
+                                                                            options:0
+                                                                              error:nil];
+    
+    //
+    NSArray *arr = [regexp matchesInString:html
+                                   options:0
+                                     range:NSMakeRange(0, html.length)];
+    
+    NSString *strbuf;
+    for (NSTextCheckingResult *match in arr) {
+//        NSString *strbuf1 = [html substringWithRange:[match rangeAtIndex:1]];
+//        NSString *strbuf2 = [html substringWithRange:[match rangeAtIndex:2]];
+//        NSString *strbuf3 = [html substringWithRange:[match rangeAtIndex:3]];
+//        NSString *strbuf4 = [html substringWithRange:[match rangeAtIndex:4]];
+//        NSString *strbuf5 = [html substringWithRange:[match rangeAtIndex:5]];
+        strbuf = [html substringWithRange:[match rangeAtIndex:5]];
+    }
+    strbuf = [strbuf substringFromIndex:3];
+    self.dateMessageLabel.text = strbuf;
+    
+    //Nikkei average
+    regexp = [NSRegularExpression regularExpressionWithPattern:@"<td class=\"stoksPrice\">(.*?)</td>"
+                                                                            options:0
+                                                                              error:nil];
+    arr = [regexp matchesInString:html
+                                   options:0
+                                     range:NSMakeRange(0, html.length)];
+    NSString *strNikkeiPrice;
+    for (NSTextCheckingResult *match in arr) {
+        strNikkeiPrice = [html substringWithRange:[match rangeAtIndex:1]];
+    }
+
+    //changeValue and changeRate
+    //<td class="change"><span class="yjSt">前日比</span><span class="icoDownRed yjMSt">-140.95（-0.84%）</span></td>
+    regexp = [NSRegularExpression regularExpressionWithPattern:@"<td class=\"change\"><span class=\"yjSt\">前日比</span><span class=\"(.*?)\">(.*?)</span></td>"
+                                                       options:0
+                                                         error:nil];
+    //
+    arr = [regexp matchesInString:html
+                          options:0
+                            range:NSMakeRange(0, html.length)];
+    
+    NSString *strChange;
+    for (NSTextCheckingResult *match in arr) {
+        strChange = [html substringWithRange:[match rangeAtIndex:2]];
+    }
+    self.nikkeiLabel.text = [NSString stringWithFormat:@"日経平均:%@    %@" ,strNikkeiPrice ,strChange];
+    
+}
+
 
 #pragma mark - Navigation Controller
 
