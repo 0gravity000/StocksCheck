@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *changeValLabel;
 @property (weak, nonatomic) IBOutlet UILabel *changeRateLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *observeImage;
+@property (weak, nonatomic) IBOutlet UILabel *noticeTimeLabel;
 
 @end

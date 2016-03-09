@@ -148,6 +148,7 @@
     [newManagedObject setValue:[NSNumber numberWithInteger:(count-1)] forKey:@"rowPosition"];
     NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
     [newManagedObject setValue:now forKey:@"timeStamp"];
+    [newManagedObject setValue:now forKey:@"noticeTime"];
     
     [newManagedObject setValue:@"" forKey:@"observePrice1"];
     [newManagedObject setValue:@"" forKey:@"observePrice2"];
@@ -156,6 +157,7 @@
     [newManagedObject setValue:@"" forKey:@"observeChangeRate1"];
     [newManagedObject setValue:@"" forKey:@"observeChangeRate2"];
     [newManagedObject setValue:@"1" forKey:@"observeImage"];
+
     
     // Save the context.
     if (![self.managedObjectContext save:&error]) {
@@ -320,6 +322,29 @@
     [self checkObserveVaules];
 }
 
+
+- (void)scheduleLocalNotification {
+    
+    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+    if (localNotif == nil) {
+        return;
+    }
+    
+    localNotif.fireDate = [NSDate  dateWithTimeIntervalSinceNow:10.0];
+    localNotif.timeZone = [NSTimeZone defaultTimeZone];
+    localNotif.repeatInterval = NSCalendarUnitMinute;
+
+    localNotif.alertBody = [NSString stringWithFormat:@"監視値成立"];
+    localNotif.alertAction = NSLocalizedString(@"View Details", nil);
+    localNotif.alertTitle = NSLocalizedString(@"Item Due", nil);
+    localNotif.soundName = UILocalNotificationDefaultSoundName;
+    //localNotif.applicationIconBadgeNumber = 1;
+    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"5" forKey:@"IntervalKey"];
+    localNotif.userInfo = infoDict;
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+}
+
 -(void)checkObserveVaules {
     NSLog(@"*** Now checkObserveVaules");
 
@@ -394,9 +419,13 @@
         }
         if (iHitFlag != 0) {
             //do anything
-            NSLog(@"Condition true");
             [object setValue:@"3" forKey:@"observeImage"];
-            //cell.observeImage.image = [UIImage imageNamed:@"button_02.png"];
+            
+            NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
+            [object setValue:now forKey:@"noticeTime"];
+
+            [self scheduleLocalNotification];
+            NSLog(@"Condition true. Notification");
         }
         
         // Save the context.
@@ -646,6 +675,10 @@
             break;
     }
     cell.observeImage.image = [UIImage imageNamed:observe];
+    
+    //通知日時
+    cell.noticeTimeLabel.text = [[object valueForKey:@"noticeTime"] description];
+    NSLog(@"cell.priceLabel.text(code+place+name) =%@", cell.noticeTimeLabel.text);
     
 }
 

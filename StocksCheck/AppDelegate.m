@@ -81,6 +81,20 @@
 //    }
 //}
 
+#pragma mark - Notification
+
+-(void)resisterLocalNotification {
+    UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+    UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notif {
+    
+    NSString *itemName = [notif.userInfo objectForKey:@"IntervalKey"];
+    //application.applicationIconBadgeNumber = notif.applicationIconBadgeNumber-1;
+}
+
 #pragma mark - Load Stocks CSV Data
 
 // HTTP からファイルをロード

@@ -103,6 +103,15 @@
                                                         <rect key="frame" x="15" y="37" width="35" height="35"/>
                                                     </variation>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知日時" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdb-JE-Isw">
+                                                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" fixedFrame="YES">
+                                                        <rect key="frame" x="244" y="44" width="98" height="21"/>
+                                                    </variation>
+                                                </label>
                                             </subviews>
                                             <variation key="default">
                                                 <mask key="subviews">
@@ -111,6 +120,7 @@
                                                     <exclude reference="TGy-rv-j7V"/>
                                                     <exclude reference="Q4m-uT-xvK"/>
                                                     <exclude reference="hkA-eK-4LY"/>
+                                                    <exclude reference="wdb-JE-Isw"/>
                                                 </mask>
                                             </variation>
                                             <variation key="widthClass=compact">
@@ -120,6 +130,7 @@
                                                     <include reference="TGy-rv-j7V"/>
                                                     <include reference="Q4m-uT-xvK"/>
                                                     <include reference="hkA-eK-4LY"/>
+                                                    <include reference="wdb-JE-Isw"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -127,6 +138,7 @@
                                             <outlet property="changeRateLabel" destination="Q4m-uT-xvK" id="Trf-Hg-Vgf"/>
                                             <outlet property="changeValLabel" destination="TGy-rv-j7V" id="5nN-2I-No4"/>
                                             <outlet property="codeNameLabel" destination="A01-kG-JsH" id="Nea-yJ-e0N"/>
+                                            <outlet property="noticeTimeLabel" destination="wdb-JE-Isw" id="Vg5-yM-kC9"/>
                                             <outlet property="observeImage" destination="hkA-eK-4LY" id="SOV-Ay-Doa"/>
                                             <outlet property="priceLabel" destination="EtR-ux-xA8" id="qFA-6d-tFX"/>
                                             <segue destination="3Bp-9L-7tg" kind="show" identifier="showDetail" id="YLg-ut-aGf"/>
