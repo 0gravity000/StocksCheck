@@ -44,8 +44,17 @@
     //self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;  ///NG
     [super viewWillAppear:animated];
 
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    //タイマー状態チェック
+    if (self.refreshSwitch.on) {
+        if(self.timerSource==nil){
+            //タイマー作成
+            [self prepareAutoRefresh];
+            // タイマー開始
+            dispatch_resume(self.timerSource);
+        }
+    }
     
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (appDelegate.IsBackResistView == TRUE) {
 
         //NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
@@ -305,48 +314,25 @@
     if (self.refreshSwitch.on == YES) {
         //ON
         self.refreshBarItemButton.enabled = NO;
+        self.addBarItemButton.enabled = NO;
+        self.navigationItem.rightBarButtonItem = nil;
         
-        //test code
-        // タイマーソース作成
-        self.timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
-        //dispatch_retain(_timerSource);
-        // タイマーキャンセルハンドラ設定
-        dispatch_source_set_cancel_handler(self.timerSource, ^{
-            if(self.timerSource){
-                //dispatch_release(_timerSource); // releaseを忘れずに
-                self.timerSource = NULL;
-            }
-        });
-        // タイマーイベントハンドラ
-        dispatch_source_set_event_handler(self.timerSource, ^{
-            // ここに定期的に行う処理を記述
-            NSLog(@"in TimerEventHandler");
-            [self autoRefreshByTimer];
-        });
-        // インターバル等を設定
-        dispatch_source_set_timer(_timerSource, dispatch_time(DISPATCH_TIME_NOW, 0), NSEC_PER_SEC * 10, NSEC_PER_SEC / 2); // 直後に開始、5秒間隔で 0.5秒の揺らぎを許可
+        //タイマー作成
+        [self prepareAutoRefresh];
         // タイマー開始
         dispatch_resume(self.timerSource);
-        
-        
-//        // 別のスレッドで行う処理をキューに加える
-//        NSOperationQueue *queue = [NSOperationQueue new];
-//        NSInvocationOperation *operation = [[NSInvocationOperation alloc]
-//                                            initWithTarget:self
-//                                            selector:@selector(prepareAutoRefresh)
-//                                            object:nil];
-//        [queue addOperation:operation];
-        
         
     } else {
         //OFF
         self.refreshBarItemButton.enabled = YES;
+        self.addBarItemButton.enabled = YES;
+        self.navigationItem.rightBarButtonItem = self.editButtonItem;
 //        // タイマ一時停止
-//        if(_timerSource){
+//        if(self.timerSource){
 //            dispatch_suspend(self.timerSource);
 //        }
         // タイマ破棄
-        if(_timerSource){
+        if(self.timerSource){
             dispatch_source_cancel(self.timerSource);
         }
     }
@@ -355,6 +341,15 @@
 ////void (^MyPeriodicTask)(void);
 //typedef void (^MyPeriodicTask)(void);
 //MyPeriodicTask myPeriodicTask = ^{ NSLog(@"in block"); };
+
+//        // 別のスレッドで行う処理をキューに加える
+//        NSOperationQueue *queue = [NSOperationQueue new];
+//        NSInvocationOperation *operation = [[NSInvocationOperation alloc]
+//                                            initWithTarget:self
+//                                            selector:@selector(prepareAutoRefresh)
+//                                            object:nil];
+//        [queue addOperation:operation];
+
 
 //dispatch_source_t CreateDispatchTimer(uint64_t interval,
 //                                      uint64_t leeway,
@@ -385,15 +380,40 @@
 
 -(void)prepareAutoRefresh {
     NSLog(@"*** Now prepareAutoRefresh");
-    if (self.autoRefershTimer == nil || (![self.autoRefershTimer isValid])) {
-        self.autoRefershTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
-                                                                 target:self
-                                                               selector:@selector(autoRefreshByTimer)
-                                                               userInfo:nil
-                                                                repeats:YES];
-    }
-    //[[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+
+    // タイマーソース作成
+    self.timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
+    //dispatch_retain(_timerSource);
+    // タイマーキャンセルハンドラ設定
+    dispatch_source_set_cancel_handler(self.timerSource, ^{
+        if(self.timerSource){
+            //dispatch_release(_timerSource); // releaseを忘れずに
+            self.timerSource = NULL;
+        }
+    });
+    // タイマーイベントハンドラ
+    dispatch_source_set_event_handler(self.timerSource, ^{
+        // ここに定期的に行う処理を記述
+        NSLog(@"in TimerEventHandler");
+        [self autoRefreshByTimer];
+    });
+    // インターバル等を設定
+    dispatch_source_set_timer(self.timerSource,
+                              dispatch_time(DISPATCH_TIME_NOW, 0), NSEC_PER_SEC * 10, NSEC_PER_SEC / 2); // 直後に開始、10秒間隔で 0.5秒の揺らぎを許可
+
 }
+
+//-(void)prepareAutoRefresh {
+//    NSLog(@"*** Now prepareAutoRefresh");
+//    if (self.autoRefershTimer == nil || (![self.autoRefershTimer isValid])) {
+//        self.autoRefershTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+//                                                                 target:self
+//                                                               selector:@selector(autoRefreshByTimer)
+//                                                               userInfo:nil
+//                                                                repeats:YES];
+//    }
+//    //[[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+//}
 
 -(void)autoRefreshByTimer {
     NSLog(@"*** Now autoRefreshByTimer");
@@ -579,16 +599,15 @@
             }
         }
         //}
-        
-        // Save the context.
-        if (![self.managedObjectContext save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-        
     }
+    // Save the context.
+    if (![self.managedObjectContext save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
     //---reload table view
     [self.boardTableView reloadData];
     
@@ -653,13 +672,14 @@
             [object setValue:pricebuf forKey:@"price"];
             NSLog(@"price %@", pricebuf);
         }
-        // Save the context.
-        if (![self.managedObjectContext save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
+    }
+    
+    // Save the context.
+    if (![self.managedObjectContext save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
     }
     //---reload table view
     [self.boardTableView reloadData];
@@ -766,6 +786,11 @@
     NSManagedObject *object;
     NSError *error = nil;
     
+    // タイマ破棄
+    if(self.timerSource){
+        dispatch_source_cancel(self.timerSource);
+    }
+    
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         indexPath = [self.boardTableView indexPathForSelectedRow];
         object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
@@ -806,6 +831,15 @@
 
 #pragma mark - Table View
 
+- (nullable NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.refreshSwitch.on == YES) {
+        return nil;
+    } else {
+        return indexPath;
+    }
+}
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSLog(@"*** Now numberOfSectionsInTableView");
     return [[self.fetchedResultsController sections] count];
@@ -829,13 +863,20 @@
     NSLog(@"*** Now configureCell");
     NSLog(@"Now configureCell index=%ld", indexPath.row);
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+    if (self.refreshSwitch.on == YES) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
+    //銘柄名
     //cell.textLabel.text = [[object valueForKey:@"code"] description];
     NSString *str;
     NSString *code = [[object valueForKey:@"code"] description];
     NSString *place = [[object valueForKey:@"place"] description];
     NSString *name = [[object valueForKey:@"name"] description];
     
-    //銘柄名
     str = [code stringByAppendingString:place];
     str = [str stringByAppendingString:@" "];
     str = [str stringByAppendingString:name];
@@ -1106,6 +1147,7 @@
         }
     }
 }
+
 
 #pragma mark - Fetched results controller
 
