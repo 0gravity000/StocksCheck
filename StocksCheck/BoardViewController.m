@@ -265,7 +265,6 @@
                                                              error:nil];
         
         //
-        //ここの処理を見直すこと。エラー処理も必要か？
         arr = [regexp matchesInString:html
                               options:0
                                 range:NSMakeRange(0, html.length)];
@@ -302,26 +301,98 @@
 
 - (IBAction)changeRefreshSwitch:(id)sender {
     NSLog(@"*** Now changeRefreshSwitch");
+    
     if (self.refreshSwitch.on == YES) {
         //ON
-        if (self.autoRefershTimer == nil || (![self.autoRefershTimer isValid])) {
-            self.autoRefershTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
-                                                                     target:self
-                                                                   selector:@selector(autoRefreshByTimer)
-                                                                   userInfo:nil
-                                                                    repeats:YES];
-        }
-        //[[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
-        
         self.refreshBarItemButton.enabled = NO;
+        
+        //test code
+        // タイマーソース作成
+        self.timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
+        //dispatch_retain(_timerSource);
+        // タイマーキャンセルハンドラ設定
+        dispatch_source_set_cancel_handler(self.timerSource, ^{
+            if(self.timerSource){
+                //dispatch_release(_timerSource); // releaseを忘れずに
+                self.timerSource = NULL;
+            }
+        });
+        // タイマーイベントハンドラ
+        dispatch_source_set_event_handler(self.timerSource, ^{
+            // ここに定期的に行う処理を記述
+            NSLog(@"in TimerEventHandler");
+            [self autoRefreshByTimer];
+        });
+        // インターバル等を設定
+        dispatch_source_set_timer(_timerSource, dispatch_time(DISPATCH_TIME_NOW, 0), NSEC_PER_SEC * 10, NSEC_PER_SEC / 2); // 直後に開始、5秒間隔で 0.5秒の揺らぎを許可
+        // タイマー開始
+        dispatch_resume(self.timerSource);
+        
+        
+//        // 別のスレッドで行う処理をキューに加える
+//        NSOperationQueue *queue = [NSOperationQueue new];
+//        NSInvocationOperation *operation = [[NSInvocationOperation alloc]
+//                                            initWithTarget:self
+//                                            selector:@selector(prepareAutoRefresh)
+//                                            object:nil];
+//        [queue addOperation:operation];
+        
         
     } else {
         //OFF
-        if ([self.autoRefershTimer isValid]) {
-            [self.autoRefershTimer invalidate];
-        }
         self.refreshBarItemButton.enabled = YES;
+//        // タイマ一時停止
+//        if(_timerSource){
+//            dispatch_suspend(self.timerSource);
+//        }
+        // タイマ破棄
+        if(_timerSource){
+            dispatch_source_cancel(self.timerSource);
+        }
     }
+}
+
+////void (^MyPeriodicTask)(void);
+//typedef void (^MyPeriodicTask)(void);
+//MyPeriodicTask myPeriodicTask = ^{ NSLog(@"in block"); };
+
+//dispatch_source_t CreateDispatchTimer(uint64_t interval,
+//                                      uint64_t leeway,
+//                                      dispatch_queue_t queue,
+//                                      dispatch_block_t block)
+//{
+//    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER,
+//                                                     0, 0, queue);
+//    if (timer) {
+//        dispatch_source_set_timer(timer, dispatch_walltime(NULL, 0), interval, leeway);
+//        dispatch_source_set_event_handler(timer, block);
+//        dispatch_resume(timer);
+//    }
+//    return timer;
+//}
+
+//void MyCreateTimer()
+//{
+//    dispatch_source_t aTimer = CreateDispatchTimer(30ull * NSEC_PER_SEC,
+//                                                   1ull * NSEC_PER_SEC,
+//                                                   dispatch_get_main_queue(),
+//                                                   ^{ MyPeriodicTask(); });
+//    // 後の使用に備えて適当な箇所に格納しておく。 if (aTimer)
+//    {
+//        MyStoreTimer(aTimer);
+//    }
+//}
+
+-(void)prepareAutoRefresh {
+    NSLog(@"*** Now prepareAutoRefresh");
+    if (self.autoRefershTimer == nil || (![self.autoRefershTimer isValid])) {
+        self.autoRefershTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                                 target:self
+                                                               selector:@selector(autoRefreshByTimer)
+                                                               userInfo:nil
+                                                                repeats:YES];
+    }
+    //[[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
 }
 
 -(void)autoRefreshByTimer {

@@ -38,4 +38,6 @@
 - (IBAction)pushRefreshBarItemButton:(id)sender;
 - (IBAction)changeRefreshSwitch:(id)sender;
 
+@property dispatch_source_t timerSource; // タイマーソース
+
 @end
