@@ -44,16 +44,6 @@
     //self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;  ///NG
     [super viewWillAppear:animated];
 
-    //タイマー状態チェック
-    if (self.refreshSwitch.on) {
-        if(self.timerSource==nil){
-            //タイマー作成
-            [self prepareAutoRefresh];
-            // タイマー開始
-            dispatch_resume(self.timerSource);
-        }
-    }
-    
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (appDelegate.IsBackResistView == TRUE) {
 
@@ -336,6 +326,8 @@
             dispatch_source_cancel(self.timerSource);
         }
     }
+    //---reload table view necessary
+    [self.boardTableView reloadData];
 }
 
 ////void (^MyPeriodicTask)(void);
@@ -382,7 +374,8 @@
     NSLog(@"*** Now prepareAutoRefresh");
 
     // タイマーソース作成
-    self.timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
+    //self.timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
+    self.timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
     //dispatch_retain(_timerSource);
     // タイマーキャンセルハンドラ設定
     dispatch_source_set_cancel_handler(self.timerSource, ^{
@@ -475,130 +468,133 @@
         //NSString *BasicPrice = cell.priceLabel.text;
         //現在値
         NSString *BasicPrice = [object valueForKey:@"price"];
-        
-        //前日比、騰落率
-        float priceValTemp = 0;
-        float changeVal = 0;
-        float changeValTemp = 0;
-        float changeRate = 0;
-        NSString *valTemp;
-        NSString *rateTemp;
-        
-        NSString *setString = [NSString stringWithFormat:@"%@",BasicPrice];
-        NSString *setString2 = [setString stringByReplacingOccurrencesOfString:@"," withString:@""];
-        priceValTemp = [setString2 floatValue];
-        
-        valTemp = [[object valueForKey:@"yesterdayPrice"] description];
-        setString = [NSString stringWithFormat:@"%@",valTemp];
-        setString2 = [setString stringByReplacingOccurrencesOfString:@"," withString:@""];
-        changeValTemp = [setString2 floatValue];
-        
-        changeVal = priceValTemp - changeValTemp;
-        changeRate = (changeVal / changeValTemp) *100;
-        
-        valTemp = [NSString stringWithFormat : @"%.0f", changeVal];
-        rateTemp = [NSString stringWithFormat : @"%.2f", changeRate];
-        //    [object setValue:valTemp forKey:@"changeVal"];
-        //    [object setValue:rateTemp forKey:@"changeRate"];
-        
-        if (changeVal == 0) {
-            valTemp = @"0";
-        } else if (changeVal > 0){
-            valTemp = [@"+" stringByAppendingString:valTemp];
-            rateTemp = [@"+" stringByAppendingString:rateTemp];
-        } else if (changeVal < 0) {
-
+        //am7:00-9:00の間、現在値がWebで”---”となるので、この場合、チェック処理を行わない。
+        if (![BasicPrice isEqualToString:@"---"]) {
+            //前日比、騰落率
+            float priceValTemp = 0;
+            float changeVal = 0;
+            float changeValTemp = 0;
+            float changeRate = 0;
+            NSString *valTemp;
+            NSString *rateTemp;
+            
+            NSString *setString = [NSString stringWithFormat:@"%@",BasicPrice];
+            NSString *setString2 = [setString stringByReplacingOccurrencesOfString:@"," withString:@""];
+            priceValTemp = [setString2 floatValue];
+            
+            valTemp = [[object valueForKey:@"yesterdayPrice"] description];
+            setString = [NSString stringWithFormat:@"%@",valTemp];
+            setString2 = [setString stringByReplacingOccurrencesOfString:@"," withString:@""];
+            changeValTemp = [setString2 floatValue];
+            
+            changeVal = priceValTemp - changeValTemp;
+            changeRate = (changeVal / changeValTemp) *100;
+            
+            valTemp = [NSString stringWithFormat : @"%.0f", changeVal];
+            rateTemp = [NSString stringWithFormat : @"%.2f", changeRate];
+            //    [object setValue:valTemp forKey:@"changeVal"];
+            //    [object setValue:rateTemp forKey:@"changeRate"];
+            
+            if (changeVal == 0) {
+                valTemp = @"0";
+            } else if (changeVal > 0){
+                valTemp = [@"+" stringByAppendingString:valTemp];
+                rateTemp = [@"+" stringByAppendingString:rateTemp];
+            } else if (changeVal < 0) {
+                
+            }
+            //rateTemp = [rateTemp stringByAppendingString:@"%"];
+            NSString *BasicChangeVal = valTemp;
+            NSString *BasicchangeRate = rateTemp;
+            
+            //-----------------
+            
+            //cell.observeImage.image = [UIImage imageNamed:@"button_01.png"];
+            if (![BasicPrice isEqualToString:@"0"]) {
+                BasicPrice = [BasicPrice stringByReplacingOccurrencesOfString:@"," withString:@""];
+                
+                targetString = [object valueForKey:@"observePrice1"];
+                if (![targetString isEqualToString:@""]) {
+                    if ([BasicPrice intValue] >= [targetString intValue]) {
+                        iHitFlag = 1;
+                    }
+                }
+                targetString = [object valueForKey:@"observePrice2"];
+                if (![targetString isEqualToString:@""]) {
+                    if ([BasicPrice intValue] <= [targetString intValue]) {
+                        iHitFlag = 2;
+                    }
+                }
+                
+                //NSString *BasicChangeVal = cell.changeValLabel.text;
+                //NSString *BasicChangeVal = [object valueForKey:@"changeVal"];
+                targetString = [object valueForKey:@"observeChangeVal1"];
+                if (![targetString isEqualToString:@""]) {
+                    if ([BasicChangeVal intValue] >= [targetString intValue]) {
+                        iHitFlag = 3;
+                    }
+                }
+                targetString = [object valueForKey:@"observeChangeVal2"];
+                if (![targetString isEqualToString:@""]) {
+                    if ([BasicChangeVal intValue] <= [targetString intValue]) {
+                        iHitFlag = 4;
+                    }
+                }
+                
+                //NSString *BasicchangeRate = cell.changeRateLabel.text;
+                //BasicchangeRate = [BasicchangeRate stringByReplacingOccurrencesOfString:@"%" withString:@""];
+                targetString = [object valueForKey:@"observeChangeRate1"];
+                if (![targetString isEqualToString:@""]) {
+                    if ([BasicchangeRate intValue] >= [targetString intValue]) {
+                        iHitFlag = 5;
+                    }
+                }
+                targetString = [object valueForKey:@"observeChangeRate2"];
+                if (![targetString isEqualToString:@""]) {
+                    if ([BasicchangeRate intValue] <= [targetString intValue]) {
+                        iHitFlag = 6;
+                    }
+                }
+            }
+            
+            if (iHitFlag != 0) {
+                //監視値　イメージ
+                [object setValue:@"3" forKey:@"observeImage"];
+                
+                //NSString *noticeDate = [object valueForKey:@"noticeTime"];
+                //if ([noticeDate isEqual:[NSNull null]]) {
+                //if (noticeDate == nil) {
+                //if ([cell.noticeTimeLabel.text isEqualToString:@""]) {
+                NSString *noticeStr = [object valueForKey:@"noticeTime"];
+                if ([noticeStr isEqualToString:@""]) {
+                    //--- Local Notification
+                    //時間
+                    NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
+                    //[object setValue:now forKey:@"noticeTime"];
+                    
+                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+                    [formatter setDateFormat:@"MM/dd HH:mm:ss"];
+                    NSString *noticeTime = [formatter stringFromDate:now];
+                    [object setValue:noticeTime forKey:@"noticeTime"];
+                    
+                    //銘柄名
+                    NSString *codePlaceName;
+                    NSString *code = [[object valueForKey:@"code"] description];
+                    NSString *place = [[object valueForKey:@"place"] description];
+                    NSString *name = [[object valueForKey:@"name"] description];
+                    
+                    codePlaceName = [code stringByAppendingString:place];
+                    codePlaceName = [codePlaceName stringByAppendingString:@" "];
+                    codePlaceName = [codePlaceName stringByAppendingString:name];
+                    
+                    [self createLocalNotification:codePlaceName :noticeTime];
+                    NSLog(@"Condition true. Notification");
+                }
+            }
+            //}
         }
-        //rateTemp = [rateTemp stringByAppendingString:@"%"];
-        NSString *BasicChangeVal = valTemp;
-        NSString *BasicchangeRate = rateTemp;
         
-//   -----------------
-        
-        //cell.observeImage.image = [UIImage imageNamed:@"button_01.png"];
-        if (![BasicPrice isEqualToString:@"0"]) {
-            BasicPrice = [BasicPrice stringByReplacingOccurrencesOfString:@"," withString:@""];
-            
-            targetString = [object valueForKey:@"observePrice1"];
-            if (![targetString isEqualToString:@""]) {
-                if ([BasicPrice intValue] >= [targetString intValue]) {
-                    iHitFlag = 1;
-                }
-            }
-            targetString = [object valueForKey:@"observePrice2"];
-            if (![targetString isEqualToString:@""]) {
-                if ([BasicPrice intValue] <= [targetString intValue]) {
-                    iHitFlag = 2;
-                }
-            }
-            
-            //NSString *BasicChangeVal = cell.changeValLabel.text;
-            //NSString *BasicChangeVal = [object valueForKey:@"changeVal"];
-            targetString = [object valueForKey:@"observeChangeVal1"];
-            if (![targetString isEqualToString:@""]) {
-                if ([BasicChangeVal intValue] >= [targetString intValue]) {
-                    iHitFlag = 3;
-                }
-            }
-            targetString = [object valueForKey:@"observeChangeVal2"];
-            if (![targetString isEqualToString:@""]) {
-                if ([BasicChangeVal intValue] <= [targetString intValue]) {
-                    iHitFlag = 4;
-                }
-            }
-            
-            //NSString *BasicchangeRate = cell.changeRateLabel.text;
-            //BasicchangeRate = [BasicchangeRate stringByReplacingOccurrencesOfString:@"%" withString:@""];
-            targetString = [object valueForKey:@"observeChangeRate1"];
-            if (![targetString isEqualToString:@""]) {
-                if ([BasicchangeRate intValue] >= [targetString intValue]) {
-                    iHitFlag = 5;
-                }
-            }
-            targetString = [object valueForKey:@"observeChangeRate2"];
-            if (![targetString isEqualToString:@""]) {
-                if ([BasicchangeRate intValue] <= [targetString intValue]) {
-                    iHitFlag = 6;
-                }
-            }
-        }
-        
-        if (iHitFlag != 0) {
-            //監視値　イメージ
-            [object setValue:@"3" forKey:@"observeImage"];
-            
-            //NSString *noticeDate = [object valueForKey:@"noticeTime"];
-            //if ([noticeDate isEqual:[NSNull null]]) {
-            //if (noticeDate == nil) {
-            //if ([cell.noticeTimeLabel.text isEqualToString:@""]) {
-            NSString *noticeStr = [object valueForKey:@"noticeTime"];
-            if ([noticeStr isEqualToString:@""]) {
-                //--- Local Notification
-                //時間
-                NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
-                //[object setValue:now forKey:@"noticeTime"];
-                
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-                [formatter setDateFormat:@"MM/dd HH:mm:ss"];
-                NSString *noticeTime = [formatter stringFromDate:now];
-                [object setValue:noticeTime forKey:@"noticeTime"];
-                
-                //銘柄名
-                NSString *codePlaceName;
-                NSString *code = [[object valueForKey:@"code"] description];
-                NSString *place = [[object valueForKey:@"place"] description];
-                NSString *name = [[object valueForKey:@"name"] description];
-                
-                codePlaceName = [code stringByAppendingString:place];
-                codePlaceName = [codePlaceName stringByAppendingString:@" "];
-                codePlaceName = [codePlaceName stringByAppendingString:name];
-                
-                [self createLocalNotification:codePlaceName :noticeTime];
-                NSLog(@"Condition true. Notification");
-            }
-        }
-        //}
     }
     // Save the context.
     if (![self.managedObjectContext save:&error]) {
@@ -785,11 +781,6 @@
     NSIndexPath *indexPath;
     NSManagedObject *object;
     NSError *error = nil;
-    
-    // タイマ破棄
-    if(self.timerSource){
-        dispatch_source_cancel(self.timerSource);
-    }
     
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         indexPath = [self.boardTableView indexPathForSelectedRow];
