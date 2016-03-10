@@ -7,6 +7,8 @@
         <userInfo/>
     </entity>
     <entity name="Stock" representedClassName="Stock" syncable="YES">
+        <attribute name="changeRate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="changeVal" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="noticeTime" optional="YES" attributeType="String" syncable="YES"/>
@@ -25,6 +27,6 @@
     </entity>
     <elements>
         <element name="Event" positionX="261" positionY="189" width="128" height="60"/>
-        <element name="Stock" positionX="261" positionY="198" width="128" height="270"/>
+        <element name="Stock" positionX="261" positionY="198" width="128" height="300"/>
     </elements>
 </model>

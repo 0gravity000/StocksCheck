@@ -242,6 +242,7 @@
                         <outlet property="boardTableView" destination="fzx-no-hft" id="DT6-AZ-MM6"/>
                         <outlet property="dateMessageLabel" destination="a7n-lz-Gbk" id="XfF-3j-4Ia"/>
                         <outlet property="nikkeiLabel" destination="4Ku-oQ-cPG" id="JEa-LM-9xG"/>
+                        <outlet property="refreshBarItemButton" destination="PER-Tw-tmF" id="9wK-If-jjX"/>
                         <outlet property="refreshSwitch" destination="WA9-B6-xhU" id="QkR-xk-d3B"/>
                     </connections>
                 </viewController>

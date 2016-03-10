@@ -24,11 +24,14 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property NSTimer *autoRefershTimer;
+
 @property (weak, nonatomic) IBOutlet UILabel *dateMessageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nikkeiLabel;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarItemButton;
 @property (weak, nonatomic) IBOutlet UISwitch *refreshSwitch;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshBarItemButton;
 
 @property (weak, nonatomic) IBOutlet BoardTableView *boardTableView;
 
