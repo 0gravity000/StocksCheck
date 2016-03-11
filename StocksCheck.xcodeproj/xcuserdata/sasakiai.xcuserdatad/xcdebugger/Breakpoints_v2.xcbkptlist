@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StocksCheck/BoardViewController.m"
-            timestampString = "479410985.083248"
+            timestampString = "479416718.771767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310"
+            startingLineNumber = "344"
+            endingLineNumber = "344"
             landmarkName = "-changeRefreshSwitch:"
             landmarkType = "5">
          </BreakpointContent>
@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StocksCheck/BoardViewController.m"
-            timestampString = "479415655.291881"
+            timestampString = "479416718.771767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1066"
-            endingLineNumber = "1066"
+            startingLineNumber = "1077"
+            endingLineNumber = "1077"
             landmarkName = "-tableView:editingStyleForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -52,11 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StocksCheck/BoardViewController.m"
-            timestampString = "479415655.291881"
+            timestampString = "479416718.771767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "974"
-            endingLineNumber = "974"
+            startingLineNumber = "985"
+            endingLineNumber = "985"
             landmarkName = "-refreshHedderLabelMainThread"
             landmarkType = "5">
          </BreakpointContent>
@@ -68,11 +68,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StocksCheck/BoardViewController.m"
-            timestampString = "479410985.083248"
+            timestampString = "479416718.771767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "393"
-            endingLineNumber = "393"
+            startingLineNumber = "427"
+            endingLineNumber = "427"
             landmarkName = "-prepareAutoRefresh"
             landmarkType = "5">
             <Locations>
@@ -84,11 +84,11 @@
                   moduleName = "StocksCheck"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/sasakiai/Documents/WatchDistribute/StocksCheck/StocksCheck/BoardViewController.m"
-                  timestampString = "479415656.31557"
+                  timestampString = "479416719.791141"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "393"
-                  endingLineNumber = "393"
+                  startingLineNumber = "427"
+                  endingLineNumber = "427"
                   offsetFromSymbolStart = "190">
                </Location>
                <Location
@@ -99,11 +99,11 @@
                   moduleName = "StocksCheck"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/sasakiai/Documents/WatchDistribute/StocksCheck/StocksCheck/BoardViewController.m"
-                  timestampString = "479415656.316297"
+                  timestampString = "479416719.791421"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "393"
-                  endingLineNumber = "393"
+                  startingLineNumber = "427"
+                  endingLineNumber = "427"
                   offsetFromSymbolStart = "19">
                </Location>
             </Locations>
@@ -116,11 +116,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StocksCheck/BoardViewController.m"
-            timestampString = "479415655.291881"
+            timestampString = "479416718.771767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "767"
-            endingLineNumber = "767"
+            startingLineNumber = "778"
+            endingLineNumber = "778"
             landmarkName = "-refreshPriceValue:"
             landmarkType = "5">
          </BreakpointContent>
@@ -132,11 +132,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StocksCheck/BoardViewController.m"
-            timestampString = "479415655.291881"
+            timestampString = "479416718.771767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "825"
-            endingLineNumber = "825"
+            startingLineNumber = "836"
+            endingLineNumber = "836"
             landmarkName = "-refreshPriceValueMainThread"
             landmarkType = "5">
          </BreakpointContent>
@@ -148,11 +148,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StocksCheck/BoardViewController.m"
-            timestampString = "479415655.291881"
+            timestampString = "479416718.771767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "859"
-            endingLineNumber = "859"
+            startingLineNumber = "870"
+            endingLineNumber = "870"
             landmarkName = "-refreshPriceValueBackgroundThread"
             landmarkType = "5">
          </BreakpointContent>
@@ -164,11 +164,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StocksCheck/BoardViewController.m"
-            timestampString = "479415655.291881"
+            timestampString = "479416718.771767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "436"
-            endingLineNumber = "436"
+            startingLineNumber = "440"
+            endingLineNumber = "440"
             landmarkName = "-prepareAutoRefresh"
             landmarkType = "5">
          </BreakpointContent>

@@ -37,8 +37,42 @@
 
     self.dateMessageLabelStr = @"";
     self.nikkeiLabelStr = @"";
-    self.tempPriceMArray = [NSMutableArray array];
     
+    //initialize autoRefresh array
+    self.tempPriceMArray = [NSMutableArray array];
+    self.tempObserveImageMArray = [NSMutableArray array];
+    self.tempNoticeTimeMArray = [NSMutableArray array];
+    
+    NSError *error = nil;
+    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+    NSLog(@"Error !: %@", [error localizedDescription]);
+    NSLog(@"CoreData count = %ld", count);
+    
+    NSIndexPath *indexPath;
+    NSManagedObject *object;
+    [self.tempPriceMArray removeAllObjects];
+    [self.tempObserveImageMArray removeAllObjects];
+    [self.tempNoticeTimeMArray removeAllObjects];
+    for (int i=0; i < count; i++) {
+        indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        
+        NSString *price = [object valueForKey:@"price"];
+        [self.tempPriceMArray addObject:price];
+        NSLog(@"price %@", price);
+        
+        NSString *observeImage = [object valueForKey:@"observeImage"];
+        [self.tempObserveImageMArray addObject:observeImage];
+        NSLog(@"observeImage %@", observeImage);
+        
+        NSString *noticeTime = [object valueForKey:@"noticeTime"];
+        [self.tempNoticeTimeMArray addObject:noticeTime];
+        NSLog(@"noticeTime %@", noticeTime);
+    }
+
     //[[UIApplication sharedApplication] cancelAllLocalNotifications];
     
 }
@@ -116,9 +150,9 @@
         //---reload table view
         [self.boardTableView reloadData];
     }
+    
     [self refreshHedderLabelMainThread];
     [self initializeCoreData];
-    [self checkObserveVaulesBackgroundThread];
     [self checkObserveVaulesMainThread];
     
 }
@@ -403,37 +437,7 @@
         dispatch_source_set_event_handler(self.BackgraundTimerSource, ^{
             // ここに定期的に行う処理を記述
             NSLog(@"in TimerEventHandler");
-            //initialize
-            NSError *error = nil;
-            self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
-            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
-            [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
-            NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-            NSLog(@"Error !: %@", [error localizedDescription]);
-            NSLog(@"CoreData count = %ld", count);
-            
-            NSIndexPath *indexPath;
-            NSManagedObject *object;
-            [self.tempPriceMArray removeAllObjects];
-            [self.tempObserveImageMArray removeAllObjects];
-            [self.tempNoticeTimeMArray removeAllObjects];
-            for (int i=0; i < count; i++) {
-                indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-                object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-
-                NSString *price = [object valueForKey:@"price"];
-                [self.tempPriceMArray addObject:price];
-                NSLog(@"price %@", price);
-                
-                NSString *observeImage = [object valueForKey:@"observeImage"];
-                [self.tempObserveImageMArray addObject:observeImage];
-                NSLog(@"observeImage %@", observeImage);
-
-                NSString *noticeTime = [object valueForKey:@"noticeTime"];
-                [self.tempNoticeTimeMArray addObject:noticeTime];
-                NSLog(@"noticeTime %@", noticeTime);
-            }
-            [self autoRefreshByTimer];
+            [self autoRefreshByBackgraundTimer];
         });
         // インターバル等を設定
         dispatch_source_set_timer(self.BackgraundTimerSource,
@@ -460,11 +464,18 @@
 //    //[[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
 //}
 
--(void)autoRefreshByTimer {
-    NSLog(@"*** Now autoRefreshByTimer");
+-(void)autoRefreshByBackgraundTimer {
+    NSLog(@"*** Now autoRefreshByBackgraundTimer");
     [self refreshHedderLabelBackgroundThread];
     [self refreshPriceValueBackgroundThread];
     [self checkObserveVaulesBackgroundThread];
+}
+
+-(void)autoRefreshByMainThreadTimer {
+    NSLog(@"*** Now autoRefreshByMainThreadTimer");
+    [self refreshHedderLabelMainThread];
+    [self refreshPriceValueMainThread];
+    [self checkObserveVaulesMainThread];
 }
 
 - (void)createLocalNotification:(NSString *)name :(NSString *)time {
