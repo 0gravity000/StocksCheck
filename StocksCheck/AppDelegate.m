@@ -141,26 +141,34 @@
     // 読み込むファイルの URL を作成
     NSURL *url = [NSURL URLWithString:@"http://0gravity000.web.fc2.com/xxx_stockList/stocks.txt"];
     
-    NSError *error = nil;
-    NSString *strData = [[NSString alloc] initWithContentsOfURL:url  encoding:NSUTF16StringEncoding error:&error];
-    NSLog(@"Error !: %@", [error localizedDescription]);
-    
-    NSFileManager* fileManager = [NSFileManager defaultManager];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"stocks.txt"];
-    
-    //NSString *data;
-    BOOL success = [fileManager fileExistsAtPath:dataPath];
-    if (success) {
-        strData = [NSString stringWithContentsOfFile:dataPath encoding:NSUTF16StringEncoding error:nil];
+    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+        NSError *error = nil;
+        //NSURL *transUrl = [NSURL URLWithString:url];
+        NSString *strData = [[NSString alloc] initWithContentsOfURL:url  encoding:NSUTF16StringEncoding error:&error];
+        
+        NSLog(@"Error !: %@", [error localizedDescription]);
+        
+        NSFileManager* fileManager = [NSFileManager defaultManager];
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"stocks.txt"];
+        
+        //NSString *data;
+        BOOL success = [fileManager fileExistsAtPath:dataPath];
+        if (success) {
+            strData = [NSString stringWithContentsOfFile:dataPath encoding:NSUTF16StringEncoding error:nil];
+        } else {
+            [strData writeToFile:dataPath atomically:YES encoding:NSUTF16StringEncoding error:&error];
+        }
+        NSLog(@"Error !: %@", [error localizedDescription]);
+        
+        [self readStocksTextdata:strData];
     } else {
-        [strData writeToFile:dataPath atomically:YES encoding:NSUTF16StringEncoding error:&error];
-    }
-    NSLog(@"Error !: %@", [error localizedDescription]);
-    
-    [self readStocksTextdata:strData];
+        //error
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"通信エラー" message:@"サーバーとの接続に失敗しました。" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+   }
 }
 
 

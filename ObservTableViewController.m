@@ -91,7 +91,6 @@
         self.changeValCell.textLabel.text = valTemp;
         self.changeRateCell.textLabel.text = rateTemp;
         
-        BOOL checkstr;
         //現在値 監視値
         self.priceUpperCell.textLabel.text = @"上限値";
         self.priceLowerCell.textLabel.text = @"下限値";

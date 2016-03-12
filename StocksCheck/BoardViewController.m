@@ -43,36 +43,6 @@
     self.tempObserveImageMArray = [NSMutableArray array];
     self.tempNoticeTimeMArray = [NSMutableArray array];
     
-    NSError *error = nil;
-    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
-    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
-    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-    NSLog(@"Error !: %@", [error localizedDescription]);
-    NSLog(@"CoreData count = %ld", count);
-    
-    NSIndexPath *indexPath;
-    NSManagedObject *object;
-    [self.tempPriceMArray removeAllObjects];
-    [self.tempObserveImageMArray removeAllObjects];
-    [self.tempNoticeTimeMArray removeAllObjects];
-    for (int i=0; i < count; i++) {
-        indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        
-        NSString *price = [object valueForKey:@"price"];
-        [self.tempPriceMArray addObject:price];
-        NSLog(@"price %@", price);
-        
-        NSString *observeImage = [object valueForKey:@"observeImage"];
-        [self.tempObserveImageMArray addObject:observeImage];
-        NSLog(@"observeImage %@", observeImage);
-        
-        NSString *noticeTime = [object valueForKey:@"noticeTime"];
-        [self.tempNoticeTimeMArray addObject:noticeTime];
-        NSLog(@"noticeTime %@", noticeTime);
-    }
-
     //[[UIApplication sharedApplication] cancelAllLocalNotifications];
     
 }
@@ -151,6 +121,7 @@
         [self.boardTableView reloadData];
     }
     
+    [self createTemporaryArrays];
     [self refreshHedderLabelMainThread];
     [self initializeCoreData];
     [self checkObserveVaulesMainThread];
@@ -207,6 +178,7 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
+    [self createTemporaryArrays];
 }
 
 
@@ -251,6 +223,10 @@
             //[[UIApplication sharedApplication] openURL:transUrl];
             //NSURLRequest *urlReq = [NSURLRequest requestWithURL:self.transUrl];
             //[self.StockWebView loadRequest:urlReq];
+        } else {
+            //error
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"通信エラー" message:@"サーバーとの接続に失敗しました。" preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
         }
         
         NSString *html_ = [NSString stringWithContentsOfURL:transUrl
@@ -328,13 +304,44 @@
     [self.boardTableView reloadData];
 }
 
+-(void)createTemporaryArrays {
+    NSLog(@"*** Now createTemporaryArrays");
+
+    NSError *error = nil;
+    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+    NSLog(@"Error !: %@", [error localizedDescription]);
+    NSLog(@"CoreData count = %ld", count);
+    
+    NSIndexPath *indexPath;
+    NSManagedObject *object;
+    [self.tempPriceMArray removeAllObjects];
+    [self.tempObserveImageMArray removeAllObjects];
+    [self.tempNoticeTimeMArray removeAllObjects];
+    for (int i=0; i < count; i++) {
+        indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        
+        NSString *price = [object valueForKey:@"price"];
+        [self.tempPriceMArray addObject:price];
+        NSLog(@"price %@", price);
+        
+        NSString *observeImage = [object valueForKey:@"observeImage"];
+        [self.tempObserveImageMArray addObject:observeImage];
+        NSLog(@"observeImage %@", observeImage);
+        
+        NSString *noticeTime = [object valueForKey:@"noticeTime"];
+        [self.tempNoticeTimeMArray addObject:noticeTime];
+        NSLog(@"noticeTime %@", noticeTime);
+    }
+}
 
 - (IBAction)pushRefreshBarItemButton:(id)sender {
     NSLog(@"*** Now pushRefreshBarItemButton");
     [self refreshHedderLabelMainThread];
-    [self refreshPriceValueBackgroundThread];
     [self refreshPriceValueMainThread];
-    [self checkObserveVaulesBackgroundThread];
     [self checkObserveVaulesMainThread];
 }
 
@@ -351,6 +358,7 @@
         [self prepareAutoRefresh];
         // タイマー開始
         dispatch_resume(self.BackgraundTimerSource);
+        dispatch_resume(self.mainTimerSource);
         
     } else {
         //OFF
@@ -364,6 +372,9 @@
         // タイマ破棄
         if(self.BackgraundTimerSource){
             dispatch_source_cancel(self.BackgraundTimerSource);
+        }
+        if(self.mainTimerSource){
+            dispatch_source_cancel(self.mainTimerSource);
         }
     }
     //---reload table view necessary
@@ -419,6 +430,7 @@
 
     // タイマーソース作成
     self.BackgraundTimerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, global_queue);
+    self.mainTimerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, main_queue);
     //    self.timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0));
     //    self.timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
     //self.timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
@@ -436,17 +448,33 @@
         // タイマーイベントハンドラ
         dispatch_source_set_event_handler(self.BackgraundTimerSource, ^{
             // ここに定期的に行う処理を記述
-            NSLog(@"in TimerEventHandler");
+            NSLog(@"*** Now global_queue in TimerEventHandler");
             [self autoRefreshByBackgraundTimer];
         });
         // インターバル等を設定
         dispatch_source_set_timer(self.BackgraundTimerSource,
-                                  dispatch_time(DISPATCH_TIME_NOW, 0), NSEC_PER_SEC * 3, NSEC_PER_SEC / 2); // 直後に開始、3秒間隔で 0.5秒の揺らぎを許可
+                                  dispatch_time(DISPATCH_TIME_NOW, 0), NSEC_PER_SEC * 10, NSEC_PER_SEC / 2); // 直後に開始、3秒間隔で 0.5秒の揺らぎを許可
         
         dispatch_sync(main_queue, ^{  // async? or sync?
         //dispatch_async(main_queue, ^{
             // Main Thread
-            NSLog(@"WWWWWWWWWWWWWWWWWWWW test main quere WWWWWWWWWWW");
+            // タイマーキャンセルハンドラ設定
+            dispatch_source_set_cancel_handler(self.mainTimerSource, ^{
+                if(self.mainTimerSource){
+                    //dispatch_release(_timerSource); // releaseを忘れずに
+                    self.mainTimerSource = NULL;
+                }
+            });
+            // タイマーイベントハンドラ
+            dispatch_source_set_event_handler(self.mainTimerSource, ^{
+                // ここに定期的に行う処理を記述
+                NSLog(@"*** Now global_queue in TimerEventHandler");
+                [self autoRefreshByMainThreadTimer];
+            });
+            // インターバル等を設定
+            dispatch_source_set_timer(self.mainTimerSource,
+                                      dispatch_time(DISPATCH_TIME_NOW, 0), NSEC_PER_SEC * 3, NSEC_PER_SEC / 2); // 直後に開始、3秒間隔で 0.5秒の揺らぎを許可
+            
         });
     });
 
@@ -790,6 +818,10 @@
         //[[UIApplication sharedApplication] openURL:transUrl];
         //NSURLRequest *urlReq = [NSURLRequest requestWithURL:self.transUrl];
         //[self.StockWebView loadRequest:urlReq];
+    } else {
+        //error
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"通信エラー" message:@"サーバーとの接続に失敗しました。" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
     }
     
     //--- Search for stock price from html
@@ -890,6 +922,10 @@
         //[[UIApplication sharedApplication] openURL:transUrl];
         //NSURLRequest *urlReq = [NSURLRequest requestWithURL:self.transUrl];
         //[self.StockWebView loadRequest:urlReq];
+    } else {
+        //error
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"通信エラー" message:@"サーバーとの接続に失敗しました。" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
     }
     
     //--- Search for stock price from html
@@ -937,6 +973,10 @@
         //[[UIApplication sharedApplication] openURL:transUrl];
         //NSURLRequest *urlReq = [NSURLRequest requestWithURL:self.transUrl];
         //[self.StockWebView loadRequest:urlReq];
+    } else {
+        //error
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"通信エラー" message:@"サーバーとの接続に失敗しました。" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
     }
     
     //--- Search for stock price from html
@@ -1138,9 +1178,10 @@
     if ([strPrice isEqualToString:@"---"]) {
         cell.priceLabel.text = [[object valueForKey:@"yesterdayPrice"] description];
     } else {
-        cell.priceLabel.text = [[object valueForKey:@"price"] description];
+        //cell.priceLabel.text = [[object valueForKey:@"price"] description];
+        cell.priceLabel.text = [self.tempPriceMArray objectAtIndex:indexPath.row];
     }
-    NSLog(@"cell.priceLabel.text(code+place+name) =%@", cell.priceLabel.text);
+    NSLog(@"cell.priceLabel.text =%@", cell.priceLabel.text);
     
     //前日比、騰落率
     float priceValTemp = 0;
@@ -1192,7 +1233,8 @@
 
     //監視値 イメージ
     NSString *observe;
-    switch ([[object valueForKey:@"observeImage"] intValue]) {
+    //switch ([[object valueForKey:@"observeImage"] intValue]) {
+    switch ([[self.tempObserveImageMArray objectAtIndex:indexPath.row] integerValue]) {
         case 1:
             observe = @"button_01.png";
             break;
@@ -1219,8 +1261,9 @@
     //通知日時
     //NSDate *noticeDate = [object valueForKey:@"noticeTime"];
     //if (![noticeDate isEqual:[NSNull null]]) {
-        cell.noticeTimeLabel.text = [[object valueForKey:@"noticeTime"] description];
-        NSLog(@"cell.noticeTimeLabel.text =%@", cell.noticeTimeLabel.text);
+    //cell.noticeTimeLabel.text = [[object valueForKey:@"noticeTime"] description];
+    cell.noticeTimeLabel.text = [self.tempNoticeTimeMArray objectAtIndex:indexPath.row];
+    NSLog(@"cell.noticeTimeLabel.text =%@", cell.noticeTimeLabel.text);
     //}
     
 }
@@ -1309,7 +1352,7 @@
         //Nothing to do
     }
 
-    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
+    //self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
 
     for (int j=0; j < count; j++) {
         indexPath = [NSIndexPath indexPathForRow:j inSection:0];
@@ -1323,6 +1366,9 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
+    
+    [self createTemporaryArrays];
+    
     //---reload table view
     [self.boardTableView reloadData];
     
@@ -1394,6 +1440,7 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
+        [self createTemporaryArrays];
     }
 }
 
@@ -1468,6 +1515,8 @@
 {
     NSLog(@"*** Now didChangeObject");
     UITableView *tableView = self.boardTableView;
+    
+    [self createTemporaryArrays];
     
     switch(type) {
         case NSFetchedResultsChangeInsert:
