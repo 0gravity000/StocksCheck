@@ -48,6 +48,8 @@
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 
+    //Start Background Fetch
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
 
 }
 
@@ -61,6 +63,9 @@
     NSLog(@"*** Now applicationWillEnterForeground");
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 
+    //Stop background Fetch
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
+    
     //Load CSV File from web
     self.stocksArray = [NSMutableArray array];
     [self loadCSVFromRemote];
@@ -99,6 +104,329 @@
 //    }
 //}
 
+
+#pragma mark - Background Fetch
+// バックグラウンド実行の際に呼び出される
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
+{
+    // ここにバックグラウンド処理
+    NSLog(@"execute Background Fetch");
+    [self refreshPriceValueMainThread];
+    [self checkObserveVaulesMainThread];
+    
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
+-(NSString *)refreshPriceValue:(NSInteger)indexRow {
+    NSLog(@"*** Now refreshPriceValue");
+    
+    //    //--- Show Stock Page in WebView
+    //    NSError *error = nil;
+    //    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
+    //    NSIndexPath *indexPath;
+    //    NSManagedObject *object;
+    //    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+    //    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+    //    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+    //    NSLog(@"Error !: %@", [error localizedDescription]);
+    //    NSLog(@"CoreData count = %ld", count);
+    
+    NSString *url;
+    NSString *codebuf;
+    NSString *placebuf;
+    NSString *pricebuf;
+    NSIndexPath *indexPath;
+    NSManagedObject *object;
+    //    for (int i=0; i < count; i++) {
+    //    indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+    indexPath = [NSIndexPath indexPathForRow:indexRow inSection:0];
+    object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+    
+    //--- Show Stock Page in WebView
+    url = [NSString stringWithFormat:@"http://stocks.finance.yahoo.co.jp/stocks/detail/?code="];
+    codebuf = [object valueForKey:@"code"];
+    url = [url stringByAppendingString:codebuf];
+    placebuf = [object valueForKey:@"place"];
+    url = [url stringByAppendingString:placebuf];
+    
+    NSURL *transUrl = [NSURL URLWithString:url];
+    if ([[UIApplication sharedApplication] canOpenURL:transUrl]) {
+        //[[UIApplication sharedApplication] openURL:transUrl];
+        //NSURLRequest *urlReq = [NSURLRequest requestWithURL:self.transUrl];
+        //[self.StockWebView loadRequest:urlReq];
+    } else {
+        //error
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"通信エラー" message:@"サーバーとの接続に失敗しました。" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+    }
+    
+    //--- Search for stock price from html
+    NSString *html_ = [NSString stringWithContentsOfURL:transUrl
+                                               encoding:NSUTF8StringEncoding
+                                                  error:nil];
+    NSString *html = [html_ stringByReplacingOccurrencesOfString:@"\n"
+                                                      withString:@""];
+    //NSLog(@"%@", html);
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+    // 正規表現の中で.*?とやると最短マッチするらしい。
+    NSRegularExpression *regexp = [NSRegularExpression regularExpressionWithPattern:@"<td class=\"stoksPrice\">(.*?)</td>"
+                                                                            options:0
+                                                                              error:nil];
+    //
+    NSArray *arr = [regexp matchesInString:html
+                                   options:0
+                                     range:NSMakeRange(0, html.length)];
+    
+    for (NSTextCheckingResult *match in arr) {
+        pricebuf = [html substringWithRange:[match rangeAtIndex:1]];
+        //            [object setValue:pricebuf forKey:@"price"];
+        //            NSLog(@"price %@", pricebuf);
+    }
+    //    }
+    return pricebuf;
+    
+}
+
+-(void)refreshPriceValueMainThread {
+    NSLog(@"*** Now refreshPriceValueMainThread");
+    
+    NSError *error = nil;
+    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+    NSLog(@"Error !: %@", [error localizedDescription]);
+    NSLog(@"CoreData count = %ld", count);
+    
+    NSIndexPath *indexPath;
+    NSManagedObject *object;
+    for (int i=0; i < count; i++) {
+        indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        NSString *price = [self refreshPriceValue:i];
+        [object setValue:price forKey:@"price"];
+        //[self.tempPriceMArray replaceObjectAtIndex:i withObject:price];
+        NSLog(@"price %@", price);
+    }
+    
+    // Save the context.
+    if (![self.managedObjectContext save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+
+}
+
+
+-(NSInteger)checkObserveVaules:(NSInteger)indexRow {
+    NSLog(@"*** Now checkObserveVaules");
+    
+    NSError *error = nil;
+    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
+    NSIndexPath *indexPath;
+    NSManagedObject *object;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+    NSLog(@"Error !: %@", [error localizedDescription]);
+    NSLog(@"CoreData count = %ld", count);
+    
+    //監視値チェック
+    //    for (int i=0; i < count; i++) {
+    //        NSLog(@"checkObserveVaules i = %d", i);
+    indexPath = [NSIndexPath indexPathForRow:indexRow inSection:0];
+    object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+    //画面に表示されていないセルはnilになる
+    //BoardTableViewCell *cell = (BoardTableViewCell *)[self.boardTableView cellForRowAtIndexPath:indexPath];
+    
+    NSInteger iHitFlag = 0;
+    NSString *targetString;
+    //NSString *BasicPrice = cell.priceLabel.text;
+    //現在値
+    NSString *BasicPrice = [object valueForKey:@"price"];
+    //am7:00-9:00の間、現在値がWebで”---”となるので、この場合、チェック処理を行わない。
+    if (![BasicPrice isEqualToString:@"---"]) {
+        //前日比、騰落率
+        float priceValTemp = 0;
+        float changeVal = 0;
+        float changeValTemp = 0;
+        float changeRate = 0;
+        NSString *valTemp;
+        NSString *rateTemp;
+        
+        NSString *setString = [NSString stringWithFormat:@"%@",BasicPrice];
+        NSString *setString2 = [setString stringByReplacingOccurrencesOfString:@"," withString:@""];
+        priceValTemp = [setString2 floatValue];
+        
+        valTemp = [[object valueForKey:@"yesterdayPrice"] description];
+        setString = [NSString stringWithFormat:@"%@",valTemp];
+        setString2 = [setString stringByReplacingOccurrencesOfString:@"," withString:@""];
+        changeValTemp = [setString2 floatValue];
+        
+        changeVal = priceValTemp - changeValTemp;
+        changeRate = (changeVal / changeValTemp) *100;
+        
+        valTemp = [NSString stringWithFormat : @"%.0f", changeVal];
+        rateTemp = [NSString stringWithFormat : @"%.2f", changeRate];
+        //    [object setValue:valTemp forKey:@"changeVal"];
+        //    [object setValue:rateTemp forKey:@"changeRate"];
+        
+        if (changeVal == 0) {
+            valTemp = @"0";
+        } else if (changeVal > 0){
+            valTemp = [@"+" stringByAppendingString:valTemp];
+            rateTemp = [@"+" stringByAppendingString:rateTemp];
+        } else if (changeVal < 0) {
+            
+        }
+        //rateTemp = [rateTemp stringByAppendingString:@"%"];
+        NSString *BasicChangeVal = valTemp;
+        NSString *BasicchangeRate = rateTemp;
+        
+        //-----------------
+        //cell.observeImage.image = [UIImage imageNamed:@"button_01.png"];
+        if (![BasicPrice isEqualToString:@"0"]) {
+            BasicPrice = [BasicPrice stringByReplacingOccurrencesOfString:@"," withString:@""];
+            
+            targetString = [object valueForKey:@"observePrice1"];
+            if (![targetString isEqualToString:@""]) {
+                if ([BasicPrice intValue] >= [targetString intValue]) {
+                    iHitFlag = 1;
+                }
+            }
+            targetString = [object valueForKey:@"observePrice2"];
+            if (![targetString isEqualToString:@""]) {
+                if ([BasicPrice intValue] <= [targetString intValue]) {
+                    iHitFlag = 2;
+                }
+            }
+            
+            //NSString *BasicChangeVal = cell.changeValLabel.text;
+            //NSString *BasicChangeVal = [object valueForKey:@"changeVal"];
+            targetString = [object valueForKey:@"observeChangeVal1"];
+            if (![targetString isEqualToString:@""]) {
+                if ([BasicChangeVal intValue] >= [targetString intValue]) {
+                    iHitFlag = 3;
+                }
+            }
+            targetString = [object valueForKey:@"observeChangeVal2"];
+            if (![targetString isEqualToString:@""]) {
+                if ([BasicChangeVal intValue] <= [targetString intValue]) {
+                    iHitFlag = 4;
+                }
+            }
+            
+            //NSString *BasicchangeRate = cell.changeRateLabel.text;
+            //BasicchangeRate = [BasicchangeRate stringByReplacingOccurrencesOfString:@"%" withString:@""];
+            targetString = [object valueForKey:@"observeChangeRate1"];
+            if (![targetString isEqualToString:@""]) {
+                if ([BasicchangeRate intValue] >= [targetString intValue]) {
+                    iHitFlag = 5;
+                }
+            }
+            targetString = [object valueForKey:@"observeChangeRate2"];
+            if (![targetString isEqualToString:@""]) {
+                if ([BasicchangeRate intValue] <= [targetString intValue]) {
+                    iHitFlag = 6;
+                }
+            }
+        }
+    }
+    return iHitFlag;
+}
+
+-(void)checkObserveVaulesMainThread {
+    NSLog(@"*** Now checkObserveVaulesMainThread");
+    
+    NSError *error = nil;
+    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+    NSLog(@"Error !: %@", [error localizedDescription]);
+    NSLog(@"CoreData count = %ld", count);
+    
+    NSIndexPath *indexPath;
+    NSManagedObject *object;
+    for (int i=0; i < count; i++) {
+        indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        NSInteger observeFlag = [self checkObserveVaules:i];
+        
+        if (observeFlag != 0) {
+            //監視値　イメージ
+            [object setValue:@"3" forKey:@"observeImage"];
+            //[self.tempObserveImageMArray replaceObjectAtIndex:i withObject:@"3"];
+            
+            //NSString *noticeDate = [object valueForKey:@"noticeTime"];
+            //if ([noticeDate isEqual:[NSNull null]]) {
+            //if (noticeDate == nil) {
+            //if ([cell.noticeTimeLabel.text isEqualToString:@""]) {
+            NSString *noticeStr = [object valueForKey:@"noticeTime"];
+            if ([noticeStr isEqualToString:@""]) {
+                //--- Local Notification
+                //時間
+                NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
+                //[object setValue:now forKey:@"noticeTime"];
+                
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+                [formatter setDateFormat:@"MM/dd HH:mm:ss"];
+                NSString *noticeTime = [formatter stringFromDate:now];
+                [object setValue:noticeTime forKey:@"noticeTime"];
+                //[self.tempNoticeTimeMArray replaceObjectAtIndex:i withObject:noticeTime];
+                
+                //銘柄名
+                NSString *codePlaceName;
+                NSString *code = [[object valueForKey:@"code"] description];
+                NSString *place = [[object valueForKey:@"place"] description];
+                NSString *name = [[object valueForKey:@"name"] description];
+                
+                codePlaceName = [code stringByAppendingString:place];
+                codePlaceName = [codePlaceName stringByAppendingString:@" "];
+                codePlaceName = [codePlaceName stringByAppendingString:name];
+                
+                [self createLocalNotification:codePlaceName :noticeTime];
+                NSLog(@"Condition true. Notification");
+            }
+        }
+    }
+    
+    // Save the context.
+    if (![self.managedObjectContext save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+}
+
+- (void)createLocalNotification:(NSString *)name :(NSString *)time {
+    
+    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+    if (localNotif == nil) {
+        return;
+    }
+    
+    localNotif.fireDate = [NSDate  dateWithTimeIntervalSinceNow:15.0];
+    localNotif.timeZone = [NSTimeZone defaultTimeZone];
+    //localNotif.repeatInterval = NSCalendarUnitMinute;
+    //localNotif.alertTitle = name;
+    localNotif.alertBody = [NSString stringWithFormat:@"%@\n株価が監視値になりました。\n%@",name ,time];
+    //localNotif.alertAction = NSLocalizedString(@"View Details", nil);aaaaa
+    localNotif.alertAction = @"Open";
+    localNotif.soundName = UILocalNotificationDefaultSoundName;
+    //localNotif.applicationIconBadgeNumber = 1;
+    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"test" forKey:@"key1"];
+    localNotif.userInfo = infoDict;
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+}
+
 #pragma mark - Notification
 
 -(void)resisterLocalNotification {
@@ -110,7 +438,7 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notif {
     
-    NSString *itemName = [notif.userInfo objectForKey:@"key1"];
+    //NSString *itemName = [notif.userInfo objectForKey:@"key1"];
     //application.applicationIconBadgeNumber = notif.applicationIconBadgeNumber-1;
 }
 
@@ -306,6 +634,46 @@
             abort();
         }
     }
+}
+
+#pragma mark - Fetched results controller
+
+- (NSFetchedResultsController *)fetchedResultsController
+{
+    NSLog(@"*** Now fetchedResultsController");
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    // Edit the entity name as appropriate.
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    // Set the batch size to a suitable number.
+    [fetchRequest setFetchBatchSize:20];
+    
+    // Edit the sort key as appropriate.
+    //NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"rowPosition" ascending:YES];
+    
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+    
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    aFetchedResultsController.delegate = self;
+    self.fetchedResultsController = aFetchedResultsController;
+    
+    NSError *error = nil;
+    if (![self.fetchedResultsController performFetch:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return _fetchedResultsController;
 }
 
 @end
