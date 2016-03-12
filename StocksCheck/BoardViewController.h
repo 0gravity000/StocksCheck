@@ -38,8 +38,8 @@
 - (IBAction)pushRefreshBarItemButton:(id)sender;
 - (IBAction)changeRefreshSwitch:(id)sender;
 
-@property dispatch_source_t BackgraundTimerSource; // タイマーソース
-@property dispatch_source_t mainTimerSource; // タイマーソース
+//@property dispatch_source_t BackgraundTimerSource; // タイマーソース
+//@property dispatch_source_t mainTimerSource; // タイマーソース
 @property NSString *dateMessageLabelStr;
 @property NSString *nikkeiLabelStr;
 @property NSMutableArray *tempPriceMArray;

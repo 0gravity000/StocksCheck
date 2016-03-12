@@ -22,6 +22,9 @@
 
 @property NSMutableArray *stocksArray;
 
+@property dispatch_source_t BackgraundTimerSource; // タイマーソース
+@property dispatch_source_t mainTimerSource; // タイマーソース
+
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 

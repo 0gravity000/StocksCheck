@@ -121,11 +121,15 @@
         [self.boardTableView reloadData];
     }
     
-    [self createTemporaryArrays];
     [self refreshHedderLabelMainThread];
     [self initializeCoreData];
     [self checkObserveVaulesMainThread];
+    [self createTemporaryArrays];
     
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    NSLog(@"*** Now viewWillDisappear");
 }
 
 - (void)didReceiveMemoryWarning {
@@ -304,6 +308,37 @@
     [self.boardTableView reloadData];
 }
 
+-(void)copyTemporaryArraysToCoredata {
+    NSLog(@"*** Now copyTemporaryArraysToCoredata");
+    
+    NSError *error = nil;
+    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+    NSLog(@"Error !: %@", [error localizedDescription]);
+    NSLog(@"CoreData count = %ld", count);
+    
+    NSIndexPath *indexPath;
+    NSManagedObject *object;
+    for (int i=0; i < count; i++) {
+        indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+
+        NSString *price = [self.tempPriceMArray objectAtIndex:i];
+        [object setValue:price forKey:@"price"];
+        NSLog(@"price %@", price);
+        
+        NSString *observeImage = [self.tempObserveImageMArray objectAtIndex:i];
+        [object setValue:observeImage forKey:@"observeImage"];
+        NSLog(@"observeImage %@", observeImage);
+
+        NSString *noticeTime = [self.tempNoticeTimeMArray objectAtIndex:i];
+        [object setValue:noticeTime forKey:@"noticeTime"];
+        NSLog(@"noticeTime %@", noticeTime);
+    }
+}
+
 -(void)createTemporaryArrays {
     NSLog(@"*** Now createTemporaryArrays");
 
@@ -347,34 +382,36 @@
 
 - (IBAction)changeRefreshSwitch:(id)sender {
     NSLog(@"*** Now changeRefreshSwitch");
-    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (self.refreshSwitch.on == YES) {
         //ON
         self.refreshBarItemButton.enabled = NO;
         self.addBarItemButton.enabled = NO;
         self.navigationItem.rightBarButtonItem = nil;
+        [self createTemporaryArrays];
         
         //タイマー作成
         [self prepareAutoRefresh];
         // タイマー開始
-        dispatch_resume(self.BackgraundTimerSource);
-        dispatch_resume(self.mainTimerSource);
+        dispatch_resume(appDelegate.BackgraundTimerSource);
+        dispatch_resume(appDelegate.mainTimerSource);
         
     } else {
         //OFF
         self.refreshBarItemButton.enabled = YES;
         self.addBarItemButton.enabled = YES;
         self.navigationItem.rightBarButtonItem = self.editButtonItem;
+        [self copyTemporaryArraysToCoredata];
 //        // タイマ一時停止
 //        if(self.timerSource){
 //            dispatch_suspend(self.timerSource);
 //        }
         // タイマ破棄
-        if(self.BackgraundTimerSource){
-            dispatch_source_cancel(self.BackgraundTimerSource);
+        if(appDelegate.BackgraundTimerSource){
+            dispatch_source_cancel(appDelegate.BackgraundTimerSource);
         }
-        if(self.mainTimerSource){
-            dispatch_source_cancel(self.mainTimerSource);
+        if(appDelegate.mainTimerSource){
+            dispatch_source_cancel(appDelegate.mainTimerSource);
         }
     }
     //---reload table view necessary
@@ -423,14 +460,14 @@
 
 -(void)prepareAutoRefresh {
     NSLog(@"*** Now prepareAutoRefresh");
-
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     // Queue作成
     dispatch_queue_t global_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
     dispatch_queue_t main_queue = dispatch_get_main_queue();
 
     // タイマーソース作成
-    self.BackgraundTimerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, global_queue);
-    self.mainTimerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, main_queue);
+    appDelegate.BackgraundTimerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, global_queue);
+    appDelegate.mainTimerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, main_queue);
     //    self.timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0));
     //    self.timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
     //self.timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
@@ -439,43 +476,43 @@
     dispatch_async(global_queue, ^{
         // Background operations
         // タイマーキャンセルハンドラ設定
-        dispatch_source_set_cancel_handler(self.BackgraundTimerSource, ^{
-            if(self.BackgraundTimerSource){
+        dispatch_source_set_cancel_handler(appDelegate.BackgraundTimerSource, ^{
+            if(appDelegate.BackgraundTimerSource){
                 //dispatch_release(_timerSource); // releaseを忘れずに
-                self.BackgraundTimerSource = NULL;
+                appDelegate.BackgraundTimerSource = NULL;
             }
         });
         // タイマーイベントハンドラ
-        dispatch_source_set_event_handler(self.BackgraundTimerSource, ^{
+        dispatch_source_set_event_handler(appDelegate.BackgraundTimerSource, ^{
             // ここに定期的に行う処理を記述
             NSLog(@"*** Now global_queue in TimerEventHandler");
             [self autoRefreshByBackgraundTimer];
         });
         // インターバル等を設定
-        dispatch_source_set_timer(self.BackgraundTimerSource,
-                                  dispatch_time(DISPATCH_TIME_NOW, 0), NSEC_PER_SEC * 10, NSEC_PER_SEC / 2); // 直後に開始、3秒間隔で 0.5秒の揺らぎを許可
-        
-        dispatch_sync(main_queue, ^{  // async? or sync?
-        //dispatch_async(main_queue, ^{
-            // Main Thread
-            // タイマーキャンセルハンドラ設定
-            dispatch_source_set_cancel_handler(self.mainTimerSource, ^{
-                if(self.mainTimerSource){
-                    //dispatch_release(_timerSource); // releaseを忘れずに
-                    self.mainTimerSource = NULL;
-                }
-            });
-            // タイマーイベントハンドラ
-            dispatch_source_set_event_handler(self.mainTimerSource, ^{
-                // ここに定期的に行う処理を記述
-                NSLog(@"*** Now global_queue in TimerEventHandler");
-                [self autoRefreshByMainThreadTimer];
-            });
-            // インターバル等を設定
-            dispatch_source_set_timer(self.mainTimerSource,
-                                      dispatch_time(DISPATCH_TIME_NOW, 0), NSEC_PER_SEC * 3, NSEC_PER_SEC / 2); // 直後に開始、3秒間隔で 0.5秒の揺らぎを許可
-            
-        });
+        dispatch_source_set_timer(appDelegate.BackgraundTimerSource,
+                                  dispatch_time(DISPATCH_TIME_NOW, 0), NSEC_PER_SEC * 3, NSEC_PER_SEC / 2); // 直後に開始、3秒間隔で 0.5秒の揺らぎを許可
+    });
+    
+    dispatch_async(main_queue, ^{  // async? or sync?
+//        //dispatch_async(main_queue, ^{
+//        // Main Thread
+//        // タイマーキャンセルハンドラ設定
+//        dispatch_source_set_cancel_handler(appDelegate.mainTimerSource, ^{
+//            if(appDelegate.mainTimerSource){
+//                //dispatch_release(_timerSource); // releaseを忘れずに
+//                appDelegate.mainTimerSource = NULL;
+//            }
+//        });
+//        // タイマーイベントハンドラ
+//        dispatch_source_set_event_handler(appDelegate.mainTimerSource, ^{
+//            // ここに定期的に行う処理を記述
+//            NSLog(@"*** Now global_queue in TimerEventHandler");
+//            [self autoRefreshByMainThreadTimer];
+//        });
+//        // インターバル等を設定
+//        dispatch_source_set_timer(appDelegate.mainTimerSource,
+//                                  dispatch_time(DISPATCH_TIME_NOW, 0), NSEC_PER_SEC * 1, NSEC_PER_SEC / 2); // 直後に開始、1秒間隔で 0.5秒の揺らぎを許可
+//        
     });
 
 }
@@ -660,51 +697,45 @@
     NSIndexPath *indexPath;
     NSManagedObject *object;
     for (int i=0; i < count; i++) {
-        NSString *ObserveImage = [self.tempObserveImageMArray objectAtIndex:i];
-        if (![ObserveImage isEqual:@""]) {
-            [object setValue:ObserveImage forKey:@"observeImage"];
-        } else {
-            indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-            object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-            NSInteger observeFlag = [self checkObserveVaules:i];
+        indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        NSInteger observeFlag = [self checkObserveVaules:i];
+        
+        if (observeFlag != 0) {
+            //監視値　イメージ
+            [object setValue:@"3" forKey:@"observeImage"];
+            //[self.tempObserveImageMArray replaceObjectAtIndex:i withObject:@"3"];
             
-            if (observeFlag != 0) {
-                //監視値　イメージ
-                [object setValue:@"3" forKey:@"observeImage"];
-                //[self.tempObserveImageMArray replaceObjectAtIndex:i withObject:@"3"];
+            //NSString *noticeDate = [object valueForKey:@"noticeTime"];
+            //if ([noticeDate isEqual:[NSNull null]]) {
+            //if (noticeDate == nil) {
+            //if ([cell.noticeTimeLabel.text isEqualToString:@""]) {
+            NSString *noticeStr = [object valueForKey:@"noticeTime"];
+            if ([noticeStr isEqualToString:@""]) {
+                //--- Local Notification
+                //時間
+                NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
+                //[object setValue:now forKey:@"noticeTime"];
                 
-                //NSString *noticeDate = [object valueForKey:@"noticeTime"];
-                //if ([noticeDate isEqual:[NSNull null]]) {
-                //if (noticeDate == nil) {
-                //if ([cell.noticeTimeLabel.text isEqualToString:@""]) {
-                NSString *noticeStr = [object valueForKey:@"noticeTime"];
-                if ([noticeStr isEqualToString:@""]) {
-                    //--- Local Notification
-                    //時間
-                    NSDate* now = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
-                    //[object setValue:now forKey:@"noticeTime"];
-                    
-                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-                    [formatter setDateFormat:@"MM/dd HH:mm:ss"];
-                    NSString *noticeTime = [formatter stringFromDate:now];
-                    //[self.tempNoticeTimeMArray replaceObjectAtIndex:i withObject:noticeTime];
-                    [object setValue:noticeTime forKey:@"noticeTime"];
-                    
-//                    //銘柄名
-//                    NSString *codePlaceName;
-//                    NSString *code = [[object valueForKey:@"code"] description];
-//                    NSString *place = [[object valueForKey:@"place"] description];
-//                    NSString *name = [[object valueForKey:@"name"] description];
-//                    
-//                    codePlaceName = [code stringByAppendingString:place];
-//                    codePlaceName = [codePlaceName stringByAppendingString:@" "];
-//                    codePlaceName = [codePlaceName stringByAppendingString:name];
-//                    
-//                    [self createLocalNotification:codePlaceName :noticeTime];
-//                    NSLog(@"Condition true. Notification");
-                    
-                }
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+                [formatter setDateFormat:@"MM/dd HH:mm:ss"];
+                NSString *noticeTime = [formatter stringFromDate:now];
+                [object setValue:noticeTime forKey:@"noticeTime"];
+                //[self.tempNoticeTimeMArray replaceObjectAtIndex:i withObject:noticeTime];
+                
+                //銘柄名
+                NSString *codePlaceName;
+                NSString *code = [[object valueForKey:@"code"] description];
+                NSString *place = [[object valueForKey:@"place"] description];
+                NSString *name = [[object valueForKey:@"name"] description];
+                
+                codePlaceName = [code stringByAppendingString:place];
+                codePlaceName = [codePlaceName stringByAppendingString:@" "];
+                codePlaceName = [codePlaceName stringByAppendingString:name];
+                
+                [self createLocalNotification:codePlaceName :noticeTime];
+                NSLog(@"Condition true. Notification");
             }
         }
     }
@@ -772,7 +803,7 @@
                 codePlaceName = [code stringByAppendingString:place];
                 codePlaceName = [codePlaceName stringByAppendingString:@" "];
                 codePlaceName = [codePlaceName stringByAppendingString:name];
-                
+                //MainThreadで実施
                 [self createLocalNotification:codePlaceName :noticeTime];
                 NSLog(@"Condition true. Notification");
             }
@@ -866,16 +897,12 @@
     NSIndexPath *indexPath;
     NSManagedObject *object;
     for (int i=0; i < count; i++) {
-        NSString *arrayPrice = [self.tempPriceMArray objectAtIndex:i];
-        if (![arrayPrice isEqual:@""]) {
-            [object setValue:arrayPrice forKey:@"price"];
-        } else {
-            indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-            object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-            NSString *price = [self refreshPriceValue:i];
-            [object setValue:price forKey:@"price"];
-            NSLog(@"price %@", price);
-        }
+        indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        NSString *price = [self refreshPriceValue:i];
+        [object setValue:price forKey:@"price"];
+        //[self.tempPriceMArray replaceObjectAtIndex:i withObject:price];
+        NSLog(@"price %@", price);
     }
 
     // Save the context.
@@ -1173,13 +1200,22 @@
     NSLog(@"cell.codeNameLabel.text(code+place+name) =%@", cell.codeNameLabel.text);
     
     //現在値
-    NSString *strPrice = [[object valueForKey:@"price"] description];
+    NSString *strPrice;
+    //NSString *strPrice = [[object valueForKey:@"price"] description];
+    if (self.refreshSwitch.on == YES) {
+        strPrice = [self.tempPriceMArray objectAtIndex:indexPath.row];
+    } else {
+        strPrice = [[object valueForKey:@"price"] description];
+    }
     //am7:00-9:00の間、現在値がWebで”---”となるので、前日終値を表示する
     if ([strPrice isEqualToString:@"---"]) {
         cell.priceLabel.text = [[object valueForKey:@"yesterdayPrice"] description];
     } else {
-        //cell.priceLabel.text = [[object valueForKey:@"price"] description];
-        cell.priceLabel.text = [self.tempPriceMArray objectAtIndex:indexPath.row];
+        if (self.refreshSwitch.on == YES) {
+            cell.priceLabel.text = [self.tempPriceMArray objectAtIndex:indexPath.row];
+        } else {
+            cell.priceLabel.text = [[object valueForKey:@"price"] description];
+        }
     }
     NSLog(@"cell.priceLabel.text =%@", cell.priceLabel.text);
     
@@ -1233,8 +1269,13 @@
 
     //監視値 イメージ
     NSString *observe;
-    //switch ([[object valueForKey:@"observeImage"] intValue]) {
-    switch ([[self.tempObserveImageMArray objectAtIndex:indexPath.row] integerValue]) {
+    NSInteger image;
+    if (self.refreshSwitch.on == YES) {
+        image = [[self.tempObserveImageMArray objectAtIndex:indexPath.row] integerValue];
+    } else {
+        image = [[object valueForKey:@"observeImage"] intValue];
+    }
+    switch (image) {
         case 1:
             observe = @"button_01.png";
             break;
@@ -1249,20 +1290,15 @@
     }
     cell.observeImage.image = [UIImage imageNamed:observe];
     
-//    // Save the context.
-//    NSError *error = nil;
-//    if (![self.managedObjectContext save:&error]) {
-//        // Replace this implementation with code to handle the error appropriately.
-//        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-//        abort();
-//    }
-    
     //通知日時
     //NSDate *noticeDate = [object valueForKey:@"noticeTime"];
     //if (![noticeDate isEqual:[NSNull null]]) {
     //cell.noticeTimeLabel.text = [[object valueForKey:@"noticeTime"] description];
-    cell.noticeTimeLabel.text = [self.tempNoticeTimeMArray objectAtIndex:indexPath.row];
+    if (self.refreshSwitch.on == YES) {
+        cell.noticeTimeLabel.text = [self.tempNoticeTimeMArray objectAtIndex:indexPath.row];
+    } else {
+        cell.noticeTimeLabel.text = [[object valueForKey:@"noticeTime"] description];
+    }
     NSLog(@"cell.noticeTimeLabel.text =%@", cell.noticeTimeLabel.text);
     //}
     
