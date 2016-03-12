@@ -231,6 +231,7 @@
             //error
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"通信エラー" message:@"サーバーとの接続に失敗しました。" preferredStyle:UIAlertControllerStyleAlert];
             [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+            [self presentViewController:alert animated:YES completion:nil];
         }
         
         NSString *html_ = [NSString stringWithContentsOfURL:transUrl
@@ -555,12 +556,20 @@
     //localNotif.repeatInterval = NSCalendarUnitMinute;
     //localNotif.alertTitle = name;
     localNotif.alertBody = [NSString stringWithFormat:@"%@\n株価が監視値になりました。\n%@",name ,time];
-    //localNotif.alertAction = NSLocalizedString(@"View Details", nil);aaaaa
+    //localNotif.alertAction = NSLocalizedString(@"View Details", nil);
     localNotif.alertAction = @"Open";
     localNotif.soundName = UILocalNotificationDefaultSoundName;
-    //localNotif.applicationIconBadgeNumber = 1;
-    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"test" forKey:@"key1"];
+    localNotif.applicationIconBadgeNumber++;
+    //NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"test" forKey:@"key1"];
+    NSDictionary *infoDict = @{name :@"name",
+                               time :@"time"};
     localNotif.userInfo = infoDict;
+
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:name
+                                                                   message:[NSString stringWithFormat:@"株価が監視値になりました。\n%@",time]
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
     
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
 }
@@ -853,6 +862,7 @@
         //error
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"通信エラー" message:@"サーバーとの接続に失敗しました。" preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
     }
     
     //--- Search for stock price from html
@@ -953,6 +963,7 @@
         //error
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"通信エラー" message:@"サーバーとの接続に失敗しました。" preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
     }
     
     //--- Search for stock price from html
@@ -1004,6 +1015,7 @@
         //error
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"通信エラー" message:@"サーバーとの接続に失敗しました。" preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
     }
     
     //--- Search for stock price from html

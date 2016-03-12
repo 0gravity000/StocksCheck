@@ -35,6 +35,7 @@
     controller.managedObjectContext = self.managedObjectContext;
     
     [self resisterLocalNotification];
+    application.applicationIconBadgeNumber = 0;
     
     //Load CSV File from web
     self.stocksArray = [NSMutableArray array];
@@ -63,6 +64,7 @@
     NSLog(@"*** Now applicationWillEnterForeground");
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 
+    application.applicationIconBadgeNumber = 0;
     //Stop background Fetch
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
     
@@ -158,6 +160,8 @@
         //error
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"通信エラー" message:@"サーバーとの接続に失敗しました。" preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        BoardViewController *controller;
+        [controller presentViewController:alert animated:YES completion:nil];
     }
     
     //--- Search for stock price from html
@@ -405,6 +409,29 @@
     
 }
 
+#pragma mark - Notification
+
+-(void)resisterLocalNotification {
+    
+    UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+    UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notif {
+    
+    application.applicationIconBadgeNumber = 0;
+//    NSString *infoName = [notif.userInfo objectForKey:@"name"];
+//    NSString *infoTime = [notif.userInfo objectForKey:@"time"];
+//    
+//    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"通知"
+//                                                                   message:[NSString stringWithFormat:@"%@\n株価が監視値になりました。\n%@",infoName ,infoTime]
+//                                                            preferredStyle:UIAlertControllerStyleAlert];
+//    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+//    BoardViewController *controller;
+//    [controller presentViewController:alert animated:YES completion:nil];
+}
+
 - (void)createLocalNotification:(NSString *)name :(NSString *)time {
     
     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
@@ -420,26 +447,13 @@
     //localNotif.alertAction = NSLocalizedString(@"View Details", nil);aaaaa
     localNotif.alertAction = @"Open";
     localNotif.soundName = UILocalNotificationDefaultSoundName;
-    //localNotif.applicationIconBadgeNumber = 1;
-    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"test" forKey:@"key1"];
+    localNotif.applicationIconBadgeNumber++;
+    //NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"test" forKey:@"key1"];
+    NSDictionary *infoDict = @{name :@"name",
+                               time :@"time"};
     localNotif.userInfo = infoDict;
     
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
-}
-
-#pragma mark - Notification
-
--(void)resisterLocalNotification {
-    
-    UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
-    UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
-}
-
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notif {
-    
-    //NSString *itemName = [notif.userInfo objectForKey:@"key1"];
-    //application.applicationIconBadgeNumber = notif.applicationIconBadgeNumber-1;
 }
 
 #pragma mark - Load Stocks CSV Data
@@ -510,8 +524,11 @@
         [self readStocksTextdata:strData];
     } else {
         //error
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"通信エラー" message:@"サーバーとの接続に失敗しました。" preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"通信エラー" message:@"サーバーとの接続に失敗しました。" preferredStyle:UIAlertControllerStyleAlert];
+//        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+//        BoardViewController *controller;
+//        [controller presentViewController:alert animated:YES completion:nil];
+        NSLog(@"サーバーとの接続に失敗しました。");
    }
 }
 
