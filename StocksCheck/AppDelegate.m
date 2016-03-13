@@ -7,9 +7,7 @@
 //
 
 #import "AppDelegate.h"
-//#import "MasterViewController.h"
 #import "BoardViewController.h"
-//#import "DetailViewController.h"
 //#import "ResistViewController.h"
 #import "ObservTableViewController.h"
 
@@ -21,7 +19,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSLog(@"*** Now application didFinishLaunchingWithOptions");
+//    NSLog(@"*** Now application didFinishLaunchingWithOptions");
     // Override point for customization after application launch.
     //UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
     //UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
@@ -45,7 +43,7 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    NSLog(@"*** Now applicationWillResignActive");
+//    NSLog(@"*** Now applicationWillResignActive");
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 
@@ -55,13 +53,13 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    NSLog(@"*** Now applicationDidEnterBackground");
+//    NSLog(@"*** Now applicationDidEnterBackground");
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    NSLog(@"*** Now applicationWillEnterForeground");
+//    NSLog(@"*** Now applicationWillEnterForeground");
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 
     application.applicationIconBadgeNumber = 0;
@@ -75,13 +73,13 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    NSLog(@"*** Now applicationDidBecomeActive");
+//    NSLog(@"*** Now applicationDidBecomeActive");
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    NSLog(@"*** Now applicationWillTerminate");
+//    NSLog(@"*** Now applicationWillTerminate");
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
@@ -112,7 +110,7 @@
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
 {
     // ここにバックグラウンド処理
-    NSLog(@"execute Background Fetch");
+//    NSLog(@"execute Background Fetch");
     [self refreshPriceValueMainThread];
     [self checkObserveVaulesMainThread];
     
@@ -120,18 +118,7 @@
 }
 
 -(NSString *)refreshPriceValue:(NSInteger)indexRow {
-    NSLog(@"*** Now refreshPriceValue");
-    
-    //    //--- Show Stock Page in WebView
-    //    NSError *error = nil;
-    //    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
-    //    NSIndexPath *indexPath;
-    //    NSManagedObject *object;
-    //    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
-    //    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
-    //    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-    //    NSLog(@"Error !: %@", [error localizedDescription]);
-    //    NSLog(@"CoreData count = %ld", count);
+//    NSLog(@"*** Now refreshPriceValue");
     
     NSString *url;
     NSString *codebuf;
@@ -139,8 +126,6 @@
     NSString *pricebuf;
     NSIndexPath *indexPath;
     NSManagedObject *object;
-    //    for (int i=0; i < count; i++) {
-    //    indexPath = [NSIndexPath indexPathForRow:i inSection:0];
     indexPath = [NSIndexPath indexPathForRow:indexRow inSection:0];
     object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
     
@@ -173,7 +158,7 @@
     //NSLog(@"%@", html);
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
-    // 正規表現の中で.*?とやると最短マッチするらしい。
+    // 正規表現の中で.*?とやると最短マッチする。
     NSRegularExpression *regexp = [NSRegularExpression regularExpressionWithPattern:@"<td class=\"stoksPrice\">(.*?)</td>"
                                                                             options:0
                                                                               error:nil];
@@ -187,21 +172,20 @@
         //            [object setValue:pricebuf forKey:@"price"];
         //            NSLog(@"price %@", pricebuf);
     }
-    //    }
     return pricebuf;
     
 }
 
 -(void)refreshPriceValueMainThread {
-    NSLog(@"*** Now refreshPriceValueMainThread");
+//    NSLog(@"*** Now refreshPriceValueMainThread");
     
     NSError *error = nil;
     self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
     NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-    NSLog(@"Error !: %@", [error localizedDescription]);
-    NSLog(@"CoreData count = %ld", count);
+//    NSLog(@"Error !: %@", [error localizedDescription]);
+//    NSLog(@"CoreData count = %ld", count);
     
     NSIndexPath *indexPath;
     NSManagedObject *object;
@@ -211,7 +195,7 @@
         NSString *price = [self refreshPriceValue:i];
         [object setValue:price forKey:@"price"];
         //[self.tempPriceMArray replaceObjectAtIndex:i withObject:price];
-        NSLog(@"price %@", price);
+//        NSLog(@"price %@", price);
     }
     
     // Save the context.
@@ -226,20 +210,19 @@
 
 
 -(NSInteger)checkObserveVaules:(NSInteger)indexRow {
-    NSLog(@"*** Now checkObserveVaules");
+//    NSLog(@"*** Now checkObserveVaules");
     
-    NSError *error = nil;
-    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
-    NSIndexPath *indexPath;
-    NSManagedObject *object;
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
-    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
-    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-    NSLog(@"Error !: %@", [error localizedDescription]);
-    NSLog(@"CoreData count = %ld", count);
+//    NSError *error = nil;
+//    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+//    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+//    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+//    NSLog(@"Error !: %@", [error localizedDescription]);
+//    NSLog(@"CoreData count = %ld", count);
     
     //監視値チェック
-    //    for (int i=0; i < count; i++) {
+    NSIndexPath *indexPath;
+    NSManagedObject *object;
     //        NSLog(@"checkObserveVaules i = %d", i);
     indexPath = [NSIndexPath indexPathForRow:indexRow inSection:0];
     object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
@@ -343,15 +326,15 @@
 }
 
 -(void)checkObserveVaulesMainThread {
-    NSLog(@"*** Now checkObserveVaulesMainThread");
+//    NSLog(@"*** Now checkObserveVaulesMainThread");
     
     NSError *error = nil;
     self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
     NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-    NSLog(@"Error !: %@", [error localizedDescription]);
-    NSLog(@"CoreData count = %ld", count);
+//    NSLog(@"Error !: %@", [error localizedDescription]);
+//    NSLog(@"CoreData count = %ld", count);
     
     NSIndexPath *indexPath;
     NSManagedObject *object;
@@ -394,7 +377,7 @@
                 codePlaceName = [codePlaceName stringByAppendingString:name];
                 
                 [self createLocalNotification:codePlaceName :noticeTime];
-                NSLog(@"Condition true. Notification");
+//                NSLog(@"Condition true. Notification");
             }
         }
     }
@@ -504,7 +487,7 @@
         //NSURL *transUrl = [NSURL URLWithString:url];
         NSString *strData = [[NSString alloc] initWithContentsOfURL:url  encoding:NSUTF16StringEncoding error:&error];
         
-        NSLog(@"Error !: %@", [error localizedDescription]);
+//        NSLog(@"Error !: %@", [error localizedDescription]);
         
         NSFileManager* fileManager = [NSFileManager defaultManager];
         
@@ -519,7 +502,7 @@
         } else {
             [strData writeToFile:dataPath atomically:YES encoding:NSUTF16StringEncoding error:&error];
         }
-        NSLog(@"Error !: %@", [error localizedDescription]);
+//        NSLog(@"Error !: %@", [error localizedDescription]);
         
         [self readStocksTextdata:strData];
     } else {
@@ -542,7 +525,7 @@
     // 改行文字で区切って配列に格納する
     //NSArray *lines = [text componentsSeparatedByString:@"\n"];
     NSArray *lines = [data componentsSeparatedByString:@"\n"];
-    NSLog(@"lines count: %ld", lines.count);    // 行数
+//    NSLog(@"lines count: %ld", lines.count);    // 行数
     
     NSString *key;
     NSString *value;
@@ -568,7 +551,7 @@
     [self.stocksArray removeObjectsInRange:NSMakeRange(0, 2)];
     //最後の1行は空データで不要なので削除
     [self.stocksArray removeObjectsInRange:NSMakeRange(([self.stocksArray count]-1), 1)];
-    NSLog(@"self.stocksArray count: %ld", [self.stocksArray count]);    // 行数
+//    NSLog(@"self.stocksArray count: %ld", [self.stocksArray count]);    // 行数
 
 }
 
@@ -657,7 +640,7 @@
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
-    NSLog(@"*** Now fetchedResultsController");
+//    NSLog(@"*** Now fetchedResultsController");
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }

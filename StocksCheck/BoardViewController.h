@@ -12,13 +12,11 @@
 #import "BoardTableViewCell.h"
 #import "AppDelegate.h"
 
-//@class DetailViewController;
 @class ObservTableViewController;
 @class ResistViewController;
 
 @interface BoardViewController : UIViewController <NSFetchedResultsControllerDelegate>
 
-//@property (strong, nonatomic) DetailViewController *detailViewController;
 @property (strong, nonatomic) ObservTableViewController *observTableViewController;
 //@property (strong, nonatomic) ResistViewController *resistViewController;
 

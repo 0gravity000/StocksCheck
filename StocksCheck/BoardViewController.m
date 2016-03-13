@@ -7,7 +7,6 @@
 //
 
 #import "BoardViewController.h"
-//#import "DetailViewController.h"
 #import "ObservTableViewController.h"
 #import "ResistViewController.h"
 
@@ -18,7 +17,7 @@
 @implementation BoardViewController
 
 - (void)viewDidLoad {
-    NSLog(@"*** Now viewDidLoad");
+//    NSLog(@"*** Now viewDidLoad");
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.title = @"リスト";
@@ -48,7 +47,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    NSLog(@"*** Now viewWillAppear");
+//    NSLog(@"*** Now viewWillAppear");
     //self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;  ///NG
     [super viewWillAppear:animated];
 
@@ -62,14 +61,14 @@
         NSError *error = nil;
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
         NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-        NSLog(@"Error !: %@", [error localizedDescription]);
-        NSLog(@"CoreData count = %ld", count);
+//        NSLog(@"Error !: %@", [error localizedDescription]);
+//        NSLog(@"CoreData count = %ld", count);
 
-        for (int j=0; j < count; j++) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:0];
-            NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-            NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
-        }
+//        for (int j=0; j < count; j++) {
+//            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:0];
+//            NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+//            NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
+//        }
         
         //rowPosition = count-1 の object(最後に追加したもの)を検索
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -99,11 +98,11 @@
             NSLog(@"fetch result is 0");
         }
         
-        for (int j=0; j < count; j++) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:0];
-            NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-            NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
-        }
+//        for (int j=0; j < count; j++) {
+//            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:0];
+//            NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+//            NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
+//        }
         
         // Save the context.
         //indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
@@ -128,18 +127,18 @@
     
 }
 
--(void)viewWillDisappear:(BOOL)animated {
-    NSLog(@"*** Now viewWillDisappear");
-}
+//-(void)viewWillDisappear:(BOOL)animated {
+//    NSLog(@"*** Now viewWillDisappear");
+//}
 
 - (void)didReceiveMemoryWarning {
-    NSLog(@"*** Now didReceiveMemoryWarning");
+//    NSLog(@"*** Now didReceiveMemoryWarning");
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 - (void)insertNewObject {
-    NSLog(@"*** Now insertNewObject");
+//    NSLog(@"*** Now insertNewObject");
     self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
     NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:self.managedObjectContext];
@@ -187,7 +186,7 @@
 
 
 -(void)initializeCoreData {
-    NSLog(@"*** Now initializeCoreData");
+//    NSLog(@"*** Now initializeCoreData");
     
     NSString *url;
     NSError *error = nil;
@@ -199,8 +198,8 @@
     //NSFetchRequest *fetchRequest;
     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
     NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-    NSLog(@"Error !: %@", [error localizedDescription]);
-    NSLog(@"CoreData count = %ld", count);
+//    NSLog(@"Error !: %@", [error localizedDescription]);
+//    NSLog(@"CoreData count = %ld", count);
     
     for (int i=0; i < count; i++) {
         indexPath = [NSIndexPath indexPathForRow:i inSection:0];
@@ -256,7 +255,7 @@
         for (NSTextCheckingResult *match in arr) {
             NSString *codeNamebuf = [html substringWithRange:[match rangeAtIndex:1]];
             [object setValue:codeNamebuf forKey:@"name"];
-            NSLog(@"name %@", codeNamebuf);
+//            NSLog(@"name %@", codeNamebuf);
         }
         
         //--- Search for yesterday stock price from html 前日終値
@@ -273,7 +272,7 @@
         for (NSTextCheckingResult *match in arr) {
             NSString *yesterdayPricebuf = [html substringWithRange:[match rangeAtIndex:1]];
             [object setValue:yesterdayPricebuf forKey:@"yesterdayPrice"];
-            NSLog(@"yesterdayPricebuf %@", yesterdayPricebuf);
+//            NSLog(@"yesterdayPricebuf %@", yesterdayPricebuf);
         }
         
         //--- Search for Now stock price from html 現在値
@@ -290,7 +289,7 @@
         for (NSTextCheckingResult *match in arr) {
             NSString *pricebuf = [html substringWithRange:[match rangeAtIndex:1]];
             [object setValue:pricebuf forKey:@"price"];
-            NSLog(@"price %@", pricebuf);
+//            NSLog(@"price %@", pricebuf);
         }
         //監視値 イメージ
         //[object setValue:@"1" forKey:@"observeImage"];
@@ -310,15 +309,15 @@
 }
 
 -(void)copyTemporaryArraysToCoredata {
-    NSLog(@"*** Now copyTemporaryArraysToCoredata");
+//    NSLog(@"*** Now copyTemporaryArraysToCoredata");
     
     NSError *error = nil;
     self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
     NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-    NSLog(@"Error !: %@", [error localizedDescription]);
-    NSLog(@"CoreData count = %ld", count);
+//    NSLog(@"Error !: %@", [error localizedDescription]);
+//    NSLog(@"CoreData count = %ld", count);
     
     NSIndexPath *indexPath;
     NSManagedObject *object;
@@ -328,28 +327,28 @@
 
         NSString *price = [self.tempPriceMArray objectAtIndex:i];
         [object setValue:price forKey:@"price"];
-        NSLog(@"price %@", price);
+//        NSLog(@"price %@", price);
         
         NSString *observeImage = [self.tempObserveImageMArray objectAtIndex:i];
         [object setValue:observeImage forKey:@"observeImage"];
-        NSLog(@"observeImage %@", observeImage);
+//        NSLog(@"observeImage %@", observeImage);
 
         NSString *noticeTime = [self.tempNoticeTimeMArray objectAtIndex:i];
         [object setValue:noticeTime forKey:@"noticeTime"];
-        NSLog(@"noticeTime %@", noticeTime);
+//        NSLog(@"noticeTime %@", noticeTime);
     }
 }
 
 -(void)createTemporaryArrays {
-    NSLog(@"*** Now createTemporaryArrays");
+//    NSLog(@"*** Now createTemporaryArrays");
 
     NSError *error = nil;
     self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
     NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-    NSLog(@"Error !: %@", [error localizedDescription]);
-    NSLog(@"CoreData count = %ld", count);
+//    NSLog(@"Error !: %@", [error localizedDescription]);
+//    NSLog(@"CoreData count = %ld", count);
     
     NSIndexPath *indexPath;
     NSManagedObject *object;
@@ -362,27 +361,27 @@
         
         NSString *price = [object valueForKey:@"price"];
         [self.tempPriceMArray addObject:price];
-        NSLog(@"price %@", price);
+//        NSLog(@"price %@", price);
         
         NSString *observeImage = [object valueForKey:@"observeImage"];
         [self.tempObserveImageMArray addObject:observeImage];
-        NSLog(@"observeImage %@", observeImage);
+//        NSLog(@"observeImage %@", observeImage);
         
         NSString *noticeTime = [object valueForKey:@"noticeTime"];
         [self.tempNoticeTimeMArray addObject:noticeTime];
-        NSLog(@"noticeTime %@", noticeTime);
+//        NSLog(@"noticeTime %@", noticeTime);
     }
 }
 
 - (IBAction)pushRefreshBarItemButton:(id)sender {
-    NSLog(@"*** Now pushRefreshBarItemButton");
+//    NSLog(@"*** Now pushRefreshBarItemButton");
     [self refreshHedderLabelMainThread];
     [self refreshPriceValueMainThread];
     [self checkObserveVaulesMainThread];
 }
 
 - (IBAction)changeRefreshSwitch:(id)sender {
-    NSLog(@"*** Now changeRefreshSwitch");
+//    NSLog(@"*** Now changeRefreshSwitch");
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (self.refreshSwitch.on == YES) {
         //ON
@@ -419,48 +418,9 @@
     [self.boardTableView reloadData];
 }
 
-////void (^MyPeriodicTask)(void);
-//typedef void (^MyPeriodicTask)(void);
-//MyPeriodicTask myPeriodicTask = ^{ NSLog(@"in block"); };
-
-//        // 別のスレッドで行う処理をキューに加える
-//        NSOperationQueue *queue = [NSOperationQueue new];
-//        NSInvocationOperation *operation = [[NSInvocationOperation alloc]
-//                                            initWithTarget:self
-//                                            selector:@selector(prepareAutoRefresh)
-//                                            object:nil];
-//        [queue addOperation:operation];
-
-
-//dispatch_source_t CreateDispatchTimer(uint64_t interval,
-//                                      uint64_t leeway,
-//                                      dispatch_queue_t queue,
-//                                      dispatch_block_t block)
-//{
-//    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER,
-//                                                     0, 0, queue);
-//    if (timer) {
-//        dispatch_source_set_timer(timer, dispatch_walltime(NULL, 0), interval, leeway);
-//        dispatch_source_set_event_handler(timer, block);
-//        dispatch_resume(timer);
-//    }
-//    return timer;
-//}
-
-//void MyCreateTimer()
-//{
-//    dispatch_source_t aTimer = CreateDispatchTimer(30ull * NSEC_PER_SEC,
-//                                                   1ull * NSEC_PER_SEC,
-//                                                   dispatch_get_main_queue(),
-//                                                   ^{ MyPeriodicTask(); });
-//    // 後の使用に備えて適当な箇所に格納しておく。 if (aTimer)
-//    {
-//        MyStoreTimer(aTimer);
-//    }
-//}
 
 -(void)prepareAutoRefresh {
-    NSLog(@"*** Now prepareAutoRefresh");
+//    NSLog(@"*** Now prepareAutoRefresh");
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     // Queue作成
     dispatch_queue_t global_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
@@ -486,7 +446,7 @@
         // タイマーイベントハンドラ
         dispatch_source_set_event_handler(appDelegate.BackgraundTimerSource, ^{
             // ここに定期的に行う処理を記述
-            NSLog(@"*** Now global_queue in TimerEventHandler");
+//            NSLog(@"*** Now global_queue in TimerEventHandler");
             [self autoRefreshByBackgraundTimer];
         });
         // インターバル等を設定
@@ -531,18 +491,18 @@
 //}
 
 -(void)autoRefreshByBackgraundTimer {
-    NSLog(@"*** Now autoRefreshByBackgraundTimer");
+//    NSLog(@"*** Now autoRefreshByBackgraundTimer");
     [self refreshHedderLabelBackgroundThread];
     [self refreshPriceValueBackgroundThread];
     [self checkObserveVaulesBackgroundThread];
 }
 
--(void)autoRefreshByMainThreadTimer {
-    NSLog(@"*** Now autoRefreshByMainThreadTimer");
-    [self refreshHedderLabelMainThread];
-    [self refreshPriceValueMainThread];
-    [self checkObserveVaulesMainThread];
-}
+//-(void)autoRefreshByMainThreadTimer {
+//    NSLog(@"*** Now autoRefreshByMainThreadTimer");
+//    [self refreshHedderLabelMainThread];
+//    [self refreshPriceValueMainThread];
+//    [self checkObserveVaulesMainThread];
+//}
 
 - (void)createLocalNotification:(NSString *)name :(NSString *)time {
     
@@ -575,19 +535,19 @@
 }
 
 -(NSInteger)checkObserveVaules:(NSInteger)indexRow {
-    NSLog(@"*** Now checkObserveVaules");
+//    NSLog(@"*** Now checkObserveVaules");
 
-    NSError *error = nil;
-    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
-    NSIndexPath *indexPath;
-    NSManagedObject *object;
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
-    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
-    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-    NSLog(@"Error !: %@", [error localizedDescription]);
-    NSLog(@"CoreData count = %ld", count);
+//    NSError *error = nil;
+//    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
+//    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
+//    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+//    NSLog(@"Error !: %@", [error localizedDescription]);
+//    NSLog(@"CoreData count = %ld", count);
     
     //監視値チェック
+    NSIndexPath *indexPath;
+    NSManagedObject *object;
     //    for (int i=0; i < count; i++) {
     //        NSLog(@"checkObserveVaules i = %d", i);
     indexPath = [NSIndexPath indexPathForRow:indexRow inSection:0];
@@ -693,15 +653,15 @@
 }
 
 -(void)checkObserveVaulesMainThread {
-    NSLog(@"*** Now checkObserveVaulesMainThread");
+//    NSLog(@"*** Now checkObserveVaulesMainThread");
 
     NSError *error = nil;
     self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
     NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-    NSLog(@"Error !: %@", [error localizedDescription]);
-    NSLog(@"CoreData count = %ld", count);
+//    NSLog(@"Error !: %@", [error localizedDescription]);
+//    NSLog(@"CoreData count = %ld", count);
     
     NSIndexPath *indexPath;
     NSManagedObject *object;
@@ -744,7 +704,7 @@
                 codePlaceName = [codePlaceName stringByAppendingString:name];
                 
                 [self createLocalNotification:codePlaceName :noticeTime];
-                NSLog(@"Condition true. Notification");
+//                NSLog(@"Condition true. Notification");
             }
         }
     }
@@ -763,15 +723,15 @@
 }
 
 -(void)checkObserveVaulesBackgroundThread {
-    NSLog(@"*** Now checkObserveVaulesBackgroundThread");
+//    NSLog(@"*** Now checkObserveVaulesBackgroundThread");
 
     NSError *error = nil;
     self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
     NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-    NSLog(@"Error !: %@", [error localizedDescription]);
-    NSLog(@"CoreData count = %ld", count);
+//    NSLog(@"Error !: %@", [error localizedDescription]);
+//    NSLog(@"CoreData count = %ld", count);
     
     NSIndexPath *indexPath;
     NSManagedObject *object;
@@ -814,7 +774,7 @@
                 codePlaceName = [codePlaceName stringByAppendingString:name];
                 //MainThreadで実施
                 [self createLocalNotification:codePlaceName :noticeTime];
-                NSLog(@"Condition true. Notification");
+//                NSLog(@"Condition true. Notification");
             }
         }
     }
@@ -822,19 +782,8 @@
 
 
 -(NSString *)refreshPriceValue:(NSInteger)indexRow {
-    NSLog(@"*** Now refreshPriceValue");
+//    NSLog(@"*** Now refreshPriceValue");
 
-//    //--- Show Stock Page in WebView
-//    NSError *error = nil;
-//    self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
-//    NSIndexPath *indexPath;
-//    NSManagedObject *object;
-//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
-//    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
-//    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-//    NSLog(@"Error !: %@", [error localizedDescription]);
-//    NSLog(@"CoreData count = %ld", count);
-    
     NSString *url;
     NSString *codebuf;
     NSString *placebuf;
@@ -874,7 +823,7 @@
     //NSLog(@"%@", html);
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
-    // 正規表現の中で.*?とやると最短マッチするらしい。
+    // 正規表現の中で.*?とやると最短マッチする。
     NSRegularExpression *regexp = [NSRegularExpression regularExpressionWithPattern:@"<td class=\"stoksPrice\">(.*?)</td>"
                                                                             options:0
                                                                               error:nil];
@@ -894,15 +843,15 @@
 }
 
 -(void)refreshPriceValueMainThread {
-    NSLog(@"*** Now refreshPriceValueMainThread");
+//    NSLog(@"*** Now refreshPriceValueMainThread");
 
     NSError *error = nil;
     self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
     NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-    NSLog(@"Error !: %@", [error localizedDescription]);
-    NSLog(@"CoreData count = %ld", count);
+//    NSLog(@"Error !: %@", [error localizedDescription]);
+//    NSLog(@"CoreData count = %ld", count);
     
     NSIndexPath *indexPath;
     NSManagedObject *object;
@@ -912,7 +861,7 @@
         NSString *price = [self refreshPriceValue:i];
         [object setValue:price forKey:@"price"];
         //[self.tempPriceMArray replaceObjectAtIndex:i withObject:price];
-        NSLog(@"price %@", price);
+//        NSLog(@"price %@", price);
     }
 
     // Save the context.
@@ -928,15 +877,15 @@
 }
 
 -(void)refreshPriceValueBackgroundThread {
-    NSLog(@"*** Now refreshPriceValueBackgroundThread");
+//    NSLog(@"*** Now refreshPriceValueBackgroundThread");
     
     NSError *error = nil;
     self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
     NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-    NSLog(@"Error !: %@", [error localizedDescription]);
-    NSLog(@"CoreData count = %ld", count);
+//    NSLog(@"Error !: %@", [error localizedDescription]);
+//    NSLog(@"CoreData count = %ld", count);
 
     NSIndexPath *indexPath;
     NSManagedObject *object;
@@ -945,12 +894,12 @@
         object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         NSString *price = [self refreshPriceValue:i];
         [self.tempPriceMArray replaceObjectAtIndex:i withObject:price];
-        NSLog(@"price %@", price);
+//        NSLog(@"price %@", price);
     }
 }
 
 -(NSString *)refreshHadderDateMessageLabel {
-    NSLog(@"*** Now refreshHadderDateMessageLabel");
+//    NSLog(@"*** Now refreshHadderDateMessageLabel");
     NSString *url;
     url = [NSString stringWithFormat:@"http://stocks.finance.yahoo.co.jp/stocks/detail/?code=998407.O"];
     
@@ -1002,7 +951,7 @@
 }
 
 -(NSString *)refreshHedderNikkeiLabel {
-    NSLog(@"*** Now refreshHedderNikkeiLabel");
+//    NSLog(@"*** Now refreshHedderNikkeiLabel");
     NSString *url;
     url = [NSString stringWithFormat:@"http://stocks.finance.yahoo.co.jp/stocks/detail/?code=998407.O"];
     
@@ -1059,7 +1008,7 @@
 }
 
 -(void)refreshHedderLabelMainThread {
-    NSLog(@"*** Now refreshHedderLabelMainThread");
+//    NSLog(@"*** Now refreshHedderLabelMainThread");
     NSString *dateMessage;
     if ([self.dateMessageLabelStr isEqualToString:@""]) {
         dateMessage = [self refreshHadderDateMessageLabel];
@@ -1078,7 +1027,7 @@
 }
 
 -(void)refreshHedderLabelBackgroundThread {
-    NSLog(@"*** Now refreshHedderLabelBackgroundThread");
+//    NSLog(@"*** Now refreshHedderLabelBackgroundThread");
     NSString *dateMessage = [self refreshHadderDateMessageLabel];
     self.dateMessageLabelStr = dateMessage;
     
@@ -1090,7 +1039,7 @@
 #pragma mark - Navigation Controller
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    NSLog(@"*** Now setEditing");
+//    NSLog(@"*** Now setEditing");
     [super setEditing:editing animated:animated];
     [self.boardTableView setEditing:editing animated:YES];
     //desable add button
@@ -1110,7 +1059,7 @@
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    NSLog(@"*** Now prepareForSegue");
+//    NSLog(@"*** Now prepareForSegue");
     NSIndexPath *indexPath;
     NSManagedObject *object;
     NSError *error = nil;
@@ -1129,7 +1078,7 @@
         [self insertNewObject];
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
         [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
-        NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+        int count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
 //        NSLog(@"Error !: %@", [error localizedDescription]);
 //        NSLog(@"CoreData count = %ld", count);
 //        indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
@@ -1138,7 +1087,7 @@
         //rowPosition = count-1 の object(最後に追加したもの)を検索
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         [request setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rowPosition == %@", [NSString stringWithFormat:@"%ld",(count-1)]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rowPosition == %@", [NSString stringWithFormat:@"%d",(count-1)]];
         [request setPredicate:predicate];
         NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
         if (array != nil) {
@@ -1173,18 +1122,18 @@
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSLog(@"*** Now numberOfSectionsInTableView");
+//    NSLog(@"*** Now numberOfSectionsInTableView");
     return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"*** Now numberOfRowsInSection");
+//    NSLog(@"*** Now numberOfRowsInSection");
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
     return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"*** Now cellForRowAtIndexPath");
+//    NSLog(@"*** Now cellForRowAtIndexPath");
     //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     BoardTableViewCell *cell = (BoardTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell"forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
@@ -1192,8 +1141,8 @@
 }
 
 - (void)configureCell:(BoardTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"*** Now configureCell");
-    NSLog(@"Now configureCell index=%ld", indexPath.row);
+//    NSLog(@"*** Now configureCell");
+//    NSLog(@"Now configureCell index=%ld", indexPath.row);
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
     if (self.refreshSwitch.on == YES) {
@@ -1213,7 +1162,7 @@
     str = [str stringByAppendingString:@" "];
     str = [str stringByAppendingString:name];
     cell.codeNameLabel.text = str;
-    NSLog(@"cell.codeNameLabel.text(code+place+name) =%@", cell.codeNameLabel.text);
+//    NSLog(@"cell.codeNameLabel.text(code+place+name) =%@", cell.codeNameLabel.text);
     
     //現在値
     NSString *strPrice;
@@ -1233,7 +1182,7 @@
             cell.priceLabel.text = [[object valueForKey:@"price"] description];
         }
     }
-    NSLog(@"cell.priceLabel.text =%@", cell.priceLabel.text);
+//    NSLog(@"cell.priceLabel.text =%@", cell.priceLabel.text);
     
     //前日比、騰落率
     float priceValTemp = 0;
@@ -1280,8 +1229,8 @@
     cell.changeValLabel.text = valTemp;
     cell.changeRateLabel.text = rateTemp;
     
-    NSLog(@"cell.changeValLabel.text %@", cell.changeValLabel.text);
-    NSLog(@"cell.changeRateLabel.text %@", cell.changeRateLabel.text);
+//    NSLog(@"cell.changeValLabel.text %@", cell.changeValLabel.text);
+//    NSLog(@"cell.changeRateLabel.text %@", cell.changeRateLabel.text);
 
     //監視値 イメージ
     NSString *observe;
@@ -1315,7 +1264,7 @@
     } else {
         cell.noticeTimeLabel.text = [[object valueForKey:@"noticeTime"] description];
     }
-    NSLog(@"cell.noticeTimeLabel.text =%@", cell.noticeTimeLabel.text);
+//    NSLog(@"cell.noticeTimeLabel.text =%@", cell.noticeTimeLabel.text);
     //}
     
 }
@@ -1323,14 +1272,14 @@
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"*** Now canMoveRowAtIndexPath");
+//    NSLog(@"*** Now canMoveRowAtIndexPath");
     // The table view should not be re-orderable.
     return YES;
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
-    NSLog(@"*** Now moveRowAtIndexPath");
+//    NSLog(@"*** Now moveRowAtIndexPath");
     //for example
 //    NSString *stringToMove = [self.reorderingRows objectAtIndex:sourceIndexPath.row];
 //    [self.reorderingRows removeObjectAtIndex:sourceIndexPath.row];
@@ -1343,14 +1292,14 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
     NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-    NSLog(@"Error !: %@", [error localizedDescription]);
-    NSLog(@"CoreData count = %ld", count);
+//    NSLog(@"Error !: %@", [error localizedDescription]);
+//    NSLog(@"CoreData count = %ld", count);
     
-    for (int j=0; j < count; j++) {
-        indexPath = [NSIndexPath indexPathForRow:j inSection:0];
-        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
-    }
+//    for (int j=0; j < count; j++) {
+//        indexPath = [NSIndexPath indexPathForRow:j inSection:0];
+//        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+//        NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
+//    }
     
     NSString *sorceRowbuf = [NSString stringWithFormat:@"%ld", sourceIndexPath.row];
     NSString *destRowbuf = [NSString stringWithFormat:@"%ld", destinationIndexPath.row];
@@ -1374,13 +1323,13 @@
         for (cnt = startRow; cnt <= endRow; cnt++) {
             indexPath = [NSIndexPath indexPathForRow:index inSection:0];
             object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-            NSLog(@"indexPath.row = @%ld", indexPath.row);
+//            NSLog(@"indexPath.row = @%ld", indexPath.row);
             rowTemp = [object valueForKey:@"rowPosition"];
             valTemp = [rowTemp integerValue];
             valTemp--;
             //[object setValue:[NSString stringWithFormat:@"%d", valTemp] forKey:@"rowPosition"];
             [object setValue:[NSNumber numberWithInteger:valTemp] forKey:@"rowPosition"];
-            NSLog(@"indexPath.row = @%ld", indexPath.row);
+//            NSLog(@"indexPath.row = @%ld", indexPath.row);
             index++;
         }
         
@@ -1392,7 +1341,7 @@
         for (cnt = startRow; cnt <= endRow; cnt++) {
             indexPath = [NSIndexPath indexPathForRow:index inSection:0];
             object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-            NSLog(@"indexPath.row = @%ld", indexPath.row);
+//            NSLog(@"indexPath.row = @%ld", indexPath.row);
             rowTemp = [object valueForKey:@"rowPosition"];
             valTemp = [rowTemp integerValue];
             valTemp++;
@@ -1404,13 +1353,11 @@
         //Nothing to do
     }
 
-    //self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
-
-    for (int j=0; j < count; j++) {
-        indexPath = [NSIndexPath indexPathForRow:j inSection:0];
-        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
-    }
+//    for (int j=0; j < count; j++) {
+//        indexPath = [NSIndexPath indexPathForRow:j inSection:0];
+//        object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+//        NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
+//    }
     
     if (![self.managedObjectContext save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
@@ -1427,25 +1374,25 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"*** Now canEditRowAtIndexPath");
+//    NSLog(@"*** Now canEditRowAtIndexPath");
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"*** Now commitEditingStyle");
+//    NSLog(@"*** Now commitEditingStyle");
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         NSError *error = nil;
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
         NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-        NSLog(@"CoreData count = %ld", count);
+//        NSLog(@"CoreData count = %ld", count);
         
-        for (int j=0; j < count; j++) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:0];
-            NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-            NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
-        }
+//        for (int j=0; j < count; j++) {
+//            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:0];
+//            NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+//            NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
+//        }
         
         //delete coredata
         self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
@@ -1453,7 +1400,7 @@
         
         fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
         count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-        NSLog(@"CoreData count = %ld", count);
+//        NSLog(@"CoreData count = %ld", count);
         
         //削除行以降のrowPositionを全て-1する
         NSManagedObject *object;
@@ -1470,21 +1417,21 @@
         for (cnt = startRow; cnt < endRow; cnt++) {
             indexPath = [NSIndexPath indexPathForRow:index inSection:0];
             object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-            NSLog(@"indexPath.row = @%ld", indexPath.row);
+//            NSLog(@"indexPath.row = @%ld", indexPath.row);
             rowTemp = [object valueForKey:@"rowPosition"];
             valTemp = [rowTemp intValue];
             valTemp--;
             //[object setValue:[NSString stringWithFormat:@"%d", valTemp] forKey:@"rowPosition"];
             [object setValue:[NSNumber numberWithInteger:valTemp] forKey:@"rowPosition"];
-            NSLog(@"indexPath.row = @%ld", indexPath.row);
+//            NSLog(@"indexPath.row = @%ld", indexPath.row);
             index++;
         }
         
-        for (int j=0; j < count; j++) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:0];
-            NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-            NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
-        }
+//        for (int j=0; j < count; j++) {
+//            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:0];
+//            NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+//            NSLog(@"object rowPosition[%d] = %@", j ,[object valueForKey:@"rowPosition"]);
+//        }
         
         if (![self.managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
@@ -1501,7 +1448,7 @@
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
-    NSLog(@"*** Now fetchedResultsController");
+//    NSLog(@"*** Now fetchedResultsController");
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
@@ -1539,14 +1486,14 @@
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-    NSLog(@"*** Now controllerWillChangeContent");
+//    NSLog(@"*** Now controllerWillChangeContent");
     [self.boardTableView beginUpdates];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
-    NSLog(@"*** Now didChangeSection");
+//    NSLog(@"*** Now didChangeSection");
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [self.boardTableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
@@ -1565,7 +1512,7 @@
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
-    NSLog(@"*** Now didChangeObject");
+//    NSLog(@"*** Now didChangeObject");
     UITableView *tableView = self.boardTableView;
     
     [self createTemporaryArrays];
@@ -1592,7 +1539,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    NSLog(@"*** Now controllerDidChangeContent");
+//    NSLog(@"*** Now controllerDidChangeContent");
     [self.boardTableView endUpdates];
 }
 
