@@ -1097,8 +1097,12 @@
     
     if (editing) {
         self.addBarItemButton.enabled = NO;
+        self.refreshBarItemButton.enabled = NO;
+        self.refreshSwitch.enabled = NO;
     } else {
         self.addBarItemButton.enabled = YES;
+        self.refreshBarItemButton.enabled = YES;
+        self.refreshSwitch.enabled = YES;
     }
 }
 
