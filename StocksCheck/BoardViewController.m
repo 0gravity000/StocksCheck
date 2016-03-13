@@ -209,11 +209,11 @@
         
         //code
         codebuf = [object valueForKey:@"code"];
-        NSLog(@"code %@", codebuf);
+//        NSLog(@"code %@", codebuf);
         
         //place
         placebuf = [object valueForKey:@"place"];
-        NSLog(@"place %@", placebuf);
+//        NSLog(@"place %@", placebuf);
         
         //--- Show Stock Page in WebView
         //http://stocks.finance.yahoo.co.jp/stocks/detail/?code=9984.T
@@ -244,52 +244,70 @@
         
         //--- Search for stockName from html　銘柄名
         // 正規表現の中で.*?とやると最短マッチする
+        NSError *error = nil;
         NSRegularExpression *regexp = [NSRegularExpression regularExpressionWithPattern:@"<th class=\"symbol\"><h1>(.*?)</h1></th>"
                                                                                 options:0
-                                                                                  error:nil];
-        //
-        NSArray *arr = [regexp matchesInString:html
-                                       options:0
-                                         range:NSMakeRange(0, html.length)];
-        
-        for (NSTextCheckingResult *match in arr) {
-            NSString *codeNamebuf = [html substringWithRange:[match rangeAtIndex:1]];
-            [object setValue:codeNamebuf forKey:@"name"];
-//            NSLog(@"name %@", codeNamebuf);
+                                                                                  error:&error];
+        NSArray *arr;
+        if (regexp != nil) {
+            if (error == nil) {
+                arr = [regexp matchesInString:html
+                                      options:0
+                                        range:NSMakeRange(0, html.length)];
+                
+                for (NSTextCheckingResult *match in arr) {
+                    NSString *codeNamebuf = [html substringWithRange:[match rangeAtIndex:1]];
+                    [object setValue:codeNamebuf forKey:@"name"];
+                    //            NSLog(@"name %@", codeNamebuf);
+                }
+            } else {
+                //nothing to do
+            }
         }
-        
+    
         //--- Search for yesterday stock price from html 前日終値
         // 正規表現の中で.*?とやると最短マッチする
         //<dl class="tseDtlDelay"><dd class="ymuiEditLink mar0"><strong>5,585</strong><span class="date yjSt">（02/26）</span></dd><dt class="title">前日終値
+        error = nil;
         regexp = [NSRegularExpression regularExpressionWithPattern:@"<dl class=\"tseDtlDelay\"><dd class=\"ymuiEditLink mar0\"><strong>(.*)</strong><span class=\"date yjSt\">(.*)</span></dd><dt class=\"title\">前日終値"
                                                            options:0
-                                                             error:nil];
-        //
-        arr = [regexp matchesInString:html
-                              options:0
-                                range:NSMakeRange(0, html.length)];
-        
-        for (NSTextCheckingResult *match in arr) {
-            NSString *yesterdayPricebuf = [html substringWithRange:[match rangeAtIndex:1]];
-            [object setValue:yesterdayPricebuf forKey:@"yesterdayPrice"];
-//            NSLog(@"yesterdayPricebuf %@", yesterdayPricebuf);
+                                                             error:&error];
+        if (regexp != nil) {
+            if (error == nil) {
+                arr = [regexp matchesInString:html
+                                      options:0
+                                        range:NSMakeRange(0, html.length)];
+                
+                for (NSTextCheckingResult *match in arr) {
+                    NSString *yesterdayPricebuf = [html substringWithRange:[match rangeAtIndex:1]];
+                    [object setValue:yesterdayPricebuf forKey:@"yesterdayPrice"];
+                    //            NSLog(@"yesterdayPricebuf %@", yesterdayPricebuf);
+                }
+            } else {
+                //nothing to do
+            }
         }
-        
         //--- Search for Now stock price from html 現在値
         // 正規表現の中で.*?とやると最短マッチする
+        error = nil;
         regexp = [NSRegularExpression regularExpressionWithPattern:@"<td class=\"stoksPrice\">(.*?)</td>"
                                                            options:0
-                                                             error:nil];
+                                                             error:&error];
         
-        //
-        arr = [regexp matchesInString:html
-                              options:0
-                                range:NSMakeRange(0, html.length)];
-        
-        for (NSTextCheckingResult *match in arr) {
-            NSString *pricebuf = [html substringWithRange:[match rangeAtIndex:1]];
-            [object setValue:pricebuf forKey:@"price"];
-//            NSLog(@"price %@", pricebuf);
+        if (regexp != nil) {
+            if (error == nil) {
+                arr = [regexp matchesInString:html
+                                      options:0
+                                        range:NSMakeRange(0, html.length)];
+                
+                for (NSTextCheckingResult *match in arr) {
+                    NSString *pricebuf = [html substringWithRange:[match rangeAtIndex:1]];
+                    [object setValue:pricebuf forKey:@"price"];
+                    //            NSLog(@"price %@", pricebuf);
+                }
+            } else {
+                //nothing to do
+            }
         }
         //監視値 イメージ
         //[object setValue:@"1" forKey:@"observeImage"];
@@ -310,6 +328,9 @@
 
 -(void)copyTemporaryArraysToCoredata {
 //    NSLog(@"*** Now copyTemporaryArraysToCoredata");
+    
+    self.dateMessageLabel.text = self.dateMessageLabelStr;
+    self.nikkeiLabel.text = self.nikkeiLabelStr;
     
     NSError *error = nil;
     self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
@@ -455,25 +476,25 @@
     });
     
     dispatch_async(main_queue, ^{  // async? or sync?
-//        //dispatch_async(main_queue, ^{
-//        // Main Thread
-//        // タイマーキャンセルハンドラ設定
-//        dispatch_source_set_cancel_handler(appDelegate.mainTimerSource, ^{
-//            if(appDelegate.mainTimerSource){
-//                //dispatch_release(_timerSource); // releaseを忘れずに
-//                appDelegate.mainTimerSource = NULL;
-//            }
-//        });
-//        // タイマーイベントハンドラ
-//        dispatch_source_set_event_handler(appDelegate.mainTimerSource, ^{
-//            // ここに定期的に行う処理を記述
+        //dispatch_async(main_queue, ^{
+        // Main Thread
+        // タイマーキャンセルハンドラ設定
+        dispatch_source_set_cancel_handler(appDelegate.mainTimerSource, ^{
+            if(appDelegate.mainTimerSource){
+                //dispatch_release(_timerSource); // releaseを忘れずに
+                appDelegate.mainTimerSource = NULL;
+            }
+        });
+        // タイマーイベントハンドラ
+        dispatch_source_set_event_handler(appDelegate.mainTimerSource, ^{
+            // ここに定期的に行う処理を記述
 //            NSLog(@"*** Now global_queue in TimerEventHandler");
-//            [self autoRefreshByMainThreadTimer];
-//        });
-//        // インターバル等を設定
-//        dispatch_source_set_timer(appDelegate.mainTimerSource,
-//                                  dispatch_time(DISPATCH_TIME_NOW, 0), NSEC_PER_SEC * 1, NSEC_PER_SEC / 2); // 直後に開始、1秒間隔で 0.5秒の揺らぎを許可
-//        
+            [self copyTemporaryArraysToCoredata];
+        });
+        // インターバル等を設定
+        dispatch_source_set_timer(appDelegate.mainTimerSource,
+                                  dispatch_time(DISPATCH_TIME_NOW, 0), NSEC_PER_SEC * 1, NSEC_PER_SEC / 2); // 直後に開始、1秒間隔で 0.5秒の揺らぎを許可
+        
     });
 
 }
@@ -742,9 +763,11 @@
         
         if (observeFlag != 0) {
             //監視値　イメージ
-            //[object setValue:@"3" forKey:@"observeImage"];
-            [self.tempObserveImageMArray replaceObjectAtIndex:i withObject:@"3"];
-            
+            //タイミングによってArrayに要素が全てない場合エラーとなるのを回避
+            if ( i < [self.tempObserveImageMArray count]) {
+                //[object setValue:@"3" forKey:@"observeImage"];
+                [self.tempObserveImageMArray replaceObjectAtIndex:i withObject:@"3"];
+            }
             //NSString *noticeDate = [object valueForKey:@"noticeTime"];
             //if ([noticeDate isEqual:[NSNull null]]) {
             //if (noticeDate == nil) {
@@ -760,8 +783,11 @@
                 [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
                 [formatter setDateFormat:@"MM/dd HH:mm:ss"];
                 NSString *noticeTime = [formatter stringFromDate:now];
-                //[object setValue:noticeTime forKey:@"noticeTime"];
-                [self.tempNoticeTimeMArray replaceObjectAtIndex:i withObject:noticeTime];
+                //タイミングによってArrayに要素が全てない場合エラーとなるのを回避
+                if ( i < [self.tempNoticeTimeMArray count]) {
+                    //[object setValue:noticeTime forKey:@"noticeTime"];
+                    [self.tempNoticeTimeMArray replaceObjectAtIndex:i withObject:noticeTime];
+                }
                 
                 //銘柄名
                 NSString *codePlaceName;
@@ -782,16 +808,14 @@
 
 
 -(NSString *)refreshPriceValue:(NSInteger)indexRow {
-//    NSLog(@"*** Now refreshPriceValue");
-
+    //    NSLog(@"*** Now refreshPriceValue");
+    
     NSString *url;
     NSString *codebuf;
     NSString *placebuf;
     NSString *pricebuf;
     NSIndexPath *indexPath;
     NSManagedObject *object;
-//    for (int i=0; i < count; i++) {
-//    indexPath = [NSIndexPath indexPathForRow:i inSection:0];
     indexPath = [NSIndexPath indexPathForRow:indexRow inSection:0];
     object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
     
@@ -811,7 +835,8 @@
         //error
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"通信エラー" message:@"サーバーとの接続に失敗しました。" preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
-        [self presentViewController:alert animated:YES completion:nil];
+        BoardViewController *controller;
+        [controller presentViewController:alert animated:YES completion:nil];
     }
     
     //--- Search for stock price from html
@@ -824,34 +849,41 @@
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
     // 正規表現の中で.*?とやると最短マッチする。
+    NSError *error = nil;
     NSRegularExpression *regexp = [NSRegularExpression regularExpressionWithPattern:@"<td class=\"stoksPrice\">(.*?)</td>"
                                                                             options:0
-                                                                              error:nil];
-    //
-    NSArray *arr = [regexp matchesInString:html
-                                   options:0
-                                     range:NSMakeRange(0, html.length)];
-    
-    for (NSTextCheckingResult *match in arr) {
-        pricebuf = [html substringWithRange:[match rangeAtIndex:1]];
-        //            [object setValue:pricebuf forKey:@"price"];
-        //            NSLog(@"price %@", pricebuf);
+                                                                              error:&error];
+    if (regexp != nil) {
+        if (error == nil) {
+            NSArray *arr = [regexp matchesInString:html
+                                           options:0
+                                             range:NSMakeRange(0, html.length)];
+            
+            for (NSTextCheckingResult *match in arr) {
+                pricebuf = [html substringWithRange:[match rangeAtIndex:1]];
+                //            [object setValue:pricebuf forKey:@"price"];
+                //            NSLog(@"price %@", pricebuf);
+            }
+        } else {
+            pricebuf = @"error";
+        }
+    } else {
+        pricebuf = @"error";
     }
-    //    }
     return pricebuf;
     
 }
 
 -(void)refreshPriceValueMainThread {
-//    NSLog(@"*** Now refreshPriceValueMainThread");
-
+    //    NSLog(@"*** Now refreshPriceValueMainThread");
+    
     NSError *error = nil;
     self.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
     NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-//    NSLog(@"Error !: %@", [error localizedDescription]);
-//    NSLog(@"CoreData count = %ld", count);
+    //    NSLog(@"Error !: %@", [error localizedDescription]);
+    //    NSLog(@"CoreData count = %ld", count);
     
     NSIndexPath *indexPath;
     NSManagedObject *object;
@@ -859,11 +891,15 @@
         indexPath = [NSIndexPath indexPathForRow:i inSection:0];
         object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         NSString *price = [self refreshPriceValue:i];
-        [object setValue:price forKey:@"price"];
+        if (![price isEqualToString:@"error"]) {
+            [object setValue:price forKey:@"price"];
+        } else {
+            //nothing to do
+        }
         //[self.tempPriceMArray replaceObjectAtIndex:i withObject:price];
-//        NSLog(@"price %@", price);
+        //        NSLog(@"price %@", price);
     }
-
+    
     // Save the context.
     if (![self.managedObjectContext save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
@@ -871,10 +907,11 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-    
     //---reload table view
     [self.boardTableView reloadData];
+    
 }
+
 
 -(void)refreshPriceValueBackgroundThread {
 //    NSLog(@"*** Now refreshPriceValueBackgroundThread");
@@ -893,8 +930,16 @@
         indexPath = [NSIndexPath indexPathForRow:i inSection:0];
         object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         NSString *price = [self refreshPriceValue:i];
-        [self.tempPriceMArray replaceObjectAtIndex:i withObject:price];
-//        NSLog(@"price %@", price);
+        if (![price isEqualToString:@"error"]) {
+            //タイミングによってArrayに要素が全てない場合エラーとなるのを回避
+            if ( i < [self.tempPriceMArray count]) {
+                [self.tempPriceMArray replaceObjectAtIndex:i withObject:price];
+                //        NSLog(@"price %@", price);
+            }
+        } else {
+            //nothing to do
+        }
+
     }
 }
 
@@ -928,25 +973,33 @@
     //<p>現在の日時：<strong>3月 9日 23:31</strong> -- 日本の証券市場は終了しました。</p></div>
     //@"<td class=\"stoksPrice\">(.*?)</td>"
     //nowtime and Message
+    NSError *error = nil;
     NSRegularExpression *regexp = [NSRegularExpression regularExpressionWithPattern:@"<p>現在の日時：<strong>(.*?)月 (.*?)日 (.*?):(.*?)</strong>(.*?)</p>"
                                                                             options:0
-                                                                              error:nil];
-    
-    //
-    NSArray *arr = [regexp matchesInString:html
-                                   options:0
-                                     range:NSMakeRange(0, html.length)];
-    
+                                                                              error:&error];
     NSString *strbuf;
-    for (NSTextCheckingResult *match in arr) {
-//        NSString *strbuf1 = [html substringWithRange:[match rangeAtIndex:1]];
-//        NSString *strbuf2 = [html substringWithRange:[match rangeAtIndex:2]];
-//        NSString *strbuf3 = [html substringWithRange:[match rangeAtIndex:3]];
-//        NSString *strbuf4 = [html substringWithRange:[match rangeAtIndex:4]];
-//        NSString *strbuf5 = [html substringWithRange:[match rangeAtIndex:5]];
-        strbuf = [html substringWithRange:[match rangeAtIndex:5]];
+    if (regexp != nil) {
+        if (error == nil) {
+            //
+            NSArray *arr = [regexp matchesInString:html
+                                           options:0
+                                             range:NSMakeRange(0, html.length)];
+            
+            for (NSTextCheckingResult *match in arr) {
+                //        NSString *strbuf1 = [html substringWithRange:[match rangeAtIndex:1]];
+                //        NSString *strbuf2 = [html substringWithRange:[match rangeAtIndex:2]];
+                //        NSString *strbuf3 = [html substringWithRange:[match rangeAtIndex:3]];
+                //        NSString *strbuf4 = [html substringWithRange:[match rangeAtIndex:4]];
+                //        NSString *strbuf5 = [html substringWithRange:[match rangeAtIndex:5]];
+                strbuf = [html substringWithRange:[match rangeAtIndex:5]];
+            }
+            strbuf = [strbuf substringFromIndex:3];
+        } else {
+            strbuf = @"***";
+        }
+    } else {
+        strbuf = @"***";
     }
-    strbuf = [strbuf substringFromIndex:3];
     return strbuf;
 }
 
@@ -978,30 +1031,49 @@
     
     // 正規表現の中で.*?とやると最短マッチする
     //Nikkei average
+    NSError *error = nil;
     NSRegularExpression *regexp = [NSRegularExpression regularExpressionWithPattern:@"<td class=\"stoksPrice\">(.*?)</td>"
                                                        options:0
-                                                         error:nil];
-    NSArray *arr = [regexp matchesInString:html
-                          options:0
-                            range:NSMakeRange(0, html.length)];
+                                                         error:&error];
     NSString *strNikkeiPrice;
-    for (NSTextCheckingResult *match in arr) {
-        strNikkeiPrice = [html substringWithRange:[match rangeAtIndex:1]];
+    NSArray *arr;
+    if (regexp != nil) {
+        if (error == nil) {
+            arr = [regexp matchesInString:html
+                                  options:0
+                                    range:NSMakeRange(0, html.length)];
+            for (NSTextCheckingResult *match in arr) {
+                strNikkeiPrice = [html substringWithRange:[match rangeAtIndex:1]];
+            }
+        } else {
+            strNikkeiPrice = @"***";
+        }
+    } else {
+        strNikkeiPrice = @"***";
     }
     
     //changeValue and changeRate
     //<td class="change"><span class="yjSt">前日比</span><span class="icoDownRed yjMSt">-140.95（-0.84%）</span></td>
+    error = nil;
     regexp = [NSRegularExpression regularExpressionWithPattern:@"<td class=\"change\"><span class=\"yjSt\">前日比</span><span class=\"(.*?)\">(.*?)</span></td>"
                                                        options:0
-                                                         error:nil];
+                                                         error:&error];
     //
-    arr = [regexp matchesInString:html
-                          options:0
-                            range:NSMakeRange(0, html.length)];
-    
     NSString *strChange;
-    for (NSTextCheckingResult *match in arr) {
-        strChange = [html substringWithRange:[match rangeAtIndex:2]];
+    if (regexp != nil) {
+        if (error == nil) {
+            arr = [regexp matchesInString:html
+                                  options:0
+                                    range:NSMakeRange(0, html.length)];
+            
+            for (NSTextCheckingResult *match in arr) {
+                strChange = [html substringWithRange:[match rangeAtIndex:2]];
+            }
+        } else {
+            strChange = @"***";
+        }
+    } else {
+        strChange = @"***";
     }
     NSString *strbuf = [NSString stringWithFormat:@"日経平均:%@    %@" ,strNikkeiPrice ,strChange];
     return strbuf;
@@ -1078,7 +1150,7 @@
         [self insertNewObject];
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
         [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
-        int count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+        NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
 //        NSLog(@"Error !: %@", [error localizedDescription]);
 //        NSLog(@"CoreData count = %ld", count);
 //        indexPath = [NSIndexPath indexPathForRow:count-1 inSection:0];
@@ -1087,7 +1159,7 @@
         //rowPosition = count-1 の object(最後に追加したもの)を検索
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         [request setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rowPosition == %@", [NSString stringWithFormat:@"%d",(count-1)]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rowPosition == %@", [NSString stringWithFormat:@"%ld",(count-1)]];
         [request setPredicate:predicate];
         NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
         if (array != nil) {
@@ -1141,8 +1213,8 @@
 }
 
 - (void)configureCell:(BoardTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-//    NSLog(@"*** Now configureCell");
-//    NSLog(@"Now configureCell index=%ld", indexPath.row);
+    NSLog(@"*** Now configureCell");
+    NSLog(@"Now configureCell index=%ld", indexPath.row);
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
     if (self.refreshSwitch.on == YES) {
@@ -1291,7 +1363,7 @@
     NSManagedObject *object;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Stock"];
     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Stock" inManagedObjectContext:self.managedObjectContext]];
-    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+//    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
 //    NSLog(@"Error !: %@", [error localizedDescription]);
 //    NSLog(@"CoreData count = %ld", count);
     

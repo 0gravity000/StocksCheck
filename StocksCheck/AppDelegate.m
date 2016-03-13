@@ -50,6 +50,14 @@
     //Start Background Fetch
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
 
+    // タイマ一時停止
+    if(self.BackgraundTimerSource){
+        dispatch_suspend(self.BackgraundTimerSource);
+    }
+    if(self.mainTimerSource){
+        dispatch_suspend(self.mainTimerSource);
+    }
+    
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -69,6 +77,10 @@
     //Load CSV File from web
     self.stocksArray = [NSMutableArray array];
     [self loadCSVFromRemote];
+    
+    // タイマー開始
+    dispatch_resume(self.BackgraundTimerSource);
+    dispatch_resume(self.mainTimerSource);
     
 }
 
@@ -159,18 +171,26 @@
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
     // 正規表現の中で.*?とやると最短マッチする。
+    NSError *error = nil;
     NSRegularExpression *regexp = [NSRegularExpression regularExpressionWithPattern:@"<td class=\"stoksPrice\">(.*?)</td>"
                                                                             options:0
-                                                                              error:nil];
-    //
-    NSArray *arr = [regexp matchesInString:html
-                                   options:0
-                                     range:NSMakeRange(0, html.length)];
-    
-    for (NSTextCheckingResult *match in arr) {
-        pricebuf = [html substringWithRange:[match rangeAtIndex:1]];
-        //            [object setValue:pricebuf forKey:@"price"];
-        //            NSLog(@"price %@", pricebuf);
+                                                                              error:&error];
+    if (regexp != nil) {
+        if (error == nil) {
+            NSArray *arr = [regexp matchesInString:html
+                                           options:0
+                                             range:NSMakeRange(0, html.length)];
+            
+            for (NSTextCheckingResult *match in arr) {
+                pricebuf = [html substringWithRange:[match rangeAtIndex:1]];
+                //            [object setValue:pricebuf forKey:@"price"];
+                //            NSLog(@"price %@", pricebuf);
+            }
+        } else {
+            pricebuf = @"error";
+        }
+    } else {
+        pricebuf = @"error";
     }
     return pricebuf;
     
@@ -193,7 +213,9 @@
         indexPath = [NSIndexPath indexPathForRow:i inSection:0];
         object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         NSString *price = [self refreshPriceValue:i];
-        [object setValue:price forKey:@"price"];
+        if (![price isEqualToString:@"error"]) {
+            [object setValue:price forKey:@"price"];
+        }
         //[self.tempPriceMArray replaceObjectAtIndex:i withObject:price];
 //        NSLog(@"price %@", price);
     }
@@ -462,7 +484,7 @@
         if (IsSuccess) {
             NSLog(@"success delete");
         } else {
-            NSLog(@"fail delete. file not exist");
+            NSLog(@"file not exist");
             NSLog(@"Error !: %@", [error localizedDescription]);
         }
     }
@@ -545,13 +567,13 @@
             cnt++;
         }
         [self.stocksArray addObject:stocksDic];
-        //NSLog(@"%@", items);778
+        //NSLog(@"%@", items);
     }
     //先頭の2行はヘッダーデータで不要なので削除
     [self.stocksArray removeObjectsInRange:NSMakeRange(0, 2)];
     //最後の1行は空データで不要なので削除
     [self.stocksArray removeObjectsInRange:NSMakeRange(([self.stocksArray count]-1), 1)];
-//    NSLog(@"self.stocksArray count: %ld", [self.stocksArray count]);    // 行数
+    NSLog(@"self.stocksArray count: %ld", [self.stocksArray count]);    // 行数
 
 }
 
