@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		AA0F11AB1C93F53700A6A622 /* button_01.png in Resources */ = {isa = PBXBuildFile; fileRef = AA0F11AA1C93F53700A6A622 /* button_01.png */; };
 		AA0F11AD1C93F54100A6A622 /* button_03.png in Resources */ = {isa = PBXBuildFile; fileRef = AA0F11AC1C93F54100A6A622 /* button_03.png */; };
+		AA0F11C01C958BE700A6A622 /* infoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0F11BF1C958BDD00A6A622 /* infoPlist.strings */; };
 		AA19AC5A1C8A8D2200FD02E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC591C8A8D2200FD02E6 /* main.m */; };
 		AA19AC5D1C8A8D2200FD02E6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC5C1C8A8D2200FD02E6 /* AppDelegate.m */; };
 		AA19AC601C8A8D2200FD02E6 /* StocksCheck.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC5E1C8A8D2200FD02E6 /* StocksCheck.xcdatamodeld */; };
@@ -64,6 +65,10 @@
 /* Begin PBXFileReference section */
 		AA0F11AA1C93F53700A6A622 /* button_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_01.png; sourceTree = "<group>"; };
 		AA0F11AC1C93F54100A6A622 /* button_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_03.png; sourceTree = "<group>"; };
+		AA0F11BB1C958BCB00A6A622 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		AA0F11BC1C958BCB00A6A622 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		AA0F11BE1C958BDD00A6A622 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/infoPlist.strings; sourceTree = "<group>"; };
+		AA0F11C11C958BE900A6A622 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/infoPlist.strings; sourceTree = "<group>"; };
 		AA19AC551C8A8D2200FD02E6 /* StocksCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StocksCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA19AC591C8A8D2200FD02E6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AA19AC5B1C8A8D2200FD02E6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -193,6 +198,7 @@
 				AAC7B13F1C8F34AB00D792AF /* button_02.png */,
 				AA0F11AC1C93F54100A6A622 /* button_03.png */,
 				AA19AC591C8A8D2200FD02E6 /* main.m */,
+				AA0F11BF1C958BDD00A6A622 /* infoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -310,6 +316,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = AA19AC4C1C8A8D2200FD02E6;
 			productRefGroup = AA19AC561C8A8D2200FD02E6 /* Products */;
@@ -331,6 +338,7 @@
 				AA19AC6E1C8A8D2200FD02E6 /* LaunchScreen.storyboard in Resources */,
 				AAC7B1401C8F34AB00D792AF /* button_02.png in Resources */,
 				AA19AC6B1C8A8D2200FD02E6 /* Assets.xcassets in Resources */,
+				AA0F11C01C958BE700A6A622 /* infoPlist.strings in Resources */,
 				AA19AC691C8A8D2200FD02E6 /* Main.storyboard in Resources */,
 				AA0F11AD1C93F54100A6A622 /* button_03.png in Resources */,
 				AA0F11AB1C93F53700A6A622 /* button_01.png in Resources */,
@@ -407,10 +415,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		AA0F11BF1C958BDD00A6A622 /* infoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AA0F11BE1C958BDD00A6A622 /* Base */,
+				AA0F11C11C958BE900A6A622 /* ja */,
+			);
+			name = infoPlist.strings;
+			sourceTree = "<group>";
+		};
 		AA19AC671C8A8D2200FD02E6 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				AA19AC681C8A8D2200FD02E6 /* Base */,
+				AA0F11BB1C958BCB00A6A622 /* ja */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -419,6 +437,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				AA19AC6D1C8A8D2200FD02E6 /* Base */,
+				AA0F11BC1C958BCB00A6A622 /* ja */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

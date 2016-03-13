@@ -1,0 +1,108 @@
+
+/* Class = "UILabel"; text = "message"; ObjectID = "27a-cr-LHK"; */
+"27a-cr-LHK.text" = "message";
+
+/* Class = "UILabel"; text = "日経平均株価"; ObjectID = "4Ku-oQ-cPG"; */
+"4Ku-oQ-cPG.text" = "日経平均株価";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "6ZR-60-luV"; */
+"6ZR-60-luV.text" = "Detail";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "8kl-PQ-9XL"; */
+"8kl-PQ-9XL.text" = "Title";
+
+/* Class = "UILabel"; text = "銘柄名"; ObjectID = "A01-kG-JsH"; */
+"A01-kG-JsH.text" = "銘柄名";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "AXY-3z-oBf"; */
+"AXY-3z-oBf.text" = "Title";
+
+/* Class = "UITableViewSection"; headerTitle = "騰落率"; ObjectID = "AZo-ij-2hL"; */
+"AZo-ij-2hL.headerTitle" = "騰落率";
+
+/* Class = "UITableViewSection"; headerTitle = "銘柄"; ObjectID = "By3-61-6N4"; */
+"By3-61-6N4.headerTitle" = "銘柄";
+
+/* Class = "UILabel"; text = "現在値"; ObjectID = "EtR-ux-xA8"; */
+"EtR-ux-xA8.text" = "現在値";
+
+/* Class = "UITableViewSection"; headerTitle = "現在値"; ObjectID = "F5b-g5-NG0"; */
+"F5b-g5-NG0.headerTitle" = "現在値";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "IqL-NV-qSI"; */
+"IqL-NV-qSI.text" = "Title";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "Jdj-HL-3do"; */
+"Jdj-HL-3do.text" = "Detail";
+
+/* Class = "UILabel"; text = "銘柄"; ObjectID = "Jgz-ou-aKV"; */
+"Jgz-ou-aKV.text" = "銘柄";
+
+/* Class = "UITableViewSection"; headerTitle = "前日比"; ObjectID = "KA9-F6-m6f"; */
+"KA9-F6-m6f.headerTitle" = "前日比";
+
+/* Class = "UILabel"; text = "項目"; ObjectID = "NZr-73-g5E"; */
+"NZr-73-g5E.text" = "項目";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "OHP-aC-7VU"; */
+"OHP-aC-7VU.text" = "Detail";
+
+/* Class = "UILabel"; text = "騰落率"; ObjectID = "Q4m-uT-xvK"; */
+"Q4m-uT-xvK.text" = "騰落率";
+
+/* Class = "UINavigationController"; title = "Master"; ObjectID = "RMx-3f-FxP"; */
+"RMx-3f-FxP.title" = "Master";
+
+/* Class = "UIViewController"; title = "ValSet"; ObjectID = "RQt-eA-POT"; */
+"RQt-eA-POT.title" = "ValSet";
+
+/* Class = "UILabel"; text = "前日比"; ObjectID = "TGy-rv-j7V"; */
+"TGy-rv-j7V.text" = "前日比";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "UQh-K6-v8H"; */
+"UQh-K6-v8H.text" = "Title";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Yfl-Xv-HgZ"; */
+"Yfl-Xv-HgZ.text" = "Title";
+
+/* Class = "UILabel"; text = "上限下限"; ObjectID = "Zid-PV-a2H"; */
+"Zid-PV-a2H.text" = "上限下限";
+
+/* Class = "UILabel"; text = "現在の日時"; ObjectID = "a7n-lz-Gbk"; */
+"a7n-lz-Gbk.text" = "現在の日時";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "buT-tu-bPx"; */
+"buT-tu-bPx.text" = "Detail";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "ef2-mV-haK"; */
+"ef2-mV-haK.text" = "Detail";
+
+/* Class = "UISearchBar"; placeholder = "コードまたは会社名を入力してください。"; ObjectID = "gTJ-xc-sm0"; */
+"gTJ-xc-sm0.placeholder" = "コードまたは会社名を入力してください。";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "gd3-iZ-80t"; */
+"gd3-iZ-80t.text" = "Title";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "opA-Pa-Wqv"; */
+"opA-Pa-Wqv.text" = "Detail";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "pI0-Zo-Nqp"; */
+"pI0-Zo-Nqp.text" = "Title";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "rCd-Ia-qcp"; */
+"rCd-Ia-qcp.text" = "Title";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "vXP-vC-YDQ"; */
+"vXP-vC-YDQ.text" = "Title";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "wWn-f4-g9h"; */
+"wWn-f4-g9h.text" = "Title";
+
+/* Class = "UILabel"; text = "通知日時"; ObjectID = "wdb-JE-Isw"; */
+"wdb-JE-Isw.text" = "通知日時";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "x3H-0w-BXu"; */
+"x3H-0w-BXu.text" = "Subtitle";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "yqs-5J-mmu"; */
+"yqs-5J-mmu.text" = "Title";

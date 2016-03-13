@@ -1,0 +1,10 @@
+/* 
+  infoPlist.strings
+  StocksCheck
+
+  Created by SASAKIAI on 2016/03/13.
+  Copyright © 2016年 SASAKIAI. All rights reserved.
+*/
+
+CFBundleName = "株番";
+CFBundleDisplayName = "株番";
