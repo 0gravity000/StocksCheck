@@ -83,7 +83,11 @@
             if (codeRange.location != NSNotFound) {
                 bHitFlag = true;
             }
-            NSRange nameRange = [name rangeOfString:searchStr];
+            
+            NSString *lowerSearchStr = [searchStr lowercaseString];
+            NSString *lowerNameStr = [name lowercaseString];
+
+            NSRange nameRange = [lowerNameStr rangeOfString:lowerSearchStr];
             if (nameRange.location != NSNotFound) {
                 bHitFlag = true;
             }
