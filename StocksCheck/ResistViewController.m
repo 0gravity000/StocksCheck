@@ -22,23 +22,23 @@
         _detailItem = newDetailItem;
         
         // Update the view.
-        [self configureView];
+//        [self configureView];
     }
 }
 
-- (void)configureView {
-    NSLog(@"*** Now ResistViewController configureView");
-    // Update the user interface for the detail item.
-    if (self.detailItem) {
-        self.detailDescriptionLabel.text = [[self.detailItem valueForKey:@"timeStamp"] description];
-    }
-}
+//- (void)configureView {
+//    NSLog(@"*** Now ResistViewController configureView");
+//    // Update the user interface for the detail item.
+//    if (self.detailItem) {
+//        //self.detailDescriptionLabel.text = [[self.detailItem valueForKey:@"timeStamp"] description];
+//    }
+//}
 
 - (void)viewDidLoad {
     NSLog(@"*** Now ResistViewController viewDidLoad");
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    [self configureView];
+    //[self configureView];
     
     self.codeSearchBar.delegate = self;
     self.codeSearchBar.showsCancelButton = true;

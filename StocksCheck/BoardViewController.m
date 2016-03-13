@@ -551,7 +551,7 @@
         return;
     }
     
-    localNotif.fireDate = [NSDate  dateWithTimeIntervalSinceNow:15.0];
+    localNotif.fireDate = [NSDate  dateWithTimeIntervalSinceNow:1.0];
     localNotif.timeZone = [NSTimeZone defaultTimeZone];
     //localNotif.repeatInterval = NSCalendarUnitMinute;
     //localNotif.alertTitle = name;
