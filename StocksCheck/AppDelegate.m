@@ -79,8 +79,12 @@
     [self loadCSVFromRemote];
     
     // タイマー開始
-    dispatch_resume(self.BackgraundTimerSource);
-    dispatch_resume(self.mainTimerSource);
+    if (self.BackgraundTimerSource != nil) {
+        dispatch_resume(self.BackgraundTimerSource);
+    }
+    if (self.mainTimerSource != nil) {
+        dispatch_resume(self.mainTimerSource);
+    }
     
 }
 

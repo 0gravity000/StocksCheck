@@ -51,6 +51,7 @@
     //[self loadImageFromRemote];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.stocksArray = [appDelegate.stocksArray mutableCopy];
+    
 }
 
 - (void)didReceiveMemoryWarning {

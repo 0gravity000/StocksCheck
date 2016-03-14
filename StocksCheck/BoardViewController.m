@@ -1213,8 +1213,8 @@
 }
 
 - (void)configureCell:(BoardTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"*** Now configureCell");
-    NSLog(@"Now configureCell index=%ld", indexPath.row);
+//    NSLog(@"*** Now configureCell");
+//    NSLog(@"Now configureCell index=%ld", indexPath.row);
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
     if (self.refreshSwitch.on == YES) {
