@@ -10,6 +10,7 @@
 		AA0F11AB1C93F53700A6A622 /* button_01.png in Resources */ = {isa = PBXBuildFile; fileRef = AA0F11AA1C93F53700A6A622 /* button_01.png */; };
 		AA0F11AD1C93F54100A6A622 /* button_03.png in Resources */ = {isa = PBXBuildFile; fileRef = AA0F11AC1C93F54100A6A622 /* button_03.png */; };
 		AA0F11C01C958BE700A6A622 /* infoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0F11BF1C958BDD00A6A622 /* infoPlist.strings */; };
+		AA0F11C71C96FA7400A6A622 /* Launch_1242_2208.png in Resources */ = {isa = PBXBuildFile; fileRef = AA0F11C61C96FA7400A6A622 /* Launch_1242_2208.png */; };
 		AA19AC5A1C8A8D2200FD02E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC591C8A8D2200FD02E6 /* main.m */; };
 		AA19AC5D1C8A8D2200FD02E6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC5C1C8A8D2200FD02E6 /* AppDelegate.m */; };
 		AA19AC601C8A8D2200FD02E6 /* StocksCheck.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AA19AC5E1C8A8D2200FD02E6 /* StocksCheck.xcdatamodeld */; };
@@ -68,6 +69,7 @@
 		AA0F11BC1C958BCB00A6A622 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		AA0F11BE1C958BDD00A6A622 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/infoPlist.strings; sourceTree = "<group>"; };
 		AA0F11C11C958BE900A6A622 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/infoPlist.strings; sourceTree = "<group>"; };
+		AA0F11C61C96FA7400A6A622 /* Launch_1242_2208.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Launch_1242_2208.png; sourceTree = "<group>"; };
 		AA19AC551C8A8D2200FD02E6 /* StocksCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StocksCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA19AC591C8A8D2200FD02E6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AA19AC5B1C8A8D2200FD02E6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 		AA19AC581C8A8D2200FD02E6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AA0F11C61C96FA7400A6A622 /* Launch_1242_2208.png */,
 				AA0F11AA1C93F53700A6A622 /* button_01.png */,
 				AAC7B13F1C8F34AB00D792AF /* button_02.png */,
 				AA0F11AC1C93F54100A6A622 /* button_03.png */,
@@ -335,6 +338,7 @@
 				AA19AC6B1C8A8D2200FD02E6 /* Assets.xcassets in Resources */,
 				AA0F11C01C958BE700A6A622 /* infoPlist.strings in Resources */,
 				AA19AC691C8A8D2200FD02E6 /* Main.storyboard in Resources */,
+				AA0F11C71C96FA7400A6A622 /* Launch_1242_2208.png in Resources */,
 				AA0F11AD1C93F54100A6A622 /* button_03.png in Resources */,
 				AA0F11AB1C93F53700A6A622 /* button_01.png in Resources */,
 			);
@@ -439,6 +443,85 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		AA0F11C21C96A9BC00A6A622 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ai Sasaki (664E54HMS7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "90a51ec0-e639-4b59-933d-b374a0179fd6";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Distribution;
+		};
+		AA0F11C31C96A9BC00A6A622 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = StocksCheck/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ne.jp.0gravity000.StocksCheck;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "90a51ec0-e639-4b59-933d-b374a0179fd6";
+			};
+			name = Distribution;
+		};
+		AA0F11C41C96A9BC00A6A622 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = StocksCheckTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ne.jp.0gravity000.StocksCheckTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StocksCheck.app/StocksCheck";
+			};
+			name = Distribution;
+		};
+		AA0F11C51C96A9BC00A6A622 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = StocksCheckUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ne.jp.0gravity000.StocksCheckUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = StocksCheck;
+				USES_XCTRUNNER = YES;
+			};
+			name = Distribution;
+		};
 		AA19AC861C8A8D2200FD02E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -456,6 +539,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ai Sasaki (664E54HMS7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -478,6 +562,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "90a51ec0-e639-4b59-933d-b374a0179fd6";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -499,6 +584,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ai Sasaki (664E54HMS7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -514,6 +600,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "90a51ec0-e639-4b59-933d-b374a0179fd6";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -524,11 +611,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = StocksCheck/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ne.jp.0gravity000.StocksCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -537,11 +627,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = StocksCheck/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ne.jp.0gravity000.StocksCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -601,6 +694,7 @@
 			buildConfigurations = (
 				AA19AC861C8A8D2200FD02E6 /* Debug */,
 				AA19AC871C8A8D2200FD02E6 /* Release */,
+				AA0F11C21C96A9BC00A6A622 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -610,6 +704,7 @@
 			buildConfigurations = (
 				AA19AC891C8A8D2200FD02E6 /* Debug */,
 				AA19AC8A1C8A8D2200FD02E6 /* Release */,
+				AA0F11C31C96A9BC00A6A622 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -619,6 +714,7 @@
 			buildConfigurations = (
 				AA19AC8C1C8A8D2200FD02E6 /* Debug */,
 				AA19AC8D1C8A8D2200FD02E6 /* Release */,
+				AA0F11C41C96A9BC00A6A622 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -628,6 +724,7 @@
 			buildConfigurations = (
 				AA19AC8F1C8A8D2200FD02E6 /* Debug */,
 				AA19AC901C8A8D2200FD02E6 /* Release */,
+				AA0F11C51C96A9BC00A6A622 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
