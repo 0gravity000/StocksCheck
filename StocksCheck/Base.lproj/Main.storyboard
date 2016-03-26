@@ -60,25 +60,25 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="銘柄名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A01-kG-JsH">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="現在値" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EtR-ux-xA8">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="前日比" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGy-rv-j7V">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="騰落率" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q4m-uT-xvK">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="button_01.png" translatesAutoresizingMaskIntoConstraints="NO" id="hkA-eK-4LY">
@@ -103,7 +103,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知日時" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdb-JE-Isw">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -135,16 +135,16 @@
                                                     <exclude reference="IvO-4K-yu5"/>
                                                     <exclude reference="OIi-mk-cJc"/>
                                                     <exclude reference="dB0-vK-sS5"/>
-                                                    <exclude reference="RFX-0e-naf"/>
-                                                    <exclude reference="bTn-ve-Z8A"/>
                                                     <exclude reference="YRd-dT-92T"/>
                                                     <exclude reference="acj-vo-z3t"/>
-                                                    <exclude reference="KHL-1t-OfL"/>
-                                                    <exclude reference="QQU-cM-gDH"/>
                                                     <exclude reference="qPh-2I-KL6"/>
                                                     <exclude reference="tzP-Gg-wpS"/>
+                                                    <exclude reference="KHL-1t-OfL"/>
+                                                    <exclude reference="QQU-cM-gDH"/>
                                                     <exclude reference="Kfn-BR-NKr"/>
                                                     <exclude reference="VRf-c1-COT"/>
+                                                    <exclude reference="RFX-0e-naf"/>
+                                                    <exclude reference="bTn-ve-Z8A"/>
                                                 </mask>
                                             </variation>
                                             <variation key="widthClass=compact">
@@ -160,16 +160,16 @@
                                                     <include reference="IvO-4K-yu5"/>
                                                     <include reference="OIi-mk-cJc"/>
                                                     <include reference="dB0-vK-sS5"/>
-                                                    <include reference="RFX-0e-naf"/>
-                                                    <include reference="bTn-ve-Z8A"/>
                                                     <include reference="YRd-dT-92T"/>
                                                     <include reference="acj-vo-z3t"/>
-                                                    <include reference="KHL-1t-OfL"/>
-                                                    <include reference="QQU-cM-gDH"/>
                                                     <include reference="qPh-2I-KL6"/>
                                                     <include reference="tzP-Gg-wpS"/>
+                                                    <include reference="KHL-1t-OfL"/>
+                                                    <include reference="QQU-cM-gDH"/>
                                                     <include reference="Kfn-BR-NKr"/>
                                                     <include reference="VRf-c1-COT"/>
+                                                    <include reference="RFX-0e-naf"/>
+                                                    <include reference="bTn-ve-Z8A"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -189,6 +189,9 @@
                                     <outlet property="delegate" destination="Soj-Er-glS" id="zVr-60-toA"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="uK7-Ta-7Aa">
+                                <rect key="frame" x="-10" y="-10" width="20" height="20"/>
+                            </activityIndicatorView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QRS-NK-zzT">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <items>
@@ -223,11 +226,13 @@
                             <constraint firstItem="4Ku-oQ-cPG" firstAttribute="leading" secondItem="aE3-97-zgi" secondAttribute="leadingMargin" constant="-20" id="4Ak-TC-dzD"/>
                             <constraint firstItem="a7n-lz-Gbk" firstAttribute="top" secondItem="YBE-Oc-WHv" secondAttribute="bottom" id="Bym-J1-09x"/>
                             <constraint firstItem="QRS-NK-zzT" firstAttribute="top" secondItem="fzx-no-hft" secondAttribute="bottom" id="MQB-MS-dCf"/>
+                            <constraint firstItem="uK7-Ta-7Aa" firstAttribute="centerX" secondItem="aE3-97-zgi" secondAttribute="centerX" id="RCo-4o-wPm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="a7n-lz-Gbk" secondAttribute="trailing" constant="-20" id="diJ-lm-ATZ"/>
                             <constraint firstItem="fzx-no-hft" firstAttribute="top" secondItem="4Ku-oQ-cPG" secondAttribute="bottom" id="fRt-xA-GIU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4Ku-oQ-cPG" secondAttribute="trailing" constant="-20" id="h9d-6E-CHS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fzx-no-hft" secondAttribute="trailing" constant="-20" id="h9j-Dr-F6V"/>
                             <constraint firstItem="QRS-NK-zzT" firstAttribute="leading" secondItem="aE3-97-zgi" secondAttribute="leadingMargin" constant="-20" id="hNS-wG-PT0"/>
+                            <constraint firstItem="uK7-Ta-7Aa" firstAttribute="centerY" secondItem="aE3-97-zgi" secondAttribute="centerY" id="iVg-56-6Ai"/>
                             <constraint firstItem="6tM-LJ-vXm" firstAttribute="top" secondItem="QRS-NK-zzT" secondAttribute="bottom" id="lvN-Fk-NOX"/>
                             <constraint firstItem="fzx-no-hft" firstAttribute="leading" secondItem="aE3-97-zgi" secondAttribute="leadingMargin" constant="-20" id="mu6-2X-5NK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QRS-NK-zzT" secondAttribute="trailing" constant="-20" id="z6Q-Dg-CVW"/>
@@ -237,22 +242,25 @@
                                 <exclude reference="a7n-lz-Gbk"/>
                                 <exclude reference="4Ku-oQ-cPG"/>
                                 <exclude reference="fzx-no-hft"/>
+                                <exclude reference="uK7-Ta-7Aa"/>
                                 <exclude reference="QRS-NK-zzT"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="lvN-Fk-NOX"/>
-                                <exclude reference="0sE-eZ-bxO"/>
-                                <exclude reference="4Ak-TC-dzD"/>
-                                <exclude reference="h9d-6E-CHS"/>
                                 <exclude reference="28f-ed-f1E"/>
                                 <exclude reference="Bym-J1-09x"/>
                                 <exclude reference="diJ-lm-ATZ"/>
-                                <exclude reference="MQB-MS-dCf"/>
-                                <exclude reference="hNS-wG-PT0"/>
-                                <exclude reference="z6Q-Dg-CVW"/>
+                                <exclude reference="0sE-eZ-bxO"/>
+                                <exclude reference="4Ak-TC-dzD"/>
+                                <exclude reference="h9d-6E-CHS"/>
                                 <exclude reference="fRt-xA-GIU"/>
                                 <exclude reference="h9j-Dr-F6V"/>
                                 <exclude reference="mu6-2X-5NK"/>
+                                <exclude reference="RCo-4o-wPm"/>
+                                <exclude reference="iVg-56-6Ai"/>
+                                <exclude reference="MQB-MS-dCf"/>
+                                <exclude reference="hNS-wG-PT0"/>
+                                <exclude reference="z6Q-Dg-CVW"/>
+                                <exclude reference="lvN-Fk-NOX"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -260,22 +268,25 @@
                                 <include reference="a7n-lz-Gbk"/>
                                 <include reference="4Ku-oQ-cPG"/>
                                 <include reference="fzx-no-hft"/>
+                                <include reference="uK7-Ta-7Aa"/>
                                 <include reference="QRS-NK-zzT"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="lvN-Fk-NOX"/>
-                                <include reference="0sE-eZ-bxO"/>
-                                <include reference="4Ak-TC-dzD"/>
-                                <include reference="h9d-6E-CHS"/>
                                 <include reference="28f-ed-f1E"/>
                                 <include reference="Bym-J1-09x"/>
                                 <include reference="diJ-lm-ATZ"/>
-                                <include reference="MQB-MS-dCf"/>
-                                <include reference="hNS-wG-PT0"/>
-                                <include reference="z6Q-Dg-CVW"/>
+                                <include reference="0sE-eZ-bxO"/>
+                                <include reference="4Ak-TC-dzD"/>
+                                <include reference="h9d-6E-CHS"/>
                                 <include reference="fRt-xA-GIU"/>
                                 <include reference="h9j-Dr-F6V"/>
                                 <include reference="mu6-2X-5NK"/>
+                                <include reference="RCo-4o-wPm"/>
+                                <include reference="iVg-56-6Ai"/>
+                                <include reference="MQB-MS-dCf"/>
+                                <include reference="hNS-wG-PT0"/>
+                                <include reference="z6Q-Dg-CVW"/>
+                                <include reference="lvN-Fk-NOX"/>
                             </mask>
                         </variation>
                     </view>
@@ -286,6 +297,7 @@
                         <outlet property="dateMessageLabel" destination="a7n-lz-Gbk" id="XfF-3j-4Ia"/>
                         <outlet property="nikkeiLabel" destination="4Ku-oQ-cPG" id="JEa-LM-9xG"/>
                         <outlet property="refreshBarItemButton" destination="PER-Tw-tmF" id="9wK-If-jjX"/>
+                        <outlet property="refreshIndicator" destination="uK7-Ta-7Aa" id="DKp-Cc-KBq"/>
                         <outlet property="refreshSwitch" destination="WA9-B6-xhU" id="QkR-xk-d3B"/>
                     </connections>
                 </viewController>
@@ -328,7 +340,7 @@
                                                     <rect key="frame" x="15" y="1" width="34" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -338,7 +350,7 @@
                                                     <rect key="frame" x="15" y="22" width="59" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -436,25 +448,25 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="項目" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NZr-73-g5E">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上限下限" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zid-PV-a2H">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="銘柄" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgz-ou-aKV">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="250" translatesAutoresizingMaskIntoConstraints="NO" id="27a-cr-LHK">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -481,6 +493,10 @@
                                 <exclude reference="27a-cr-LHK"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="Qh9-ZD-o18"/>
+                                <exclude reference="UZN-VQ-Ppr"/>
+                                <exclude reference="mF5-UQ-Wtl"/>
+                                <exclude reference="xJh-Dp-1O2"/>
                                 <exclude reference="Hqk-dS-yYw"/>
                                 <exclude reference="sN8-BU-mpT"/>
                                 <exclude reference="v32-uK-qc4"/>
@@ -488,10 +504,6 @@
                                 <exclude reference="tkD-MX-zBQ"/>
                                 <exclude reference="Fhi-4o-KTS"/>
                                 <exclude reference="Zun-Ac-qkY"/>
-                                <exclude reference="Qh9-ZD-o18"/>
-                                <exclude reference="UZN-VQ-Ppr"/>
-                                <exclude reference="mF5-UQ-Wtl"/>
-                                <exclude reference="xJh-Dp-1O2"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -503,6 +515,10 @@
                                 <include reference="27a-cr-LHK"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="Qh9-ZD-o18"/>
+                                <include reference="UZN-VQ-Ppr"/>
+                                <include reference="mF5-UQ-Wtl"/>
+                                <include reference="xJh-Dp-1O2"/>
                                 <include reference="Hqk-dS-yYw"/>
                                 <include reference="sN8-BU-mpT"/>
                                 <include reference="v32-uK-qc4"/>
@@ -510,10 +526,6 @@
                                 <include reference="tkD-MX-zBQ"/>
                                 <include reference="Fhi-4o-KTS"/>
                                 <include reference="Zun-Ac-qkY"/>
-                                <include reference="Qh9-ZD-o18"/>
-                                <include reference="UZN-VQ-Ppr"/>
-                                <include reference="mF5-UQ-Wtl"/>
-                                <include reference="xJh-Dp-1O2"/>
                             </mask>
                         </variation>
                     </view>
@@ -536,7 +548,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="hy3-Sn-AoB">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection headerTitle="銘柄" id="By3-61-6N4">
                                 <cells>
@@ -551,7 +563,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -575,7 +587,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
@@ -605,7 +617,7 @@
                                                     <rect key="frame" x="112" y="10" width="52" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -638,7 +650,7 @@
                                                     <rect key="frame" x="112" y="10" width="52" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -665,7 +677,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
@@ -695,7 +707,7 @@
                                                     <rect key="frame" x="112" y="10" width="52" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -728,7 +740,7 @@
                                                     <rect key="frame" x="112" y="10" width="52" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -755,7 +767,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
@@ -785,7 +797,7 @@
                                                     <rect key="frame" x="112" y="10" width="52" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -818,7 +830,7 @@
                                                     <rect key="frame" x="112" y="10" width="52" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>

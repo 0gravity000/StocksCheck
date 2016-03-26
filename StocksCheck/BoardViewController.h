@@ -22,7 +22,8 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property NSTimer *autoRefershTimer;
+//@property (strong, atomic) NSFetchedResultsController *fetchedResultsController;
+//@property (strong, atomic) NSManagedObjectContext *managedObjectContext;
 
 @property (weak, nonatomic) IBOutlet UILabel *dateMessageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nikkeiLabel;
@@ -32,12 +33,14 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshBarItemButton;
 
 @property (weak, nonatomic) IBOutlet BoardTableView *boardTableView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refreshIndicator;
 
 - (IBAction)pushRefreshBarItemButton:(id)sender;
 - (IBAction)changeRefreshSwitch:(id)sender;
 
 //@property dispatch_source_t BackgraundTimerSource; // タイマーソース
 //@property dispatch_source_t mainTimerSource; // タイマーソース
+@property NSTimer *autoRefershTimer;
 @property NSString *dateMessageLabelStr;
 @property NSString *nikkeiLabelStr;
 @property NSMutableArray *tempPriceMArray;
