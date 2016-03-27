@@ -11,6 +11,7 @@
 #import "BoardTableView.h"
 #import "BoardTableViewCell.h"
 #import "AppDelegate.h"
+#import "Reachability.h"
 
 @class ObservTableViewController;
 @class ResistViewController;
@@ -35,6 +36,8 @@
 @property (weak, nonatomic) IBOutlet BoardTableView *boardTableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refreshIndicator;
 
+@property (weak, nonatomic) IBOutlet UIImageView *remoteHostImageView;
+
 - (IBAction)pushRefreshBarItemButton:(id)sender;
 - (IBAction)changeRefreshSwitch:(id)sender;
 
@@ -46,5 +49,14 @@
 @property NSMutableArray *tempPriceMArray;
 @property NSMutableArray *tempObserveImageMArray;
 @property NSMutableArray *tempNoticeTimeMArray;
+
+@property (nonatomic) Reachability *hostReachability;
+@property (nonatomic) Reachability *internetReachability;
+@property (nonatomic) Reachability *wifiReachability;
+
+@property int networkStatusFlag;
+@property int refreshingFlag;
+@property int refreshSwitchOnCount;
+
 
 @end

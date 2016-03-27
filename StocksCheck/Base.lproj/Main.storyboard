@@ -62,6 +62,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="15" y="5" width="209" height="17"/>
+                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="現在値" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EtR-ux-xA8">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
@@ -195,6 +198,7 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QRS-NK-zzT">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="azJ-YD-3K1"/>
                                     <barButtonItem systemItem="refresh" id="PER-Tw-tmF">
                                         <connections>
                                             <action selector="pushRefreshBarItemButton:" destination="Soj-Er-glS" id="Rc0-mn-4vR"/>
@@ -210,6 +214,7 @@
                                             </connections>
                                         </switch>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="NDm-tY-u5y"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="cn1-bO-Mdt"/>
                                     <barButtonItem systemItem="add" id="trn-Q0-DnH">
                                         <connections>
@@ -218,12 +223,33 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="x57-fW-VFA">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="3LW-5n-KKN"/>
+                                    <constraint firstAttribute="height" constant="30" id="f00-XI-1wM"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="3LW-5n-KKN"/>
+                                        <exclude reference="f00-XI-1wM"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="3LW-5n-KKN"/>
+                                        <include reference="f00-XI-1wM"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="4Ku-oQ-cPG" firstAttribute="top" secondItem="a7n-lz-Gbk" secondAttribute="bottom" id="0sE-eZ-bxO"/>
                             <constraint firstItem="a7n-lz-Gbk" firstAttribute="leading" secondItem="aE3-97-zgi" secondAttribute="leadingMargin" constant="-20" id="28f-ed-f1E"/>
                             <constraint firstItem="4Ku-oQ-cPG" firstAttribute="leading" secondItem="aE3-97-zgi" secondAttribute="leadingMargin" constant="-20" id="4Ak-TC-dzD"/>
+                            <constraint firstItem="6tM-LJ-vXm" firstAttribute="top" secondItem="x57-fW-VFA" secondAttribute="bottom" constant="7" id="6ny-Y2-Iel"/>
+                            <constraint firstItem="x57-fW-VFA" firstAttribute="top" secondItem="fzx-no-hft" secondAttribute="bottom" constant="7" id="7hl-UP-jxq"/>
                             <constraint firstItem="a7n-lz-Gbk" firstAttribute="top" secondItem="YBE-Oc-WHv" secondAttribute="bottom" id="Bym-J1-09x"/>
                             <constraint firstItem="QRS-NK-zzT" firstAttribute="top" secondItem="fzx-no-hft" secondAttribute="bottom" id="MQB-MS-dCf"/>
                             <constraint firstItem="uK7-Ta-7Aa" firstAttribute="centerX" secondItem="aE3-97-zgi" secondAttribute="centerX" id="RCo-4o-wPm"/>
@@ -233,6 +259,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="fzx-no-hft" secondAttribute="trailing" constant="-20" id="h9j-Dr-F6V"/>
                             <constraint firstItem="QRS-NK-zzT" firstAttribute="leading" secondItem="aE3-97-zgi" secondAttribute="leadingMargin" constant="-20" id="hNS-wG-PT0"/>
                             <constraint firstItem="uK7-Ta-7Aa" firstAttribute="centerY" secondItem="aE3-97-zgi" secondAttribute="centerY" id="iVg-56-6Ai"/>
+                            <constraint firstItem="x57-fW-VFA" firstAttribute="leading" secondItem="aE3-97-zgi" secondAttribute="leadingMargin" constant="-10" id="ldB-er-7A0"/>
                             <constraint firstItem="6tM-LJ-vXm" firstAttribute="top" secondItem="QRS-NK-zzT" secondAttribute="bottom" id="lvN-Fk-NOX"/>
                             <constraint firstItem="fzx-no-hft" firstAttribute="leading" secondItem="aE3-97-zgi" secondAttribute="leadingMargin" constant="-20" id="mu6-2X-5NK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QRS-NK-zzT" secondAttribute="trailing" constant="-20" id="z6Q-Dg-CVW"/>
@@ -244,6 +271,7 @@
                                 <exclude reference="fzx-no-hft"/>
                                 <exclude reference="uK7-Ta-7Aa"/>
                                 <exclude reference="QRS-NK-zzT"/>
+                                <exclude reference="x57-fW-VFA"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="28f-ed-f1E"/>
@@ -260,6 +288,9 @@
                                 <exclude reference="MQB-MS-dCf"/>
                                 <exclude reference="hNS-wG-PT0"/>
                                 <exclude reference="z6Q-Dg-CVW"/>
+                                <exclude reference="7hl-UP-jxq"/>
+                                <exclude reference="ldB-er-7A0"/>
+                                <exclude reference="6ny-Y2-Iel"/>
                                 <exclude reference="lvN-Fk-NOX"/>
                             </mask>
                         </variation>
@@ -270,6 +301,7 @@
                                 <include reference="fzx-no-hft"/>
                                 <include reference="uK7-Ta-7Aa"/>
                                 <include reference="QRS-NK-zzT"/>
+                                <include reference="x57-fW-VFA"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="28f-ed-f1E"/>
@@ -286,6 +318,9 @@
                                 <include reference="MQB-MS-dCf"/>
                                 <include reference="hNS-wG-PT0"/>
                                 <include reference="z6Q-Dg-CVW"/>
+                                <include reference="7hl-UP-jxq"/>
+                                <include reference="ldB-er-7A0"/>
+                                <include reference="6ny-Y2-Iel"/>
                                 <include reference="lvN-Fk-NOX"/>
                             </mask>
                         </variation>
@@ -299,6 +334,7 @@
                         <outlet property="refreshBarItemButton" destination="PER-Tw-tmF" id="9wK-If-jjX"/>
                         <outlet property="refreshIndicator" destination="uK7-Ta-7Aa" id="DKp-Cc-KBq"/>
                         <outlet property="refreshSwitch" destination="WA9-B6-xhU" id="QkR-xk-d3B"/>
+                        <outlet property="remoteHostImageView" destination="x57-fW-VFA" id="a4g-rX-4qW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="63K-d9-GOm" userLabel="First Responder" sceneMemberID="firstResponder"/>
