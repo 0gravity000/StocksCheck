@@ -29,10 +29,10 @@
 		AA19ACA81C8AC58000FD02E6 /* ResistTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19ACA71C8AC58000FD02E6 /* ResistTableViewCell.m */; };
 		AA19ACB11C8D9EF900FD02E6 /* ObservTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19ACB01C8D9EF900FD02E6 /* ObservTableViewController.m */; };
 		AA19ACB41C8DCFA100FD02E6 /* ValSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19ACB31C8DCFA100FD02E6 /* ValSetViewController.m */; };
+		AA3F24F21CA9984F00300201 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3F24F11CA9984E00300201 /* UIKit.framework */; };
+		AA3F24F41CA9986700300201 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3F24F31CA9986700300201 /* Foundation.framework */; };
+		AA3F24F61CA9988B00300201 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3F24F51CA9988B00300201 /* CoreGraphics.framework */; };
 		AA8B676C1CA621F100F78887 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8B676B1CA621F100F78887 /* Reachability.m */; };
-		AA8B676F1CA637C900F78887 /* stop-32.png in Resources */ = {isa = PBXBuildFile; fileRef = AA8B676E1CA637C900F78887 /* stop-32.png */; };
-		AA8B67711CA637D900F78887 /* Airport.png in Resources */ = {isa = PBXBuildFile; fileRef = AA8B67701CA637D900F78887 /* Airport.png */; };
-		AA8B67731CA637E000F78887 /* WWAN5.png in Resources */ = {isa = PBXBuildFile; fileRef = AA8B67721CA637E000F78887 /* WWAN5.png */; };
 		AA8B67751CA7071200F78887 /* WWAN_02.png in Resources */ = {isa = PBXBuildFile; fileRef = AA8B67741CA7071200F78887 /* WWAN_02.png */; };
 		AA8B67771CA7071C00F78887 /* WWAN_01.png in Resources */ = {isa = PBXBuildFile; fileRef = AA8B67761CA7071C00F78887 /* WWAN_01.png */; };
 		AA8B67791CA7072300F78887 /* Airport_02.png in Resources */ = {isa = PBXBuildFile; fileRef = AA8B67781CA7072300F78887 /* Airport_02.png */; };
@@ -114,11 +114,11 @@
 		AA19ACB01C8D9EF900FD02E6 /* ObservTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservTableViewController.m; path = ../ObservTableViewController.m; sourceTree = "<group>"; };
 		AA19ACB21C8DCFA100FD02E6 /* ValSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValSetViewController.h; sourceTree = "<group>"; };
 		AA19ACB31C8DCFA100FD02E6 /* ValSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValSetViewController.m; sourceTree = "<group>"; };
+		AA3F24F11CA9984E00300201 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		AA3F24F31CA9986700300201 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		AA3F24F51CA9988B00300201 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		AA8B676B1CA621F100F78887 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		AA8B676D1CA6224000F78887 /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		AA8B676E1CA637C900F78887 /* stop-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stop-32.png"; sourceTree = "<group>"; };
-		AA8B67701CA637D900F78887 /* Airport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Airport.png; sourceTree = "<group>"; };
-		AA8B67721CA637E000F78887 /* WWAN5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WWAN5.png; sourceTree = "<group>"; };
 		AA8B67741CA7071200F78887 /* WWAN_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WWAN_02.png; sourceTree = "<group>"; };
 		AA8B67761CA7071C00F78887 /* WWAN_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WWAN_01.png; sourceTree = "<group>"; };
 		AA8B67781CA7072300F78887 /* Airport_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Airport_02.png; sourceTree = "<group>"; };
@@ -132,6 +132,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA3F24F61CA9988B00300201 /* CoreGraphics.framework in Frameworks */,
+				AA3F24F41CA9986700300201 /* Foundation.framework in Frameworks */,
+				AA3F24F21CA9984F00300201 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +158,9 @@
 		AA19AC4C1C8A8D2200FD02E6 = {
 			isa = PBXGroup;
 			children = (
+				AA3F24F51CA9988B00300201 /* CoreGraphics.framework */,
+				AA3F24F31CA9986700300201 /* Foundation.framework */,
+				AA3F24F11CA9984E00300201 /* UIKit.framework */,
 				AA19AC9D1C8AA3BB00FD02E6 /* Stock+CoreDataProperties.h */,
 				AA19AC9E1C8AA3BB00FD02E6 /* Stock+CoreDataProperties.m */,
 				AA19AC9F1C8AA3BB00FD02E6 /* Stock.h */,
@@ -217,9 +223,6 @@
 				AA8B67781CA7072300F78887 /* Airport_02.png */,
 				AA8B67761CA7071C00F78887 /* WWAN_01.png */,
 				AA8B67741CA7071200F78887 /* WWAN_02.png */,
-				AA8B67721CA637E000F78887 /* WWAN5.png */,
-				AA8B67701CA637D900F78887 /* Airport.png */,
-				AA8B676E1CA637C900F78887 /* stop-32.png */,
 				AA0F11C61C96FA7400A6A622 /* Launch_1242_2208.png */,
 				AA0F11AA1C93F53700A6A622 /* button_01.png */,
 				AAC7B13F1C8F34AB00D792AF /* button_02.png */,
@@ -368,15 +371,12 @@
 				AA19AC6E1C8A8D2200FD02E6 /* LaunchScreen.storyboard in Resources */,
 				AA8B677D1CA7E53700F78887 /* stop_01.png in Resources */,
 				AAC7B1401C8F34AB00D792AF /* button_02.png in Resources */,
-				AA8B676F1CA637C900F78887 /* stop-32.png in Resources */,
 				AA19AC6B1C8A8D2200FD02E6 /* Assets.xcassets in Resources */,
 				AA0F11C01C958BE700A6A622 /* infoPlist.strings in Resources */,
 				AA19AC691C8A8D2200FD02E6 /* Main.storyboard in Resources */,
-				AA8B67731CA637E000F78887 /* WWAN5.png in Resources */,
 				AA0F11C71C96FA7400A6A622 /* Launch_1242_2208.png in Resources */,
 				AA0F11AD1C93F54100A6A622 /* button_03.png in Resources */,
 				AA0F11AB1C93F53700A6A622 /* button_01.png in Resources */,
-				AA8B67711CA637D900F78887 /* Airport.png in Resources */,
 				AA8B67771CA7071C00F78887 /* WWAN_01.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

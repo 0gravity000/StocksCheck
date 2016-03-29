@@ -53,15 +53,18 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
 
     //Change the host name here to change the server you want to monitor.
-    NSString *remoteHostName = @"www.apple.com";
+//    NSString *remoteHostName = @"www.apple.com";
 //    NSString *remoteHostName = @"http://stocks.finance.yahoo.co.jp/stocks";
     
-    self.refreshSwitchOnCount = 0;
-    self.networkStatusFlag = 0;
+    self.IsDispatchSourceTimerExcute = NO;
+    self.inetworkStatusFlag = 0;
+    self.wifiStatusFlag = 0;
     self.refreshingFlag = 0;
-    self.hostReachability = [Reachability reachabilityWithHostName:remoteHostName];
-    [self.hostReachability startNotifier];
-    [self updateInterfaceWithReachability:self.hostReachability];
+//    self.inetRetryCount = 0;
+//    self.wifiRetryCount = 0;
+//    self.hostReachability = [Reachability reachabilityWithHostName:remoteHostName];
+//    [self.hostReachability startNotifier];
+//    [self updateInterfaceWithReachability:self.hostReachability];
     
     self.internetReachability = [Reachability reachabilityForInternetConnection];
     [self.internetReachability startNotifier];
@@ -434,10 +437,13 @@
     self.navigationItem.rightBarButtonItem = nil;
     self.refreshingFlag = 1;
     
-    if (self.networkStatusFlag == 2) {
-        self.remoteHostImageView.image = [UIImage imageNamed:@"WWAN_01.png"];
-    } else if (self.networkStatusFlag == 3) {
+    //load image
+    if (self.inetworkStatusFlag == 2 && self.wifiStatusFlag == 2) {
+        self.remoteHostImageView.image = [UIImage imageNamed:@"stop_01.png"];
+    } else if (self.wifiStatusFlag == 1) {
         self.remoteHostImageView.image = [UIImage imageNamed:@"Airport_01.png"];
+    } else {
+        self.remoteHostImageView.image = [UIImage imageNamed:@"WWAN_01.png"];
     }
     
     [self.view setNeedsDisplay];
@@ -473,10 +479,13 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.refreshingFlag = 0;
     
-    if (self.networkStatusFlag == 2) {
-        self.remoteHostImageView.image = [UIImage imageNamed:@"WWAN_02.png"];
-    } else if (self.networkStatusFlag == 3) {
+    //load image
+    if (self.inetworkStatusFlag == 2 && self.wifiStatusFlag == 2) {
+        self.remoteHostImageView.image = [UIImage imageNamed:@"stop_01.png"];
+    } else if (self.wifiStatusFlag == 1) {
         self.remoteHostImageView.image = [UIImage imageNamed:@"Airport_02.png"];
+    } else {
+        self.remoteHostImageView.image = [UIImage imageNamed:@"WWAN_02.png"];
     }
     
     [self.view setNeedsDisplay];
@@ -489,64 +498,69 @@
     //    NSLog(@"*** Now changeRefreshSwitch");
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (self.refreshSwitch.on == YES) {
-        
         //なぜか２回呼ばれるため回避判定処理
-        self.refreshSwitchOnCount++;
-        if (self.refreshSwitchOnCount == 1) {
+        if (self.IsDispatchSourceTimerExcute == NO) {
             //ON
             self.refreshBarItemButton.enabled = NO;
             self.addBarItemButton.enabled = NO;
             self.navigationItem.rightBarButtonItem = nil;
             [self createTemporaryArrays];
             
-            if (self.networkStatusFlag == 2) {
-                self.remoteHostImageView.image = [UIImage imageNamed:@"WWAN_01.png"];
-                self.networkStatusFlag = 12;
-            } else if (self.networkStatusFlag == 3) {
+            //load image
+            if (self.inetworkStatusFlag == 2 && self.wifiStatusFlag == 2) {
+                self.remoteHostImageView.image = [UIImage imageNamed:@"stop_01.png"];
+            } else if (self.wifiStatusFlag == 1) {
                 self.remoteHostImageView.image = [UIImage imageNamed:@"Airport_01.png"];
-                self.networkStatusFlag = 13;
+            } else {
+                self.remoteHostImageView.image = [UIImage imageNamed:@"WWAN_01.png"];
             }
             
             //タイマー作成 viewdidLoadで
-            [self prepareAutoRefresh];
+            //        [self prepareAutoRefresh];
             
             // タイマー開始
             dispatch_resume(appDelegate.BackgraundTimerSource);
             dispatch_resume(appDelegate.mainTimerSource);
-            
+
+            self.IsDispatchSourceTimerExcute = YES;
         }
     } else {
-        //OFF
-        self.refreshSwitchOnCount = 0;
-        
-        self.refreshBarItemButton.enabled = YES;
-        self.addBarItemButton.enabled = YES;
-        self.navigationItem.rightBarButtonItem = self.editButtonItem;
-        [self copyTemporaryArraysToCoredata];
-        //        // タイマ一時停止
-        //        if(self.timerSource){
-        //            dispatch_suspend(self.timerSource);
-        //        }
-        // タイマ破棄
-        if(appDelegate.BackgraundTimerSource){
-            dispatch_source_cancel(appDelegate.BackgraundTimerSource);
-//            appDelegate.BackgraundTimerSource = nil;
+//        //なぜか２回呼ばれるため回避判定処理
+        if (self.IsDispatchSourceTimerExcute == YES) {
+            //OFF
+            self.refreshBarItemButton.enabled = YES;
+            self.addBarItemButton.enabled = YES;
+            self.navigationItem.rightBarButtonItem = self.editButtonItem;
+            [self copyTemporaryArraysToCoredata];
+            //        // タイマ一時停止
+            //        if(self.timerSource){
+            //            dispatch_suspend(self.timerSource);
+            //        }
+            // タイマ一時停止
+            if(appDelegate.BackgraundTimerSource){
+                dispatch_suspend(appDelegate.BackgraundTimerSource);
+                //                dispatch_source_cancel(appDelegate.BackgraundTimerSource);
+            }
+            if(appDelegate.mainTimerSource){
+                dispatch_suspend(appDelegate.mainTimerSource);
+                //                dispatch_source_cancel(appDelegate.mainTimerSource);
+            }
+            self.IsDispatchSourceTimerExcute = NO;
+            
+            //load image
+            if (self.inetworkStatusFlag == 2 && self.wifiStatusFlag == 2) {
+                self.remoteHostImageView.image = [UIImage imageNamed:@"stop_01.png"];
+            } else if (self.wifiStatusFlag == 1) {
+                self.remoteHostImageView.image = [UIImage imageNamed:@"Airport_02.png"];
+            } else {
+                self.remoteHostImageView.image = [UIImage imageNamed:@"WWAN_02.png"];
+            }
+            
         }
-        if(appDelegate.mainTimerSource){
-            dispatch_source_cancel(appDelegate.mainTimerSource);
-//            appDelegate.mainTimerSource = nil;
-        }
-        
-        if (self.networkStatusFlag == 12) {
-            self.remoteHostImageView.image = [UIImage imageNamed:@"WWAN_02.png"];
-            self.networkStatusFlag = 2;
-        } else if (self.networkStatusFlag == 13) {
-            self.remoteHostImageView.image = [UIImage imageNamed:@"Airport_02.png"];
-            self.networkStatusFlag = 3;
-        }
-        
+
     }
-    [self.view setNeedsDisplay];
+    
+//    [self.view setNeedsDisplay];
     //---reload table view necessary
     [self.boardTableView reloadData];
 }
@@ -560,15 +574,13 @@
     dispatch_queue_t main_queue = dispatch_get_main_queue();
     
     // タイマーソース作成
-//    if (appDelegate.BackgraundTimerSource) {
-//        appDelegate.BackgraundTimerSource = nil;
+//    if(appDelegate.BackgraundTimerSource == nil){
+        appDelegate.BackgraundTimerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, global_queue);
 //    }
-    appDelegate.BackgraundTimerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, global_queue);
     
-//    if (appDelegate.mainTimerSource) {
-//        appDelegate.mainTimerSource = nil;
+//    if(appDelegate.mainTimerSource == nil){
+        appDelegate.mainTimerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, main_queue);
 //    }
-    appDelegate.mainTimerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, main_queue);
     //    self.timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0));
     //    self.timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
     //self.timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
@@ -1781,57 +1793,91 @@
     Reachability* curReach = [note object];
     NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
     [self updateInterfaceWithReachability:curReach];
+    
 }
-
 
 - (void)updateInterfaceWithReachability:(Reachability *)reachability
 {
-    if (reachability == self.hostReachability)
-    {
-        //２回呼ばれる。２回目のコールは、CompleteでFlagが0になる
-        //このコールは無視する。
-//        self.hostReachabilityCallCount++;
-//        if (self.hostReachabilityCallCount == 1) {
-            NSLog(@"reachability == self.hostReachability");
-            //        [self configureTextField:self.remoteHostStatusField imageView:self.remoteHostImageView reachability:reachability];
-            [self configureTextField:self.remoteHostImageView reachability:reachability];
-            
-            //        NetworkStatus netStatus = [reachability currentReachabilityStatus];
-            BOOL connectionRequired = [reachability connectionRequired];
-            
-            //        self.summaryLabel.hidden = (netStatus != ReachableViaWWAN);
-            NSString* baseLabelText = @"";
-            
-            if (connectionRequired)
-            {
-                baseLabelText = NSLocalizedString(@"Cellular data network is available.\nInternet traffic will be routed through it after a connection is established.", @"Reachability text if a connection is required");
-            }
-            else
-            {
-                baseLabelText = NSLocalizedString(@"Cellular data network is active.\nInternet traffic will be routed through it.", @"Reachability text if a connection is not required");
-            }
-            //        self.summaryLabel.text = baseLabelText;
-//        } else {
-//            self.hostReachabilityCallCount = 0;
-//        }
-    }
+//    if (reachability == self.hostReachability)
+//    {
+//        //２回呼ばれる。２回目のコールは、CompleteでFlagが0になる
+//        //このコールは無視する。
+////        self.hostReachabilityCallCount++;
+////        if (self.hostReachabilityCallCount == 1) {
+//            NSLog(@"reachability == self.hostReachability");
+//            //        [self configureTextField:self.remoteHostStatusField imageView:self.remoteHostImageView reachability:reachability];
+//            [self configureTextField:self.remoteHostImageView reachability:reachability];
+//            
+//            //        NetworkStatus netStatus = [reachability currentReachabilityStatus];
+//            BOOL connectionRequired = [reachability connectionRequired];
+//            
+//            //        self.summaryLabel.hidden = (netStatus != ReachableViaWWAN);
+//            NSString* baseLabelText = @"";
+//            
+//            if (connectionRequired)
+//            {
+//                baseLabelText = NSLocalizedString(@"Cellular data network is available.\nInternet traffic will be routed through it after a connection is established.", @"Reachability text if a connection is required");
+//            }
+//            else
+//            {
+//                baseLabelText = NSLocalizedString(@"Cellular data network is active.\nInternet traffic will be routed through it.", @"Reachability text if a connection is not required");
+//            }
+//            //        self.summaryLabel.text = baseLabelText;
+////        } else {
+////            self.hostReachabilityCallCount = 0;
+////        }
+//    }
     
     if (reachability == self.internetReachability)
     {
         NSLog(@"reachability == self.internetReachability");
+        
 //        [self configureTextField:self.internetConnectionStatusField imageView:self.internetConnectionImageView reachability:reachability];
-//        [self configureTextField:self.remoteHostImageView reachability:reachability];
+        [self configureTextField:self.remoteHostImageView reachability:reachability];
+        
+        if (self.refreshSwitch.on == YES) {
+//            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//            // タイマ破棄
+//            if(appDelegate.BackgraundTimerSource){
+//                dispatch_source_cancel(appDelegate.BackgraundTimerSource);
+//                //            appDelegate.BackgraundTimerSource = nil;
+//            }
+//            if(appDelegate.mainTimerSource){
+//                dispatch_source_cancel(appDelegate.mainTimerSource);
+//                //            appDelegate.mainTimerSource = nil;
+//            }
+            
+            if (![self.inetRetryTimer isValid]) {
+                self.inetRetryTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f
+                                                                   target:self
+                                                                 selector:@selector(inetRetryTimer:)
+                                                                 userInfo:reachability
+                                                                  repeats:YES];
+            }
+        }
     }
     
     if (reachability == self.wifiReachability)
     {
         NSLog(@"reachability == self.wifiReachability");
 //        [self configureTextField:self.localWiFiConnectionStatusField imageView:self.localWiFiConnectionImageView reachability:reachability];
-//        [self configureTextField:self.remoteHostImageView reachability:reachability];
+        [self configureTextField:self.remoteHostImageView reachability:reachability];
+
+        if (self.refreshSwitch.on == YES) {
+            if (![self.wifiRetryTimer isValid]) {
+                self.wifiRetryTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f
+                                                                       target:self
+                                                                     selector:@selector(wifiRetryTimer:)
+                                                                     userInfo:reachability
+                                                                      repeats:YES];
+            }
+        }
     }
+    
+}
 
 // Template Sorce Code
-//    
+//
 //    if (reachability == self.hostReachability)
 //    {
 //        [self configureTextField:self.remoteHostStatusField imageView:self.remoteHostImageView reachability:reachability];
@@ -1861,21 +1907,85 @@
 //    {
 //        [self configureTextField:self.localWiFiConnectionStatusField imageView:self.localWiFiConnectionImageView reachability:reachability];
 //    }
+//}
+
+-(void)inetRetryTimer:(NSTimer *)timer{
+    
+    Reachability *reachability = [timer userInfo];
+    if (reachability == self.internetReachability)
+    {
+        NSLog(@"retrying  reachability == self.internetReachability");
+        //        [self configureTextField:self.internetConnectionStatusField imageView:self.internetConnectionImageView reachability:reachability];
+        [self configureTextField:self.remoteHostImageView reachability:reachability];
+    }
+
+    if (self.inetworkStatusFlag == 2 && self.wifiStatusFlag == 2) {
+        Reachability *reachability = [timer userInfo];
+        if (reachability == self.internetReachability)
+        {
+            NSLog(@"retrying  reachability == self.internetReachability");
+            //        [self configureTextField:self.internetConnectionStatusField imageView:self.internetConnectionImageView reachability:reachability];
+            [self configureTextField:self.remoteHostImageView reachability:reachability];
+        }
+//        self.inetRetryCount++;
+    } else {
+//        self.inetRetryCount = 0;
+        [timer invalidate];
+    }
+    
 }
+
+-(void)wifiRetryTimer:(NSTimer *)timer{
+
+    Reachability *reachability = [timer userInfo];
+    if (reachability == self.wifiReachability)
+    {
+        NSLog(@"retrying  reachability == self.wifiReachability");
+        //        [self configureTextField:self.localWiFiConnectionStatusField imageView:self.localWiFiConnectionImageView reachability:reachability];
+        [self configureTextField:self.remoteHostImageView reachability:reachability];
+    }
+    
+    if (self.inetworkStatusFlag == 2 && self.wifiStatusFlag == 2) {
+        Reachability *reachability = [timer userInfo];
+        if (reachability == self.wifiReachability)
+        {
+            NSLog(@"retrying  reachability == self.wifiReachability");
+            //        [self configureTextField:self.localWiFiConnectionStatusField imageView:self.localWiFiConnectionImageView reachability:reachability];
+            [self configureTextField:self.remoteHostImageView reachability:reachability];
+        }
+//        self.wifiRetryCount++;
+    } else {
+//        if (!(self.inetworkStatusFlag == 2 && self.wifiStatusFlag == 2)) {
+//        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//        //タイマー作成 viewdidLoadで
+//        [self prepareAutoRefresh];
+//        // タイマー開始
+//        dispatch_resume(appDelegate.BackgraundTimerSource);
+//        dispatch_resume(appDelegate.mainTimerSource);
+//        }
+        [timer invalidate];
+    }
+    
+}
+
 
 
 - (void)configureTextField:(UIImageView *)imageView reachability:(Reachability *)reachability
 {
     NetworkStatus netStatus = [reachability currentReachabilityStatus];
     BOOL connectionRequired = [reachability connectionRequired];
-    NSString* statusString = @"";
+//    NSString* statusString = @"";
     
     switch (netStatus)
     {
         case NotReachable:        {
 //            statusString = NSLocalizedString(@"Access Not Available", @"Text field text for access is not available");
-            imageView.image = [UIImage imageNamed:@"stop_01.png"] ;
-            self.networkStatusFlag = 1;
+            if (reachability == self.internetReachability) {
+                self.inetworkStatusFlag = 2;
+            }
+            if (reachability == self.wifiReachability) {
+                self.wifiStatusFlag = 2;
+            }
             /*
              Minor interface detail- connectionRequired may return YES even when the host is unreachable. We cover that up here...
              */
@@ -1886,25 +1996,13 @@
         case ReachableViaWWAN:        {
 //            statusString = NSLocalizedString(@"Reachable WWAN", @"");
 //            if (self.networkStatusFlag == 12 || self.networkStatusFlag == 13) {
-            if (self.refreshSwitch.on) {
-                self.remoteHostImageView.image = [UIImage imageNamed:@"WWAN_01.png"];
-                self.networkStatusFlag = 12;
-            } else {
-                imageView.image = [UIImage imageNamed:@"WWAN_02.png"];
-                self.networkStatusFlag = 2;
-            }
+            self.inetworkStatusFlag = 1;
             break;
         }
         case ReachableViaWiFi:        {
 //            statusString= NSLocalizedString(@"Reachable WiFi", @"");
 //            if (self.networkStatusFlag == 12 || self.networkStatusFlag == 13) {
-            if (self.refreshSwitch.on) {
-                self.remoteHostImageView.image = [UIImage imageNamed:@"Airport_01.png"];
-                self.networkStatusFlag = 13;
-            } else {
-                imageView.image = [UIImage imageNamed:@"Airport_02.png"];
-                self.networkStatusFlag = 3;
-            }
+            self.wifiStatusFlag = 1;
             break;
         }
         case IgnoreReachable:        {
@@ -1912,13 +2010,33 @@
         }
     }
     
-    if (connectionRequired)
-    {
-        NSString *connectionRequiredFormatString = NSLocalizedString(@"%@, Connection Required", @"Concatenation of status string with connection requirement");
-        statusString= [NSString stringWithFormat:connectionRequiredFormatString, statusString];
+    //load image
+    if (self.inetworkStatusFlag == 2 && self.wifiStatusFlag == 2) {
+        imageView.image = [UIImage imageNamed:@"stop_01.png"];
+    } else if (self.wifiStatusFlag == 1) {
+        if (self.refreshSwitch.on == YES) {
+            imageView.image = [UIImage imageNamed:@"Airport_01.png"];
+        } else {
+            imageView.image = [UIImage imageNamed:@"Airport_02.png"];
+        }
+    } else {
+        if (self.refreshSwitch.on == YES) {
+            imageView.image = [UIImage imageNamed:@"WWAN_01.png"];
+        } else {
+            imageView.image = [UIImage imageNamed:@"WWAN_02.png"];
+        }
     }
+    
+    [self.view setNeedsDisplay];
+    
+//    if (connectionRequired)
+//    {
+//        NSString *connectionRequiredFormatString = NSLocalizedString(@"%@, Connection Required", @"Concatenation of status string with connection requirement");
+//        statusString= [NSString stringWithFormat:connectionRequiredFormatString, statusString];
+//    }
 //    textField.text= statusString;
 }
+
 
 //- (void)configureTextField:(UITextField *)textField imageView:(UIImageView *)imageView reachability:(Reachability *)reachability
 //{

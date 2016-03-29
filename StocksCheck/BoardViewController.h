@@ -54,9 +54,14 @@
 @property (nonatomic) Reachability *internetReachability;
 @property (nonatomic) Reachability *wifiReachability;
 
-@property int networkStatusFlag;
+@property int inetworkStatusFlag;
+@property int wifiStatusFlag;
 @property int refreshingFlag;
-@property int refreshSwitchOnCount;
-
+//@property int refreshSwitchOnCount;
+@property NSTimer *inetRetryTimer;
+@property NSTimer *wifiRetryTimer;
+//@property int inetRetryCount;
+//@property int wifiRetryCount;
+@property BOOL IsDispatchSourceTimerExcute;
 
 @end
